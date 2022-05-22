@@ -4,6 +4,10 @@
 <dict>
 	<key>UIAppFonts</key>
 	<array>
+		<string>Ubuntu-Medium.ttf</string>
+		<string>Ubuntu-Bold.ttf</string>
+		<string>Ubuntu-Light.ttf</string>
+		<string>Ubuntu-Regular.ttf</string>
 		<string>SF-Pro-Display-Light.otf</string>
 		<string>SF-Pro-Display-Semibold.otf</string>
 	</array>

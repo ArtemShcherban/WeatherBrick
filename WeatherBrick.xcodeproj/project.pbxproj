@@ -11,7 +11,7 @@
 		2D0AF65018A5DBCFC7612F14 /* Pods_WeatherBrick_WeatherBrickUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0308B2BCAC9E5292D2FA4666 /* Pods_WeatherBrick_WeatherBrickUITests.framework */; };
 		5B2A9AC6B1EB7A524FE8D61E /* Pods_WeatherBrickTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9F81CBD63D95EAC2496FF1CB /* Pods_WeatherBrickTests.framework */; };
 		A3475EFF273305F200BF5E86 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3475EFE273305F200BF5E86 /* AppDelegate.swift */; };
-		A3475F01273305F200BF5E86 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3475F00273305F200BF5E86 /* ViewController.swift */; };
+		A3475F01273305F200BF5E86 /* WeatherMainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3475F00273305F200BF5E86 /* WeatherMainViewController.swift */; };
 		A3475F04273305F200BF5E86 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A3475F02273305F200BF5E86 /* Main.storyboard */; };
 		A3475F06273305F400BF5E86 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A3475F05273305F400BF5E86 /* Assets.xcassets */; };
 		A3475F09273305F400BF5E86 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A3475F07273305F400BF5E86 /* LaunchScreen.storyboard */; };
@@ -20,6 +20,13 @@
 		A3ACF2E1273847B000CEE97C /* SF-Pro-Display-Light.otf in Resources */ = {isa = PBXBuildFile; fileRef = A3ACF2E0273847B000CEE97C /* SF-Pro-Display-Light.otf */; };
 		A3ACF2E3273847B800CEE97C /* SF-Pro-Display-Semibold.otf in Resources */ = {isa = PBXBuildFile; fileRef = A3ACF2E2273847B800CEE97C /* SF-Pro-Display-Semibold.otf */; };
 		A3ACF2E727384B9800CEE97C /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = A3ACF2E627384B9800CEE97C /* Localizable.strings */; };
+		F47DA1FB2837836900098B17 /* WeatherMainView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F47DA1FA2837836900098B17 /* WeatherMainView.swift */; };
+		F47DA1FF2837938C00098B17 /* AppConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = F47DA1FE2837938C00098B17 /* AppConstants.swift */; };
+		F47DA2062837B9C800098B17 /* PopUpWindow.swift in Sources */ = {isa = PBXBuildFile; fileRef = F47DA2052837B9C800098B17 /* PopUpWindow.swift */; };
+		F47DA21428381BBB00098B17 /* Ubuntu-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = F47DA21328381BBB00098B17 /* Ubuntu-Bold.ttf */; };
+		F47DA21628381C2900098B17 /* Ubuntu-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = F47DA21528381C2900098B17 /* Ubuntu-Regular.ttf */; };
+		F47DA21828381C3800098B17 /* Ubuntu-Light.ttf in Resources */ = {isa = PBXBuildFile; fileRef = F47DA21728381C3800098B17 /* Ubuntu-Light.ttf */; };
+		F47DA21A2838AF8000098B17 /* Ubuntu-Medium.ttf in Resources */ = {isa = PBXBuildFile; fileRef = F47DA2192838AF8000098B17 /* Ubuntu-Medium.ttf */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -49,7 +56,7 @@
 		9F81CBD63D95EAC2496FF1CB /* Pods_WeatherBrickTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_WeatherBrickTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		A3475EFB273305F200BF5E86 /* WeatherBrick.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = WeatherBrick.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		A3475EFE273305F200BF5E86 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		A3475F00273305F200BF5E86 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		A3475F00273305F200BF5E86 /* WeatherMainViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherMainViewController.swift; sourceTree = "<group>"; };
 		A3475F03273305F200BF5E86 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		A3475F05273305F400BF5E86 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		A3475F08273305F400BF5E86 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
@@ -65,6 +72,13 @@
 		A3ACF2E627384B9800CEE97C /* Localizable.strings */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; path = Localizable.strings; sourceTree = "<group>"; };
 		A5D7E17997DCC46CE2999FB0 /* Pods-WeatherBrick-WeatherBrickUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-WeatherBrick-WeatherBrickUITests.release.xcconfig"; path = "Target Support Files/Pods-WeatherBrick-WeatherBrickUITests/Pods-WeatherBrick-WeatherBrickUITests.release.xcconfig"; sourceTree = "<group>"; };
 		D97144F82122F3B87CF109F0 /* Pods-WeatherBrickTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-WeatherBrickTests.debug.xcconfig"; path = "Target Support Files/Pods-WeatherBrickTests/Pods-WeatherBrickTests.debug.xcconfig"; sourceTree = "<group>"; };
+		F47DA1FA2837836900098B17 /* WeatherMainView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherMainView.swift; sourceTree = "<group>"; };
+		F47DA1FE2837938C00098B17 /* AppConstants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppConstants.swift; sourceTree = "<group>"; };
+		F47DA2052837B9C800098B17 /* PopUpWindow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PopUpWindow.swift; sourceTree = "<group>"; };
+		F47DA21328381BBB00098B17 /* Ubuntu-Bold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Ubuntu-Bold.ttf"; sourceTree = "<group>"; };
+		F47DA21528381C2900098B17 /* Ubuntu-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Ubuntu-Regular.ttf"; sourceTree = "<group>"; };
+		F47DA21728381C3800098B17 /* Ubuntu-Light.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Ubuntu-Light.ttf"; sourceTree = "<group>"; };
+		F47DA2192838AF8000098B17 /* Ubuntu-Medium.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Ubuntu-Medium.ttf"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -130,10 +144,8 @@
 		A3475EFD273305F200BF5E86 /* WeatherBrick */ = {
 			isa = PBXGroup;
 			children = (
-				A3475F00273305F200BF5E86 /* ViewController.swift */,
-				A3475F02273305F200BF5E86 /* Main.storyboard */,
-				A3ACF2E4273847C600CEE97C /* Resources */,
 				A3ACF2DE27383B7400CEE97C /* Supporting Files */,
+				F47DA1FC2837931300098B17 /* WeatherMainModule */,
 			);
 			path = WeatherBrick;
 			sourceTree = "<group>";
@@ -159,8 +171,10 @@
 		A3ACF2DE27383B7400CEE97C /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
-				A3475EFE273305F200BF5E86 /* AppDelegate.swift */,
-				A3475F07273305F400BF5E86 /* LaunchScreen.storyboard */,
+				F47DA1FD2837934400098B17 /* Constants */,
+				F47DA1F8283782C700098B17 /* Application */,
+				A3ACF2E4273847C600CEE97C /* Resources */,
+				F47DA1F9283782D800098B17 /* View */,
 				A3475F0A273305F400BF5E86 /* Info.plist */,
 			);
 			name = "Supporting Files";
@@ -169,8 +183,8 @@
 		A3ACF2DF2738479300CEE97C /* Fonts */ = {
 			isa = PBXGroup;
 			children = (
-				A3ACF2E0273847B000CEE97C /* SF-Pro-Display-Light.otf */,
-				A3ACF2E2273847B800CEE97C /* SF-Pro-Display-Semibold.otf */,
+				F47DA20D28381AB500098B17 /* ProDisplay */,
+				F47DA20E28381ACF00098B17 /* Ubuntu */,
 			);
 			path = Fonts;
 			sourceTree = "<group>";
@@ -183,6 +197,85 @@
 				A3ACF2E627384B9800CEE97C /* Localizable.strings */,
 			);
 			name = Resources;
+			sourceTree = "<group>";
+		};
+		F47DA1F52837826900098B17 /* Controller */ = {
+			isa = PBXGroup;
+			children = (
+				A3475F00273305F200BF5E86 /* WeatherMainViewController.swift */,
+			);
+			name = Controller;
+			sourceTree = "<group>";
+		};
+		F47DA1F62837827F00098B17 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				F47DA2052837B9C800098B17 /* PopUpWindow.swift */,
+				F47DA1FA2837836900098B17 /* WeatherMainView.swift */,
+			);
+			name = View;
+			sourceTree = "<group>";
+		};
+		F47DA1F72837828A00098B17 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Model;
+			sourceTree = "<group>";
+		};
+		F47DA1F8283782C700098B17 /* Application */ = {
+			isa = PBXGroup;
+			children = (
+				A3475EFE273305F200BF5E86 /* AppDelegate.swift */,
+			);
+			name = Application;
+			sourceTree = "<group>";
+		};
+		F47DA1F9283782D800098B17 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				A3475F07273305F400BF5E86 /* LaunchScreen.storyboard */,
+				A3475F02273305F200BF5E86 /* Main.storyboard */,
+			);
+			name = View;
+			sourceTree = "<group>";
+		};
+		F47DA1FC2837931300098B17 /* WeatherMainModule */ = {
+			isa = PBXGroup;
+			children = (
+				F47DA1F72837828A00098B17 /* Model */,
+				F47DA1F62837827F00098B17 /* View */,
+				F47DA1F52837826900098B17 /* Controller */,
+			);
+			name = WeatherMainModule;
+			sourceTree = "<group>";
+		};
+		F47DA1FD2837934400098B17 /* Constants */ = {
+			isa = PBXGroup;
+			children = (
+				F47DA1FE2837938C00098B17 /* AppConstants.swift */,
+			);
+			name = Constants;
+			sourceTree = "<group>";
+		};
+		F47DA20D28381AB500098B17 /* ProDisplay */ = {
+			isa = PBXGroup;
+			children = (
+				A3ACF2E0273847B000CEE97C /* SF-Pro-Display-Light.otf */,
+				A3ACF2E2273847B800CEE97C /* SF-Pro-Display-Semibold.otf */,
+			);
+			path = ProDisplay;
+			sourceTree = "<group>";
+		};
+		F47DA20E28381ACF00098B17 /* Ubuntu */ = {
+			isa = PBXGroup;
+			children = (
+				F47DA21728381C3800098B17 /* Ubuntu-Light.ttf */,
+				F47DA21528381C2900098B17 /* Ubuntu-Regular.ttf */,
+				F47DA2192838AF8000098B17 /* Ubuntu-Medium.ttf */,
+				F47DA21328381BBB00098B17 /* Ubuntu-Bold.ttf */,
+			);
+			path = Ubuntu;
 			sourceTree = "<group>";
 		};
 		FA897FDCA5607126FCE80F1D /* Pods */ = {
@@ -309,11 +402,15 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F47DA21628381C2900098B17 /* Ubuntu-Regular.ttf in Resources */,
 				A3475F09273305F400BF5E86 /* LaunchScreen.storyboard in Resources */,
 				A3ACF2E727384B9800CEE97C /* Localizable.strings in Resources */,
 				A3475F06273305F400BF5E86 /* Assets.xcassets in Resources */,
 				A3ACF2E3273847B800CEE97C /* SF-Pro-Display-Semibold.otf in Resources */,
+				F47DA21428381BBB00098B17 /* Ubuntu-Bold.ttf in Resources */,
+				F47DA21A2838AF8000098B17 /* Ubuntu-Medium.ttf in Resources */,
 				A3ACF2E1273847B000CEE97C /* SF-Pro-Display-Light.otf in Resources */,
+				F47DA21828381C3800098B17 /* Ubuntu-Light.ttf in Resources */,
 				A3475F04273305F200BF5E86 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -425,8 +522,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				A3475F01273305F200BF5E86 /* ViewController.swift in Sources */,
+				A3475F01273305F200BF5E86 /* WeatherMainViewController.swift in Sources */,
 				A3475EFF273305F200BF5E86 /* AppDelegate.swift in Sources */,
+				F47DA1FB2837836900098B17 /* WeatherMainView.swift in Sources */,
+				F47DA1FF2837938C00098B17 /* AppConstants.swift in Sources */,
+				F47DA2062837B9C800098B17 /* PopUpWindow.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
