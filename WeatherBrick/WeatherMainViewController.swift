@@ -38,7 +38,7 @@ extension WeatherMainViewController: WeatherMainViewDelegate {
 extension WeatherMainViewController: PopUpWindowDelegate {
     func animateFirst() {
         print("Tap")
-        weatherMainView.animatePopUpWindowIn()
+        weatherMainView.animateGradient()
         }
     
     func animateSecond() {

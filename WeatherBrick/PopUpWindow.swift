@@ -53,15 +53,49 @@ class PopUpWindow: UIView {
     private lazy var windowBackgroundView: UIView = {
         let tempbackgroundView = UIView()
         tempbackgroundView.layer.cornerRadius = 16
-        tempbackgroundView.backgroundColor = AppConstants.Color.darkOrange
+        tempbackgroundView.backgroundColor = AppConstants.Color.brightOrange
         return tempbackgroundView
     }()
     
-    private lazy var containerView: UIView = {
-        let tempContainerView = UIView()
+    lazy var containerView: UIView = {
+        let tempContainerView = UIView(frame: CGRect(
+            x: 0,
+            y: 0,
+            width: (UIScreen.main.bounds.width * 0.7 - 8),
+            height: UIScreen.main.bounds.height * 0.45))
         tempContainerView.layer.cornerRadius = 16
+        tempContainerView.clipsToBounds = true
         tempContainerView.backgroundColor = AppConstants.Color.orange
         return tempContainerView
+    }()
+    
+//        lazy var gradientLayer: CAGradientLayer = {
+//            let tempGradientLayer = CAGradientLayer()
+//            tempGradientLayer.colors = [AppConstants.Color.orange.cgColor, AppConstants.Color.brightOrange.cgColor]
+//            tempGradientLayer.locations = [0, 1]
+//            tempGradientLayer.startPoint = CGPoint(x: 0.25, y: 0.5)
+//            tempGradientLayer.endPoint = CGPoint(x: 0.75, y: 0.5)
+//            tempGradientLayer.transform = CATransform3DMakeAffineTransform(CGAffineTransform(
+//                a: 0,
+//                b: 0.87,
+//                c: -0.87,
+//                d: 0,
+//                tx: 0.94,
+//                ty: 0))
+//            tempGradientLayer.bounds = containerView.bounds.insetBy(
+//                dx: -0.5 * containerView.bounds.size.width,
+//                dy: -0.5 * containerView.bounds.size.height)
+//            tempGradientLayer.position = containerView.center
+//            return tempGradientLayer
+//        }()
+    
+    lazy var gradientLayer: CAGradientLayer = {
+        let tempGradientLayer = CAGradientLayer()
+        tempGradientLayer.colors = [AppConstants.Color.orange.cgColor, AppConstants.Color.brightOrange.cgColor]
+        tempGradientLayer.startPoint = CGPoint(x: 0.25, y: 0.5)
+        tempGradientLayer.endPoint = CGPoint(x: 0.75, y: 0.5)
+        tempGradientLayer.frame = containerView.frame
+        return tempGradientLayer
     }()
     
     override init(frame: CGRect) {
@@ -73,6 +107,8 @@ class PopUpWindow: UIView {
         containerView.addSubview(titleLabel)
         conditionLabels.forEach { containerView.addSubview($0) }
         containerView.addSubview(hideButton)
+        
+        containerView.layer.insertSublayer(gradientLayer, at: 0)
         
         setWindowBackgroundViewConstraints()
         setContainerViewConstraints()

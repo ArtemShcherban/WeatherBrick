@@ -12,6 +12,7 @@ import UIKit
 enum AppConstants {
     enum Image {
         static let background = "image_background"
+        static let stoneNormal = "image_stone_normal"
     }
     
     enum Font {
@@ -26,6 +27,7 @@ enum AppConstants {
         static let lightGraphite = UIColor(red: 0.342, green: 0.342, blue: 0.342, alpha: 1)
         static let orange = UIColor(red: 1, green: 0.6, blue: 0.375, alpha: 1)
         static let darkOrange = UIColor(red: 0.984, green: 0.373, blue: 0.161, alpha: 1)
+        static let brightOrange = UIColor(red: 0.977, green: 0.315, blue: 0.106, alpha: 1)
     }
     
     static let conditions = [
