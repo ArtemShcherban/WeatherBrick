@@ -9,56 +9,35 @@
 import UIKit
 final class WeatherMainView: UIView {
     static let shared = WeatherMainView()
-   
-    private lazy var axisYConstraint = NSLayoutConstraint()
-    
     weak var delegate: WeatherMainViewDelegate?
     
-    private lazy var backgroundImageView: UIImageView = {
-        let tempbackgroundImageView = UIImageView(frame: CGRect(
-            x: 0,
-            y: 0,
-            width: UIScreen.main.bounds.size.width,
-            height: UIScreen.main.bounds.size.height))
-        tempbackgroundImageView.isUserInteractionEnabled = true
-        tempbackgroundImageView.backgroundColor = .white
-        tempbackgroundImageView.image = UIImage(named: AppConstants.Image.background)
-        return tempbackgroundImageView
-    }()
+    private lazy var axisYConstraint = NSLayoutConstraint()
     
-    private lazy var stoneImageView: UIImageView = {
+    private lazy var backgroundImageView = BackgraundImageView()
+    
+    lazy var stoneImageView: UIImageView = {
         let tempStoneImageView = UIImageView()
-        tempStoneImageView.image = UIImage(named: AppConstants.Image.stoneNormal)
+        tempStoneImageView.alpha = 1
         return tempStoneImageView
     }()
     
-    private lazy var temperatureLabel: UILabel = {
+    lazy var temperatureLabel: UILabel = {
         let tempTemperatureLabel = UILabel(frame: (CGRect(x: 16, y: 461, width: 124, height: 126)))
-        tempTemperatureLabel.text = "12°"
         tempTemperatureLabel.font = UIFont(name: AppConstants.Font.ubuntuRegular, size: 83)
         return tempTemperatureLabel
     }()
     
-    private lazy var conditionLabel: UILabel = {
+    lazy var conditionLabel: UILabel = {
         let tempConditionLabel = UILabel(frame: CGRect(x: 16, y: 558, width: 124, height: 58))
-        let attributedString = NSAttributedString(string: "sunny", attributes: [
+        let attributedString = NSAttributedString(string: " ", attributes: [
             NSAttributedString.Key.kern: -0.41,
             NSAttributedString.Key.font: UIFont(name: AppConstants.Font.ubuntuLight, size: 36) ?? UIFont()
         ])
         tempConditionLabel.attributedText = attributedString
+        tempConditionLabel.numberOfLines = 3
         return tempConditionLabel
     }()
-    
-    private lazy var locationButton: UIButton = {
-        let tempLocationButton = UIButton()
-        let attributedString = NSAttributedString(string: "Krakow, Poland", attributes: [
-            NSAttributedString.Key.kern: -0.41,
-            NSAttributedString.Key.font: UIFont(name: AppConstants.Font.ubuntuMedium, size: 17) ?? UIFont()
-        ])
-        tempLocationButton.setAttributedTitle(attributedString, for: .normal)
-        tempLocationButton.setTitleColor(AppConstants.Color.graphite, for: .normal)
-        return tempLocationButton
-    }()
+    lazy var locationButton = LocationButton()
     
     private lazy var geoLocationView: UIImageView = {
         let tempGeoLocationLabel = UIImageView()
@@ -77,13 +56,13 @@ final class WeatherMainView: UIView {
         return view
     }()
     
-//    lazy var gradientLayer: CAGradientLayer = {
-//        let tempGradientlayer = CAGradientLayer()
-//        tempGradientlayer.colors = [UIColor.black.cgColor, UIColor.red.cgColor]
-//        tempGradientlayer.endPoint = CGPoint(x: 0.5, y: 0.5)
-//        tempGradientlayer.frame = self.frame
-//    return tempGradientlayer
-//    }()
+    //    lazy var gradientLayer: CAGradientLayer = {
+    //        let tempGradientlayer = CAGradientLayer()
+    //        tempGradientlayer.colors = [UIColor.black.cgColor, UIColor.red.cgColor]
+    //        tempGradientlayer.endPoint = CGPoint(x: 0.5, y: 0.5)
+    //        tempGradientlayer.frame = self.frame
+    //    return tempGradientlayer
+    //    }()
     
     //    lazy var gradientLayer: CAGradientLayer = {
     //        let tempGradientLayer = CAGradientLayer()
@@ -115,26 +94,14 @@ final class WeatherMainView: UIView {
         addSubview(stoneImageView)
         addSubview(popUpWindow)
         
-//        createGradient()
-        
-    setLocationLabelConstraints()
+        //        createGradient()
+        setConditionLabelConstraints()
+        locationButton.setConstraints()
         setGeoLocationViewConstraints()
         setSearchIconViewConstraints()
         setStoneImageViewConstraints()
         setPopUpWindowConstraints()
         addTargetForLocationButton()
-//        self.layer.addSublayer(gradientLayer)
-//        createGradient()
-    }
-    
-    func createGradient() {
-        //        gradientView = UIView(frame: CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height))
-        //        gradientLayer = CAGradientLayer()
-        //        gradientLayer.colors = [UIColor.red.cgColor, UIColor.blue.cgColor]
-        //        gradientLayer.endPoint = CGPoint(x: 0.5, y: 0.5)
-        //        gradientLayer.frame = gradientView.frame
-        //        gradientView.layer.addSublayer(gradientLayer)
-        //        gradientView.backgroundColor = .red
     }
     
     func addTargetForLocationButton() {
@@ -145,13 +112,26 @@ final class WeatherMainView: UIView {
         delegate?.locationButtonPressed()
     }
     
-    func setLocationLabelConstraints() {
-        locationButton.translatesAutoresizingMaskIntoConstraints = false
+    func updateWeather(with myWeather: MyWeather ) {
+        temperatureLabel.text = myWeather.temperature
+        conditionLabel.text = myWeather.condition.lowercased()
+        locationButton.setButtonTitle("\(myWeather.city), \(myWeather.country)")
+        stoneImageView.image = UIImage(named: myWeather.stoneImage)
+        if AppConstants.Precipitation.atmosphere.contains(myWeather.mainCondition) {
+            stoneImageView.alpha = 0.3
+        } else {
+            stoneImageView.alpha = 1
+        }
+    }
+    
+    func setConditionLabelConstraints() {
+        conditionLabel.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
-            locationButton.topAnchor.constraint(equalTo: self.topAnchor, constant: 700),
-            locationButton.centerXAnchor.constraint(equalTo: self.centerXAnchor),
-            locationButton.widthAnchor.constraint(greaterThanOrEqualToConstant: 0),
-            locationButton.heightAnchor.constraint(equalToConstant: 22)
+            conditionLabel.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 16),
+            conditionLabel.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -16),
+            conditionLabel.topAnchor.constraint(equalTo: self.topAnchor, constant: 558),
+            conditionLabel.widthAnchor.constraint(greaterThanOrEqualToConstant: 0),
+            conditionLabel.heightAnchor.constraint(greaterThanOrEqualToConstant: 0)
         ])
     }
     
@@ -198,14 +178,14 @@ final class WeatherMainView: UIView {
 
 extension WeatherMainView {
     func animateGradient() {
-    guard let gradientLayerInside = self.popUpWindow.containerView.layer.sublayers?[0]
-        as? CAGradientLayer else { return }
-
+        guard let gradientLayerInside = self.popUpWindow.containerView.layer.sublayers?[0]
+            as? CAGradientLayer else { return }
+        
         let xCoordinate: CGFloat = self.popUpWindow.bounds.origin.x
         let yCoordinate: CGFloat = self.popUpWindow.bounds.origin.y
         let height = self.popUpWindow.bounds.size.height
         let width = self.popUpWindow.bounds.size.width
-
+        
         gradientLayerInside.frame = CGRect(x: xCoordinate, y: yCoordinate, width: width, height: height)
         gradientLayerInside.position = CGPoint.zero
         gradientLayerInside.anchorPoint = CGPoint.zero
@@ -215,7 +195,7 @@ extension WeatherMainView {
         gradientLayerInside.endPoint = CGPoint(x: 0.75, y: 0.5)
         animatePopUpWindowIn(gradientLayerInside)
     }
-        
+    
     func animatePopUpWindowIn(_ gradientLayerInside: CAGradientLayer) {
         popUpWindow.isActive = true
         self.axisYConstraint.constant = 0
@@ -241,7 +221,6 @@ extension WeatherMainView {
                 self.layoutIfNeeded()
         }
     }
-    
     
     func animatePopUpWindowOut() {
         guard let gradientLayerInside = self.popUpWindow.containerView.layer.sublayers?[0] as?

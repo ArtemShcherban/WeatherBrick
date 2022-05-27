@@ -10,11 +10,30 @@ import Foundation
 import UIKit
 
 enum AppConstants {
-    enum Image {
-        static let background = "image_background"
-        static let stoneNormal = "image_stone_normal"
+    static let apiKey = "59a2b233df10c0b64ce48ebeb844ddf2"
+    static let ljubljana = "Ljubljana"
+    static let boston = "Boston"
+    static let atar = "Atar"
+    static let cities = ["Atar", "Delhi", "Baden", "Graz"]
+    
+    enum Precipitation {
+        static let rain = ["Thunderstorm", "Drizzle", "Rain"]
+        static let snow = "Snow"
+        static let clouds = "Clouds"
+        static let clearSky = "Clear"
+        static let atmosphere = ["Mist", "Smoke", "Haze", "Dust", "Fog", "Sand", "Ash", "Squal", "Tornado"]
     }
     
+    enum Image {
+        static let background = "image_background"
+    }
+    
+    enum StoneImage {
+        static let normal = "image_stone_normal"
+        static let wet = "image_stone_wet"
+        static let withSnow = "image_stone_snow"
+        static let withCracks = "image_stone_cracks"
+    }
     enum Font {
         static let ubuntuRegular = "Ubuntu-Regular"
         static let ubuntuMedium = "Ubuntu-Medium"
@@ -28,6 +47,7 @@ enum AppConstants {
         static let orange = UIColor(red: 1, green: 0.6, blue: 0.375, alpha: 1)
         static let darkOrange = UIColor(red: 0.984, green: 0.373, blue: 0.161, alpha: 1)
         static let brightOrange = UIColor(red: 0.977, green: 0.315, blue: 0.106, alpha: 1)
+        static let skyBlue = UIColor(red: 0.635, green: 0.866, blue: 1, alpha: 1)
     }
     
     static let conditions = [
