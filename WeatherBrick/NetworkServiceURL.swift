@@ -91,8 +91,8 @@ class NetworkServiceURL {
 //        .resume()
     }
     
-    func getDataFromJson(completion: @escaping(([Any]) -> Void) ) {
-        guard let url = Bundle.main.url(forResource: "Countries", withExtension: "json"),
+    func getDataFromCoutriesJson(completion: @escaping(([Any]) -> Void) ) {
+        guard let url = Bundle.main.url(forResource: "CountriesWithFlags", withExtension: "json"),
             let data = try? Data(contentsOf: url),
             let json = try? JSONSerialization.jsonObject(
             with: data,
@@ -101,7 +101,7 @@ class NetworkServiceURL {
     }
     
     func getDataFromCitiesJson(completion: @escaping(([Any]) -> Void) ) {
-        guard let url = Bundle.main.url(forResource: "citylist", withExtension: "json"),
+        guard let url = Bundle.main.url(forResource: "CitiesWithPopulation", withExtension: "json"),
             let data = try? Data(contentsOf: url),
             let json = try? JSONSerialization.jsonObject(with: data, options: .fragmentsAllowed) as? [Any]
         else { return }

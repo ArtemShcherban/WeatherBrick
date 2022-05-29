@@ -36,7 +36,7 @@
   "Code": "AQ"
  },
  {
-  "Country": "Antigua and Barbuda",
+  "Country": "Antigua & Barbuda",
   "Code": "AG"
  },
  {
@@ -104,11 +104,11 @@
   "Code": "BT"
  },
  {
-  "Country": "Bolivia (Plurinational State of)",
+  "Country": "Bolivia",
   "Code": "BO"
  },
  {
-  "Country": "Bonaire, Sint Eustatius and Saba",
+  "Country": "Bonaire",
   "Code": "BQ"
  },
  {
@@ -128,7 +128,7 @@
   "Code": "BR"
  },
  {
-  "Country": "British Indian Ocean Territory",
+  "Country": "British Indian Ocean Tr.",
   "Code": "IO"
  },
  {
@@ -188,7 +188,7 @@
   "Code": "CX"
  },
  {
-  "Country": "Cocos (Keeling) Islands",
+  "Country": "Cocos Islands",
   "Code": "CC"
  },
  {
@@ -204,7 +204,7 @@
   "Code": "CG"
  },
  {
-  "Country": "Congo, Democratic Republic of the",
+  "Country": "Congo",
   "Code": "CD"
  },
  {
@@ -288,7 +288,7 @@
   "Code": "ET"
  },
  {
-  "Country": "Falkland Islands (Malvinas)",
+  "Country": "Falkland Islands",
   "Code": "FK"
  },
  {
@@ -316,7 +316,7 @@
   "Code": "PF"
  },
  {
-  "Country": "French Southern Territories",
+  "Country": "French Southern Tr.",
   "Code": "TF"
  },
  {
@@ -388,7 +388,7 @@
   "Code": "HT"
  },
  {
-  "Country": "Heard Island and McDonald Islands",
+  "Country": "Heard Isl. & McDonald Isl.",
   "Code": "HM"
  },
  {
@@ -420,7 +420,7 @@
   "Code": "ID"
  },
  {
-  "Country": "Iran (Islamic Republic of)",
+  "Country": "Iran",
   "Code": "IR"
  },
  {
@@ -472,11 +472,11 @@
   "Code": "KI"
  },
  {
-  "Country": "Korea (Democratic People's Republic of)",
+  "Country": "North Korea",
   "Code": "KP"
  },
  {
-  "Country": "Korea, Republic of",
+  "Country": "South Korea",
   "Code": "KR"
  },
  {
@@ -488,7 +488,7 @@
   "Code": "KG"
  },
  {
-  "Country": "Lao People's Democratic Republic",
+  "Country": "Lao",
   "Code": "LA"
  },
  {
@@ -576,11 +576,11 @@
   "Code": "MX"
  },
  {
-  "Country": "Micronesia (Federated States of)",
+  "Country": "Micronesia",
   "Code": "FM"
  },
  {
-  "Country": "Moldova, Republic of",
+  "Country": "Moldova",
   "Code": "MD"
  },
  {
@@ -660,7 +660,7 @@
   "Code": "MK"
  },
  {
-  "Country": "Northern Mariana Islands",
+  "Country": "Northern Mariana Isl.",
   "Code": "MP"
  },
  {
@@ -680,7 +680,7 @@
   "Code": "PW"
  },
  {
-  "Country": "Palestine, State of",
+  "Country": "Palestine",
   "Code": "PS"
  },
  {
@@ -732,7 +732,7 @@
   "Code": "RO"
  },
  {
-  "Country": "Russian Federation",
+  "Country": "Russia",
   "Code": "RU"
  },
  {
@@ -744,27 +744,27 @@
   "Code": "BL"
  },
  {
-  "Country": "Saint Helena, Ascension and Tristan da Cunha",
+  "Country": "St. Helena",
   "Code": "SH"
  },
  {
-  "Country": "Saint Kitts and Nevis",
+  "Country": "St. Kitts and Nevis",
   "Code": "KN"
  },
  {
-  "Country": "Saint Lucia",
+  "Country": "St. Lucia",
   "Code": "LC"
  },
  {
-  "Country": "Saint Martin (French part)",
+  "Country": "Saint Martin FP.",
   "Code": "MF"
  },
  {
-  "Country": "Saint Pierre and Miquelon",
+  "Country": "Saint Pierre & Miquelon",
   "Code": "PM"
  },
  {
-  "Country": "Saint Vincent and the Grenadines",
+  "Country": "St. Vincent & the Grenadines",
   "Code": "VC"
  },
  {
@@ -776,7 +776,7 @@
   "Code": "SM"
  },
  {
-  "Country": "Sao Tome and Principe",
+  "Country": "Sao Tome & Principe",
   "Code": "ST"
  },
  {
@@ -804,7 +804,7 @@
   "Code": "SG"
  },
  {
-  "Country": "Sint Maarten (Dutch part)",
+  "Country": "Sint Maarten DP.",
   "Code": "SX"
  },
  {
@@ -828,7 +828,7 @@
   "Code": "ZA"
  },
  {
-  "Country": "South Georgia and the South Sandwich Islands",
+  "Country": "S.Georgia & the S.Sandwich Isl.",
   "Code": "GS"
  },
  {
@@ -852,7 +852,7 @@
   "Code": "SR"
  },
  {
-  "Country": "Svalbard and Jan Mayen",
+  "Country": "Svalbard & Jan Mayen",
   "Code": "SJ"
  },
  {
@@ -864,11 +864,11 @@
   "Code": "CH"
  },
  {
-  "Country": "Syrian Arab Republic",
+  "Country": "Syria",
   "Code": "SY"
  },
  {
-  "Country": "Taiwan, Province of China",
+  "Country": "Taiwan",
   "Code": "TW"
  },
  {
@@ -876,7 +876,7 @@
   "Code": "TJ"
  },
  {
-  "Country": "Tanzania, United Republic of",
+  "Country": "Tanzania",
   "Code": "TZ"
  },
  {
@@ -900,7 +900,7 @@
   "Code": "TO"
  },
  {
-  "Country": "Trinidad and Tobago",
+  "Country": "Trinidad & Tobago",
   "Code": "TT"
  },
  {
@@ -916,7 +916,7 @@
   "Code": "TM"
  },
  {
-  "Country": "Turks and Caicos Islands",
+  "Country": "Turks & Caicos Islands",
   "Code": "TC"
  },
  {
@@ -936,15 +936,15 @@
   "Code": "AE"
  },
  {
-  "Country": "United Kingdom of Great Britain and Northern Ireland",
+  "Country": "United Kingdom",
   "Code": "GB"
  },
  {
-  "Country": "United States of America",
+  "Country": "United States",
   "Code": "US"
  },
  {
-  "Country": "United States Minor Outlying Islands",
+  "Country": "United States MOI",
   "Code": "UM"
  },
  {
@@ -960,7 +960,7 @@
   "Code": "VU"
  },
  {
-  "Country": "Venezuela (Bolivarian Republic of)",
+  "Country": "Venezuela",
   "Code": "VE"
  },
  {

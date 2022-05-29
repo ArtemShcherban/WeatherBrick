@@ -115,7 +115,7 @@ final class WeatherMainView: UIView {
     func updateWeather(with myWeather: MyWeather ) {
         temperatureLabel.text = myWeather.temperature
         conditionLabel.text = myWeather.condition.lowercased()
-        locationButton.setButtonTitle("\(myWeather.city), \(myWeather.country)")
+        locationButton.setButtonTitle("\(myWeather.city), \(myWeather.flag) \(myWeather.country) ")
         stoneImageView.image = UIImage(named: myWeather.stoneImage)
         if AppConstants.Precipitation.atmosphere.contains(myWeather.mainCondition) {
             stoneImageView.alpha = 0.3

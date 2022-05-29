@@ -12,7 +12,7 @@ import UIKit
 final class WeatherMainModel {
     static let shared = WeatherMainModel()
     private lazy var networkServiceUrl = NetworkServiceURL.shared
-    lazy var countries: [String: String] = [:]
+    private lazy var countriesWithFlags: [String: Country] = [:]
     lazy var cities: [City] = []
     
     private func sendRequestToOpenWeatherFor(_ location: String, completion: @escaping((ResultOfRequest) -> Void)) {
@@ -25,7 +25,8 @@ final class WeatherMainModel {
         sendRequestToOpenWeatherFor(location) { resultOfRequest in
             let myWeather = MyWeather(
                 city: resultOfRequest.name ?? "",
-                country: self.countries[resultOfRequest.sys?.country ?? ""] ?? "",
+                country: self.countriesWithFlags[resultOfRequest.sys?.country ?? ""]?.name ?? "",
+                flag: self.countriesWithFlags[resultOfRequest.sys?.country ?? ""]?.flag ?? "",
                 temperature: String(Int(resultOfRequest.main?.temp ?? 0.0)) + "°",
                 condition: resultOfRequest.weather?.first?.description ?? "",
                 mainCondition: resultOfRequest.weather?.first?.main ?? "",
@@ -34,17 +35,19 @@ final class WeatherMainModel {
         }
     }
     
-    func getCountries(completion: @escaping(() -> Void)) {
-        networkServiceUrl.getDataFromJson { jsonArray in
+    func getCountries() {
+        networkServiceUrl.getDataFromCoutriesJson { jsonArray in
             for item in jsonArray {
                 if let object = item as? [String: String] {
-                    let key = object["Code"] ?? ""
-                    let value = object["Country"] ?? ""
-                    self.countries.updateValue(value, forKey: key)
+                    let codeIso = object["ISO"] ?? ""
+                    let countryName = object["Name"] ?? ""
+                    let countryFlag = object["Emoji"] ?? ""
+                    let unicode = object["Unicode"] ?? ""
+                    let country = Country(codeISO: codeIso, name: countryName, flag: countryFlag, unicode: unicode)
+                    self.countriesWithFlags.updateValue(country, forKey: codeIso)
                 }
             }
         }
-        completion()
     }
     
     func getCities() {
@@ -57,18 +60,20 @@ final class WeatherMainModel {
                         let name = object["name"]
                         let country = object["country"]
                         
+                        let stat = object["stat"] as? [String: Any]
+                        let population = stat?["population"]
+                      
                         guard let id = key as? Double,
                         let cityName = name as? String,
-                        let countryName = country as? String else { return }
-                        let city = City(name: cityName, id: Int(id), country: countryName)
+                        let countryName = country as? String,
+                        let citiPopulation = population as? Int else { return }
+                        let city = City(name: cityName, id: Int(id), country: countryName, population: citiPopulation)
                         tempCities.append(city)
                     }
                 }
             }
-            print(Thread.current)
             self.cities = tempCities
-//            self.cities = tempCities.sorted(by: <#T##(City, City) throws -> Bool#>)
-            print(self.cities[10100])
+            print("Population of city \(self.cities[10100].name) is \(self.cities[10100].population) peoples")
         }
     }
     

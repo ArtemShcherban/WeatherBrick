@@ -31,17 +31,15 @@ class WeatherMainViewController: UIViewController, SearchLocationViewControllerD
     override func viewDidLoad() {
         super.viewDidLoad()
         weatherMainView.createMainView()
-        weatherMainModel.getCities()
         weatherMainModel.getMyWeather(in: AppConstants.ljubljana) { myWeather in
             DispatchQueue.main.async {
                 self.weatherMainView.updateWeather(with: myWeather)
             }
         }
         
-    weatherMainModel.getCountries {
-        print("finish")
+        weatherMainModel.getCities()
+        weatherMainModel.getCountries()
     }
-}
     
     func updateWeather(with myWeather: MyWeather) {
         self.weatherMainView.updateWeather(with: myWeather)
@@ -59,16 +57,8 @@ extension WeatherMainViewController: WeatherMainViewDelegate {
         guard let viewController =
             storyboard.instantiateViewController(withIdentifier:
             SearchLocationViewController.reuseIdentifier) as? SearchLocationViewController else { return }
-        //        viewController.modalPresentationStyle = .fullScreen
         viewController.delgate = self
-        //                    self.present(viewController, animated: true, completion: nil)
-            navigationController?.pushViewController(viewController, animated: true)
-        
-        //                weatherMainModel.getMyWeather(in: AppConstants.cities[Int.random(in: 0...3)]) { myWeather in
-        //                    DispatchQueue.main.async {
-        //                        self.weatherMainView.updateWeather(with: myWeather)
-        //                    }
-        //                }
+        navigationController?.pushViewController(viewController, animated: true)
     }
 }
 
