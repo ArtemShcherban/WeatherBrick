@@ -42,7 +42,6 @@ struct Country {
     var unicode: String
 }
 
-
 struct City: Hashable {
     var name: String
     var id: Int

@@ -18,7 +18,6 @@ struct Stations: Codable {
 	let kf: Int?
 
 	enum CodingKeys: String, CodingKey {
-
 		case id = "id"
 		case dist = "dist"
 		case kf = "kf"
@@ -30,5 +29,4 @@ struct Stations: Codable {
 		dist = try values.decodeIfPresent(Int.self, forKey: .dist)
 		kf = try values.decodeIfPresent(Int.self, forKey: .kf)
 	}
-
 }

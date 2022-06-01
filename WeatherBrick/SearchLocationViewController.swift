@@ -10,16 +10,19 @@ import UIKit
 
 final class SearchLocationViewController: UIViewController {
     static let reuseIdentifier = String(describing: SearchLocationViewController.self)
+    static let shared = SearchLocationViewController()
     weak var delgate: SearchLocationViewControllerDelegate?
     
-    var tempArrayFinal: [City] = []
-    var filteredLocations: [City] = []
-    var cities: [City] = []
+    var mainQueue: Dispatching?
+    
+//    var tempArrayFinal: [City] = []
+//    var filteredLocations: [City] = []
+//    var cities: [City] = []
     
     private lazy var weatherMainModel = WeatherMainModel.shared
     
-    private lazy var searchLocationViewModel: SearchLocationViewModel = {
-        let view = SearchLocationViewModel()
+    private lazy var searchLocationViewModel: SearchLocationView = {
+        let view = SearchLocationView()
         view.delegate = self
         return view
     }()
@@ -34,11 +37,11 @@ final class SearchLocationViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        mainQueue = AsyncQueue.main
         searchLocationViewModel.createSearchLocationMainView()
         navigationItem.searchController = searchLocationViewModel.searchController
     }
 }
-
 
 extension SearchLocationViewController: UISearchResultsUpdating {
     func updateSearchResults(for searchController: UISearchController) {
@@ -48,33 +51,33 @@ extension SearchLocationViewController: UISearchResultsUpdating {
 extension SearchLocationViewController: SearchLocationViewModelDelegate {
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
         guard let location = searchBar.text?.replacingOccurrences(of: " ", with: "+") else { return }
-
-        weatherMainModel.getMyWeather(in: location) { myWeather in
-            DispatchQueue.main.async {
-                self.delgate?.updateWeather(with: myWeather)
-                self.navigationController?.popViewController(animated: true)
+        
+        weatherMainModel.getMyWeather(in: location) { myWeatherOrError in
+            switch myWeatherOrError {
+            case .failure(let error):
+                self.mainQueue?.dispatch {
+                    self.searchLocationViewModel.addErrorTextLabel(with: error.rawValue)
+                }
+            case .success(let myWeather):
+                self.mainQueue?.dispatch {
+                    self.delgate?.updateWeather(with: myWeather)
+                    self.navigationController?.popViewController(animated: true)
+                }
             }
         }
     }
     
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
-//        if searchBar.text?.count ?? 0 >= 0 {
-//            let cities = self.tempArrayFinal.isEmpty ? self.weatherMainModel.cities : self.tempArrayFinal
-//            print(cities.count)
-//            let start = DispatchTime.now()
-//            let tempArray = cities.filter { city in
-//                city.name.contains(searchText)
-//            }
-//            self.tempArrayFinal = tempArray
-//            
-//            let end = DispatchTime.now()
-//            let nanoTime = end.uptimeNanoseconds - start.uptimeNanoseconds
-//            let time = (Double(nanoTime) / 1_000_000) / 1000
-//            print("Time in seconds is: \(time)")
-//            //            print(tempArray.count)
-//        }
-//        print(searchBar.text ?? "")
-//        //        print(tempArrayFinal)
+        if searchText.isEmpty == true &&
+            searchLocationViewModel.errorTextLabel.superview === self.view {
+            searchLocationViewModel.errorTextLabel.removeFromSuperview()
+        }
+    }
+    
+    func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
+        if searchLocationViewModel.errorTextLabel.superview === self.view {
+            searchLocationViewModel.errorTextLabel.removeFromSuperview()
+        }
     }
 }
 

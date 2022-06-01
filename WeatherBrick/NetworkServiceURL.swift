@@ -10,85 +10,35 @@ import Foundation
 
 class NetworkServiceURL {
     static let shared = NetworkServiceURL()
-    var coutriesDictionary: [String: String] = [:]
     
-    func getDataFromOpenWeather(location: String, completion: @escaping(ResultOfRequest) -> Void) {
+    var coutriesDictionary: [String: String] = [:]
+   
+    func getDataFromOpenWeather(location: String, completion: @escaping(Result<ResultOfRequest, NetworkServiceError>) -> Void) {
         guard let url = URL(string: "https://api.openweathermap.org/data/2.5/weather?q=\(location)&APPID=\(AppConstants.apiKey)&units=metric") else {
-            print("Error: Cannot create URL")
+            completion(.failure(NetworkServiceError.cannotCreateURL))
             return }
         
         let request = URLRequest(url: url)
         
         URLSession.shared.dataTask(with: request) { data, response, error in
             guard error == nil else {
-                print("Error: error calling GET")
+                completion(.failure(NetworkServiceError.errorCallingGET))
                 return
             }
             guard let data = data else {
-                print("Error: did not recieve data")
+                completion(.failure(NetworkServiceError.didNotRecieveData))
                 return
             }
-            guard let response = response as? HTTPURLResponse, (200 ..< 299) ~= response.statusCode else {
-                print("Error: HTTP request failed")
+            guard let response1 = response as? HTTPURLResponse, (200 ..< 299) ~= response1.statusCode else {
+                completion(.failure(NetworkServiceError.httpRequestFailed))
                 return
             }
             
             if let dataFromOpenWeather = try? JSONDecoder().decode(ResultOfRequest.self, from: data) {
-                completion(dataFromOpenWeather)
+                completion(.success(dataFromOpenWeather))
             }
         }
         .resume()
-    }
-    
-    func getDataMethod() {
-//        guard let url = URL(string: "https://api.openweathermap.org/data/2.5/weather?q=ljubljana,slo&APPID=\(AppConstants.apiKey)&units=metric") else {
-//            print("Error: Cannot create URL")
-//            return
-//        }
-//        
-//        let request = URLRequest(url: url)
-//        
-//        URLSession.shared.dataTask(with: request) { data, response, error in
-//            guard  let data = data else {
-//                print("Error: did not receive data")
-//                return
-//            }
-//            
-//            guard let response = response as? HTTPURLResponse, (200 ..< 299) ~= response.statusCode else {
-//                print("Error: HTTP request failed")
-//                return
-//            }
-//            
-//            guard error == nil else {
-//                print("Error: error calling GET")
-//                return
-//            }
-//            do {
-//                guard let jsonObject = try JSONSerialization.jsonObject(with: data) as? [String: Any] else {
-//                    print("Error: cannot convert data from JSON object")
-//                    return
-//                }
-//                
-//                guard let prettyJsonData = try? JSONSerialization.data(
-//                    withJSONObject: jsonObject,
-//                    options: .prettyPrinted)
-//                        
-//                else { print("Error: Cannot convert JSON object to Pretty JSON data")
-//                    return
-//                }
-//                
-//                guard let prettyPrintedJson = String(data: prettyJsonData, encoding: .utf8 ) else {
-//                    print("Error: Could print JSON in String")
-//                    return
-//                }
-//                
-//                print(prettyPrintedJson)
-//            } catch {
-//                print("Error: Trying to convert JSON data to string")
-//                return
-//            }
-//        }
-//        .resume()
     }
     
     func getDataFromCoutriesJson(completion: @escaping(([Any]) -> Void) ) {

@@ -8,8 +8,8 @@ import UIKit
 class WeatherMainViewController: UIViewController, SearchLocationViewControllerDelegate {
     static let reuseIdentifier = String(describing: WeatherMainViewController.self)
     static let shared = WeatherMainViewController()
-    
     var networkServiceURLmodel = NetworkServiceURL.shared
+    var mainQueue: Dispatching?
     
     var myWeatherVar: MyWeather?
     
@@ -30,15 +30,25 @@ class WeatherMainViewController: UIViewController, SearchLocationViewControllerD
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        mainQueue = AsyncQueue.main
         weatherMainView.createMainView()
-        weatherMainModel.getMyWeather(in: AppConstants.ljubljana) { myWeather in
-            DispatchQueue.main.async {
-                self.weatherMainView.updateWeather(with: myWeather)
-            }
-        }
+        tryGetMyWeather()
         
         weatherMainModel.getCities()
         weatherMainModel.getCountries()
+    }
+    
+    func tryGetMyWeather() {
+        weatherMainModel.getMyWeather(in: AppConstants.ljubljana) { myWeatherOrErrors in
+            switch myWeatherOrErrors {
+            case .failure(let error):
+                print(error.localizedDescription)
+            case .success(let myWeather):
+                self.mainQueue?.dispatch {
+                self.weatherMainView.updateWeather(with: myWeather)
+                }
+            }
+        }
     }
     
     func updateWeather(with myWeather: MyWeather) {

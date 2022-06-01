@@ -15,23 +15,33 @@ final class WeatherMainModel {
     private lazy var countriesWithFlags: [String: Country] = [:]
     lazy var cities: [City] = []
     
-    private func sendRequestToOpenWeatherFor(_ location: String, completion: @escaping((ResultOfRequest) -> Void)) {
-        networkServiceUrl.getDataFromOpenWeather(location: location) { resultOfrequest in
-            completion(resultOfrequest)
+    private func sendRequestToOpenWeatherFor(_ location: String, completion: @escaping((Result<ResultOfRequest, NetworkServiceError>) -> Void)) {
+        networkServiceUrl.getDataFromOpenWeather(location: location) { resultWithErrors in
+            switch resultWithErrors {
+            case .failure:
+                completion(resultWithErrors)
+            case .success:
+                completion(resultWithErrors)
+            }
         }
     }
     
-    func getMyWeather(in location: String, completion: @escaping((MyWeather) -> Void)) {
-        sendRequestToOpenWeatherFor(location) { resultOfRequest in
-            let myWeather = MyWeather(
-                city: resultOfRequest.name ?? "",
-                country: self.countriesWithFlags[resultOfRequest.sys?.country ?? ""]?.name ?? "",
-                flag: self.countriesWithFlags[resultOfRequest.sys?.country ?? ""]?.flag ?? "",
-                temperature: String(Int(resultOfRequest.main?.temp ?? 0.0)) + "°",
-                condition: resultOfRequest.weather?.first?.description ?? "",
-                mainCondition: resultOfRequest.weather?.first?.main ?? "",
-                stoneImage: self.getStoneImage(dependingOn: resultOfRequest))
-            completion(myWeather)
+    func getMyWeather(in location: String, completion: @escaping((Result<MyWeather, NetworkServiceError>) -> Void)) {
+        sendRequestToOpenWeatherFor(location) { resultWithErrors in
+            switch resultWithErrors {
+            case .failure(let error):
+                completion(.failure(error))
+            case .success(let weather):
+                let myWeather = MyWeather(
+                    city: weather.name ?? "",
+                    country: self.countriesWithFlags[weather.sys?.country ?? ""]?.name ?? "",
+                    flag: self.countriesWithFlags[weather.sys?.country ?? ""]?.flag ?? "",
+                    temperature: String(Int(weather.main?.temp ?? 0.0)) + "°",
+                    condition: weather.weather?.first?.description ?? "",
+                    mainCondition: weather.weather?.first?.main ?? "",
+                    stoneImage: self.getStoneImage(dependingOn: weather))
+                completion(.success(myWeather))
+            }
         }
     }
     
@@ -51,8 +61,7 @@ final class WeatherMainModel {
     }
     
     func getCities() {
-        DispatchQueue.global(qos: .default).async {
-            var tempCities = self.cities
+        var tempCities = self.cities
             self.networkServiceUrl.getDataFromCitiesJson { json in
                 for item in json {
                     if let object = item as? [String: Any] {
@@ -74,7 +83,6 @@ final class WeatherMainModel {
             }
             self.cities = tempCities
             print("Population of city \(self.cities[10100].name) is \(self.cities[10100].population) peoples")
-        }
     }
     
     func getStoneImage(dependingOn weather: ResultOfRequest) -> String {

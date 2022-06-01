@@ -24,6 +24,11 @@ enum AppConstants {
         static let atmosphere = ["Mist", "Smoke", "Haze", "Dust", "Fog", "Sand", "Ash", "Squal", "Tornado"]
     }
     
+    enum Indent {
+        static let left: CGFloat = 16
+        static let right: CGFloat = -16
+    }
+    
     enum Image {
         static let background = "image_background"
     }

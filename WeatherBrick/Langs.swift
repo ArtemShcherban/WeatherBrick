@@ -12,8 +12,8 @@ For support, please feel free to contact me at https://www.linkedin.com/in/syeda
 */
 
 import Foundation
-struct Langs : Codable {
-	let de : String?
+struct Langs: Codable {
+	let de: String?
 
 	enum CodingKeys: String, CodingKey {
 		case de = "de"

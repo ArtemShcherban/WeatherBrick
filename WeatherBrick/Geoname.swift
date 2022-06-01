@@ -18,7 +18,6 @@ struct Geoname: Codable {
 	let parent: Int?
 
 	enum CodingKeys: String, CodingKey {
-
 		case cl = "cl"
 		case code = "code"
 		case parent = "parent"
@@ -30,5 +29,4 @@ struct Geoname: Codable {
 		code = try values.decodeIfPresent(String.self, forKey: .code)
 		parent = try values.decodeIfPresent(Int.self, forKey: .parent)
 	}
-
 }
