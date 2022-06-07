@@ -39,13 +39,13 @@ final class WeatherMainView: UIView {
     }()
     lazy var locationButton = LocationButton()
     
-    private lazy var geoLocationView: UIImageView = {
+    lazy var geoLocationImageView: UIImageView = {
         let tempGeoLocationLabel = UIImageView()
         tempGeoLocationLabel.image = UIImage(named: "icon_location")
         return tempGeoLocationLabel
     }()
     
-    private lazy var searchIconView: UIImageView = {
+    lazy var searchIconImageView: UIImageView = {
         let tempSearchIconView = UIImageView()
         tempSearchIconView.image = UIImage(named: "icon_search")
         return tempSearchIconView
@@ -89,16 +89,12 @@ final class WeatherMainView: UIView {
         addSubview(temperatureLabel)
         addSubview(conditionLabel)
         addSubview(locationButton)
-        addSubview(geoLocationView)
-        addSubview(searchIconView)
         addSubview(stoneImageView)
         addSubview(popUpWindow)
         
         //        createGradient()
         setConditionLabelConstraints()
         locationButton.setConstraints()
-        setGeoLocationViewConstraints()
-        setSearchIconViewConstraints()
         setStoneImageViewConstraints()
         setPopUpWindowConstraints()
         addTargetForLocationButton()
@@ -114,13 +110,30 @@ final class WeatherMainView: UIView {
     
     func updateWeather(with myWeather: MyWeather ) {
         temperatureLabel.text = myWeather.temperature
-        conditionLabel.text = myWeather.condition.lowercased()
+        conditionLabel.text = myWeather.conditionDetails.lowercased()
         locationButton.setButtonTitle("\(myWeather.city), \(myWeather.flag) \(myWeather.country) ")
         stoneImageView.image = UIImage(named: myWeather.stoneImage)
-        if AppConstants.Precipitation.atmosphere.contains(myWeather.mainCondition) {
+        if AppConstants.Precipitation.atmosphere.contains(myWeather.conditionMain) {
             stoneImageView.alpha = 0.3
         } else {
             stoneImageView.alpha = 1
+        }
+    }
+    
+    func setIcon(for locator: Bool) {
+        switch locator {
+        case true:
+            if searchIconImageView.superview === self {
+                searchIconImageView.removeFromSuperview()
+            }
+            insertSubview(geoLocationImageView, belowSubview: popUpWindow)
+            setGeoLocationViewConstraints()
+        case false:
+            if geoLocationImageView.superview === self {
+                geoLocationImageView.removeFromSuperview()
+            }
+            insertSubview(searchIconImageView, belowSubview: popUpWindow)
+            setSearchIconViewConstraints()
         }
     }
     
@@ -136,22 +149,22 @@ final class WeatherMainView: UIView {
     }
     
     func setGeoLocationViewConstraints() {
-        geoLocationView.translatesAutoresizingMaskIntoConstraints = false
+        geoLocationImageView.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
-            geoLocationView.centerYAnchor.constraint(equalTo: locationButton.centerYAnchor),
-            geoLocationView.trailingAnchor.constraint(equalTo: locationButton.leadingAnchor, constant: -5),
-            geoLocationView.widthAnchor.constraint(equalToConstant: 16),
-            geoLocationView.heightAnchor.constraint(equalToConstant: 16)
+            geoLocationImageView.centerYAnchor.constraint(equalTo: locationButton.centerYAnchor),
+            geoLocationImageView.trailingAnchor.constraint(equalTo: locationButton.leadingAnchor, constant: -5),
+            geoLocationImageView.widthAnchor.constraint(equalToConstant: 16),
+            geoLocationImageView.heightAnchor.constraint(equalToConstant: 16)
         ])
     }
     
     func setSearchIconViewConstraints() {
-        searchIconView.translatesAutoresizingMaskIntoConstraints = false
+        searchIconImageView.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
-            searchIconView.centerYAnchor.constraint(equalTo: locationButton.centerYAnchor),
-            searchIconView.leadingAnchor.constraint(equalTo: locationButton.trailingAnchor, constant: 5),
-            searchIconView.widthAnchor.constraint(equalToConstant: 16),
-            searchIconView.heightAnchor.constraint(equalToConstant: 16)
+            searchIconImageView.centerYAnchor.constraint(equalTo: locationButton.centerYAnchor),
+            searchIconImageView.leadingAnchor.constraint(equalTo: locationButton.trailingAnchor, constant: 5),
+            searchIconImageView.widthAnchor.constraint(equalToConstant: 16),
+            searchIconImageView.heightAnchor.constraint(equalToConstant: 16)
         ])
     }
     

@@ -10,7 +10,11 @@ import Foundation
 import UIKit
 
 enum AppConstants {
-    static let apiKey = "59a2b233df10c0b64ce48ebeb844ddf2"
+    static let weatherIn = "https://api.openweathermap.org/data/2.5/weather?q="
+    static let weatherBy = "https://api.openweathermap.org/data/2.5/weather?lat="
+    static let and = "&lon="
+    static let apiKey = "&APPID=59a2b233df10c0b64ce48ebeb844ddf2"
+    static let metricUnits = "&units=metric"
     static let ljubljana = "Ljubljana"
     static let boston = "Boston"
     static let atar = "Atar"

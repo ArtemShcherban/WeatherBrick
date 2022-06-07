@@ -8,38 +8,51 @@
 
 import Foundation
 import UIKit
+import CoreLocation
 
 final class WeatherMainModel {
     static let shared = WeatherMainModel()
     private lazy var networkServiceUrl = NetworkServiceURL.shared
     private lazy var countriesWithFlags: [String: Country] = [:]
-    lazy var cities: [City] = []
+    private lazy var geocoder = CLGeocoder()
     
-    private func sendRequestToOpenWeatherFor(_ location: String, completion: @escaping((Result<ResultOfRequest, NetworkServiceError>) -> Void)) {
-        networkServiceUrl.getDataFromOpenWeather(location: location) { resultWithErrors in
-            switch resultWithErrors {
-            case .failure:
-                completion(resultWithErrors)
-            case .success:
-                completion(resultWithErrors)
-            }
+    func prepareLinkFor<T>(location: T, completion: @escaping(String) -> Void) {
+        if let location = location as? String {
+            let link = "\(AppConstants.weatherIn)\(location)\(AppConstants.apiKey)\(AppConstants.metricUnits)"
+            
+            completion(link)
+        }
+        
+        if let location = location as? CLLocation {
+            let latitude = location.coordinate.latitude.description
+            let longtitude = location.coordinate.longitude.description
+            let link = "\(AppConstants.weatherBy)\(latitude)\(AppConstants.and)\(longtitude)\(AppConstants.apiKey)\(AppConstants.metricUnits)"
+            
+            completion(link)
         }
     }
-    
-    func getMyWeather(in location: String, completion: @escaping((Result<MyWeather, NetworkServiceError>) -> Void)) {
-        sendRequestToOpenWeatherFor(location) { resultWithErrors in
-            switch resultWithErrors {
+        
+    func createMyWeather(with link: String, completion: @escaping((Result<MyWeather, NetworkServiceError>) -> Void)) {
+        networkServiceUrl.getDataFromOpenWeather(with: link) { resultOrError in
+            switch resultOrError {
             case .failure(let error):
                 completion(.failure(error))
             case .success(let weather):
-                let myWeather = MyWeather(
-                    city: weather.name ?? "",
-                    country: self.countriesWithFlags[weather.sys?.country ?? ""]?.name ?? "",
-                    flag: self.countriesWithFlags[weather.sys?.country ?? ""]?.flag ?? "",
-                    temperature: String(Int(weather.main?.temp ?? 0.0)) + "°",
-                    condition: weather.weather?.first?.description ?? "",
-                    mainCondition: weather.weather?.first?.main ?? "",
+                var myWeather = MyWeather(
+                    city: weather.cityName ?? "",
+                    country: self.countriesWithFlags[weather.countryISO ?? ""]?.name ?? "",
+                    flag: self.countriesWithFlags[weather.countryISO ?? ""]?.flag ?? "",
+                    temperature: String(Int(weather.temperature ?? 0.0)),
+                    conditionDetails: weather.conditionDetails ?? "",
+                    conditionMain: weather.conditionMain ?? "",
                     stoneImage: self.getStoneImage(dependingOn: weather))
+                if myWeather.country.isEmpty && myWeather.city.isEmpty {
+                    let geoCoordinates = self.convertToGeo(coordinates: ((
+                        weather.coordinates?.latitude ?? 0.0,
+                        weather.coordinates?.longitude ?? 0.0)))
+                    myWeather.city = geoCoordinates.0
+                    myWeather.country = geoCoordinates.1
+                }
                 completion(.success(myWeather))
             }
         }
@@ -60,34 +73,9 @@ final class WeatherMainModel {
         }
     }
     
-    func getCities() {
-        var tempCities = self.cities
-            self.networkServiceUrl.getDataFromCitiesJson { json in
-                for item in json {
-                    if let object = item as? [String: Any] {
-                        let key = object["id"]
-                        let name = object["name"]
-                        let country = object["country"]
-                        
-                        let stat = object["stat"] as? [String: Any]
-                        let population = stat?["population"]
-                      
-                        guard let id = key as? Double,
-                        let cityName = name as? String,
-                        let countryName = country as? String,
-                        let citiPopulation = population as? Int else { return }
-                        let city = City(name: cityName, id: Int(id), country: countryName, population: citiPopulation)
-                        tempCities.append(city)
-                    }
-                }
-            }
-            self.cities = tempCities
-            print("Population of city \(self.cities[10100].name) is \(self.cities[10100].population) peoples")
-    }
-    
     func getStoneImage(dependingOn weather: ResultOfRequest) -> String {
-        guard let condition = weather.weather?.first?.main,
-            let temperature = weather.main?.temp else {
+        guard let condition = weather.conditionMain,
+            let temperature = weather.temperature else {
             return String()
         }
         let checkedValue = true
@@ -115,5 +103,35 @@ final class WeatherMainModel {
                 return AppConstants.StoneImage.normal
             }
         }
+    }
+    
+    func convertToGeo(coordinates: (Double, Double)) -> (String, String) {
+        var latitude = ""
+        var longtitude = ""
+        var doubleCoordinate = 0.0
+        for _ in 0...1 {
+            if latitude.isEmpty {
+                doubleCoordinate = coordinates.0
+            } else {
+                doubleCoordinate = coordinates.1
+            }
+            let degrees = abs(Int(doubleCoordinate))
+            let seconds = 3600 * (abs(doubleCoordinate) - abs(Double(degrees)))
+            let minutes = Int(seconds / 60)
+            let reminderInSeconds = Int(((seconds / 60) - Double(minutes)) * 60)
+            let geoCoordinate = "\(degrees)°\(minutes)'\(reminderInSeconds)\""
+            
+            if latitude.isEmpty && coordinates.0 >= 0 {
+                latitude = geoCoordinate + "N"
+            } else if latitude.isEmpty && coordinates.0 < 0 {
+                latitude = geoCoordinate + "S"
+            } else if longtitude.isEmpty && coordinates.1 >= 0 {
+                longtitude = geoCoordinate + "E"
+            } else if longtitude.isEmpty && coordinates.1 < 0 {
+                longtitude = geoCoordinate + "W"
+            }
+        }
+        print(latitude, longtitude)
+        return (latitude, longtitude)
     }
 }

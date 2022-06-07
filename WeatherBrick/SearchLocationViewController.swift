@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import CoreLocation
 
 final class SearchLocationViewController: UIViewController {
     static let reuseIdentifier = String(describing: SearchLocationViewController.self)
@@ -15,15 +16,16 @@ final class SearchLocationViewController: UIViewController {
     
     var mainQueue: Dispatching?
     
-//    var tempArrayFinal: [City] = []
-//    var filteredLocations: [City] = []
-//    var cities: [City] = []
+    let locationManager = CLLocationManager()
+//    lazy var locationManager = LocationManager.shared
     
     private lazy var weatherMainModel = WeatherMainModel.shared
+    private lazy var weatherMainView = WeatherMainView.shared
     
     private lazy var searchLocationViewModel: SearchLocationView = {
         let view = SearchLocationView()
         view.delegate = self
+        view.searchBarDelegate = self
         return view
     }()
     
@@ -31,42 +33,83 @@ final class SearchLocationViewController: UIViewController {
         self.view = searchLocationViewModel
     }
     
-    private var isSearchBarEmpty: Bool {
-        searchLocationViewModel.searchController.searchBar.text?.isEmpty ?? true
-    }
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         mainQueue = AsyncQueue.main
+        
+        //        CLLocationManager.locationServicesEnabled()
+        locationManager.delegate = self
+        locationManager.desiredAccuracy = kCLLocationAccuracyHundredMeters
+        
         searchLocationViewModel.createSearchLocationMainView()
         navigationItem.searchController = searchLocationViewModel.searchController
     }
-}
-
-extension SearchLocationViewController: UISearchResultsUpdating {
-    func updateSearchResults(for searchController: UISearchController) {
-    }
-}
-
-extension SearchLocationViewController: SearchLocationViewModelDelegate {
-    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
-        guard let location = searchBar.text?.replacingOccurrences(of: " ", with: "+") else { return }
-        
-        weatherMainModel.getMyWeather(in: location) { myWeatherOrError in
-            switch myWeatherOrError {
-            case .failure(let error):
-                self.mainQueue?.dispatch {
-                    self.searchLocationViewModel.addErrorTextLabel(with: error.rawValue)
-                }
-            case .success(let myWeather):
-                self.mainQueue?.dispatch {
-                    self.delgate?.updateWeather(with: myWeather)
-                    self.navigationController?.popViewController(animated: true)
+    
+    func getMyWeatherFor<T>(_ location: T, compleation: @escaping(MyWeather) -> Void) {
+        weatherMainModel.prepareLinkFor(location: location) { link in
+            self.weatherMainModel.createMyWeather(with: link) { myWeatherOrError in
+                switch myWeatherOrError {
+                case .failure(let error):
+                    self.mainQueue?.dispatch {
+                        self.searchLocationViewModel.addErrorTextLabel(with: error.rawValue)
+                    }
+                case .success(let myWeather):
+                    self.mainQueue?.dispatch {
+                    compleation(myWeather)
+                    }
                 }
             }
         }
     }
+}
+
+extension SearchLocationViewController: SearchLocationViewModelDelegate {
+    func userLocattionButtonPressed() {
+        searchLocationViewModel.userLocationButton.isSelected = true
+        let status = locationManager.authorizationStatus
+        if status == .authorizedWhenInUse {
+            locationManager.requestLocation()
+            searchLocationViewModel.userLocationButton.isSelected = false
+        } else {
+            locationManager.requestWhenInUseAuthorization()
+        }
+    }
+}
+
+extension SearchLocationViewController: CLLocationManagerDelegate {
+    func locationManagerDidChangeAuthorization(_ manager: CLLocationManager) {
+        let status = locationManager.authorizationStatus
+        if status == .authorizedWhenInUse && searchLocationViewModel.userLocationButton.isSelected {
+            userLocattionButtonPressed()
+        }
+    }
     
+    func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
+        if let location = locations.first {
+            getMyWeatherFor(location) { myWeather in
+                self.delgate?.updateWeather(with: myWeather)
+                self.delgate?.updateIcon(locator: true)
+                self.navigationController?.popViewController(animated: true)
+            }
+        }
+    }
+    
+    func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
+        print("Error: \(error.localizedDescription)")
+    }
+}
+
+extension SearchLocationViewController: UISearchBarDelegate {
+    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
+        guard let location = searchBar.text?.replacingOccurrences(of: " ", with: "+") else { return }
+        
+        getMyWeatherFor(location) { myWeather in
+            self.delgate?.updateWeather(with: myWeather)
+            self.delgate?.updateIcon(locator: false)
+            self.navigationController?.popViewController(animated: true)
+        }
+    }
+   
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
         if searchText.isEmpty == true &&
             searchLocationViewModel.errorTextLabel.superview === self.view {
@@ -83,4 +126,6 @@ extension SearchLocationViewController: SearchLocationViewModelDelegate {
 
 protocol SearchLocationViewControllerDelegate: AnyObject {
     func updateWeather(with myWeather: MyWeather)
+    
+    func updateIcon(locator: Bool)
 }

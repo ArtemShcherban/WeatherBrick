@@ -15,49 +15,33 @@ import Foundation
 
 struct ResultOfRequest: Codable {
     let coordinates: Coordinates?
-    let weather: [Weather]?
-    let base: String?
-    let main: Main?
-    let visibility: Int?
+    let conditionMain: String?
+    let conditionDetails: String?
+    let temperature: Double?
+    let countryISO: String?
+    let cityName: String?
     let wind: Wind?
-    let clouds: Clouds?
-    let dataTime: Int?
-    let sys: Sys?
-    let timezone: Int?
-    let id: Int?
-    let name: String?
-    let cod: Int?
     
     enum CodingKeys: String, CodingKey {
         case coordinates = "coord"
-        case weather = "weather"
-        case base = "base"
-        case main = "main"
-        case visibility = "visibility"
-        case wind = "wind"
-        case clouds = "clouds"
-        case dataTime = "dt"
-        case sys = "sys"
-        case timezone = "timezone"
-        case id = "id"
-        case name = "name"
-        case cod = "cod"
+        case basicParameters = "main"
+        case cityName = "name"
+        case weather
+        case sys
+        case wind
     }
     
     init(from decoder: Decoder) throws {
         let values = try decoder.container(keyedBy: CodingKeys.self)
         coordinates = try values.decodeIfPresent(Coordinates.self, forKey: .coordinates)
-        weather = try values.decodeIfPresent([Weather].self, forKey: .weather)
-        base = try values.decodeIfPresent(String.self, forKey: .base)
-        main = try values.decodeIfPresent(Main.self, forKey: .main)
-        visibility = try values.decodeIfPresent(Int.self, forKey: .visibility)
+        conditionMain = try values.decodeIfPresent([Weather].self, forKey: .weather)?.first?.main
+        conditionDetails = try values.decodeIfPresent([Weather].self, forKey: .weather)?.first?.description
+        temperature = try values.decodeIfPresent(Temperature.self, forKey: .basicParameters)?.сelsius
+        countryISO = try values.decodeIfPresent(CountryCode.self, forKey: .sys)?.code
+        cityName = try values.decodeIfPresent(String.self, forKey: .cityName)
         wind = try values.decodeIfPresent(Wind.self, forKey: .wind)
-        clouds = try values.decodeIfPresent(Clouds.self, forKey: .clouds)
-        dataTime = try values.decodeIfPresent(Int.self, forKey: .dataTime)
-        sys = try values.decodeIfPresent(Sys.self, forKey: .sys)
-        timezone = try values.decodeIfPresent(Int.self, forKey: .timezone)
-        id = try values.decodeIfPresent(Int.self, forKey: .id)
-        name = try values.decodeIfPresent(String.self, forKey: .name)
-        cod = try values.decodeIfPresent(Int.self, forKey: .cod)
+    }
+    
+    func encode(to encoder: Encoder) throws {
     }
 }

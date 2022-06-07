@@ -31,11 +31,11 @@ class LocationButton: UIButton {
     }
     
     func setConstraints() {
-        guard let superView = superview as? WeatherMainView else { return }
+        guard let superview = superview as? WeatherMainView else { return }
         translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
-            topAnchor.constraint(equalTo: superView.topAnchor, constant: 700),
-            centerXAnchor.constraint(equalTo: superView.centerXAnchor),
+            topAnchor.constraint(equalTo: superview.topAnchor, constant: 700),
+            centerXAnchor.constraint(equalTo: superview.centerXAnchor),
             widthAnchor.constraint(greaterThanOrEqualToConstant: 0),
             heightAnchor.constraint(equalToConstant: 22)
         ])

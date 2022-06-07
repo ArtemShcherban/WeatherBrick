@@ -4,11 +4,12 @@
 //
 
 import UIKit
+import CoreLocation
 
 class WeatherMainViewController: UIViewController, SearchLocationViewControllerDelegate {
     static let reuseIdentifier = String(describing: WeatherMainViewController.self)
     static let shared = WeatherMainViewController()
-    var networkServiceURLmodel = NetworkServiceURL.shared
+    
     var mainQueue: Dispatching?
     
     var myWeatherVar: MyWeather?
@@ -32,27 +33,32 @@ class WeatherMainViewController: UIViewController, SearchLocationViewControllerD
         super.viewDidLoad()
         mainQueue = AsyncQueue.main
         weatherMainView.createMainView()
-        tryGetMyWeather()
-        
-        weatherMainModel.getCities()
+        getMyWeather()
+
         weatherMainModel.getCountries()
     }
     
-    func tryGetMyWeather() {
-        weatherMainModel.getMyWeather(in: AppConstants.ljubljana) { myWeatherOrErrors in
-            switch myWeatherOrErrors {
-            case .failure(let error):
-                print(error.localizedDescription)
-            case .success(let myWeather):
-                self.mainQueue?.dispatch {
-                self.weatherMainView.updateWeather(with: myWeather)
+    func getMyWeather() {
+        weatherMainModel.prepareLinkFor(location: AppConstants.ljubljana) { link in
+            self.weatherMainModel.createMyWeather(with: link) { myWeatherOrError in
+                switch myWeatherOrError {
+                case .failure(let error):
+                    print(error.rawValue)
+                case .success(let myWeather):
+                    self.mainQueue?.dispatch {
+                        self.weatherMainView.updateWeather(with: myWeather)
+                    }
                 }
             }
         }
     }
     
     func updateWeather(with myWeather: MyWeather) {
-        self.weatherMainView.updateWeather(with: myWeather)
+        weatherMainView.updateWeather(with: myWeather)
+    }
+ 
+    func updateIcon(locator: Bool) {
+        weatherMainView.setIcon(for: locator)
     }
 }
 

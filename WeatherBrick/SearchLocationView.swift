@@ -10,6 +10,7 @@ import UIKit
 
 final class SearchLocationView: UIView {
     weak var delegate: SearchLocationViewModelDelegate?
+    weak var searchBarDelegate: UISearchBarDelegate?
     
     private lazy var backgroundImageView = BackgraundImageView()
  
@@ -17,14 +18,33 @@ final class SearchLocationView: UIView {
         let tempSearchController = UISearchController(searchResultsController: nil)
         tempSearchController.obscuresBackgroundDuringPresentation = false
         tempSearchController.searchBar.placeholder = "Enter your location"
-        tempSearchController.searchBar.delegate = delegate
+        tempSearchController.searchBar.delegate = searchBarDelegate
     return tempSearchController
     }()
     
 private(set) lazy var errorTextLabel = ErrorTextLabel()
+    
+    lazy var userLocationButton: LocationButton = {
+        let tempUserLocationButton = LocationButton()
+        tempUserLocationButton.backgroundColor = .clear
+        tempUserLocationButton.isSelected = false
+        tempUserLocationButton.setButtonTitle("Find your location")
+        tempUserLocationButton.setTitleColor(AppConstants.Color.lightGraphite, for: .normal)
+        tempUserLocationButton.layer.cornerRadius = 18
+        tempUserLocationButton.layer.borderColor = AppConstants.Color.lightGraphite.cgColor
+        tempUserLocationButton.layer.borderWidth = 2
+        tempUserLocationButton.titleLabel?.numberOfLines = 2
+        tempUserLocationButton.addTarget(
+            delegate,
+            action: #selector(delegate?.userLocattionButtonPressed),
+            for: .touchUpInside)
+        return tempUserLocationButton
+    }()
       
     func createSearchLocationMainView() {
         addSubview(backgroundImageView)
+        addSubview(userLocationButton)
+        setUserLocationButtonConstraints()
     }
     
     func addErrorTextLabel(with text: String) {
@@ -32,7 +52,20 @@ private(set) lazy var errorTextLabel = ErrorTextLabel()
         errorTextLabel.setConstraints()
         errorTextLabel.text = text
     }
+    
+    func setUserLocationButtonConstraints() {
+        userLocationButton.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.activate([
+            userLocationButton.topAnchor.constraint(equalTo: self.safeAreaLayoutGuide.topAnchor, constant: 100),
+            userLocationButton.leadingAnchor.constraint(
+                equalTo: self.leadingAnchor, constant: (AppConstants.Indent.left * 4)),
+            userLocationButton.trailingAnchor.constraint(
+                equalTo: self.trailingAnchor, constant: (AppConstants.Indent.right * 4)),
+            userLocationButton.heightAnchor.constraint(equalToConstant: 36)
+        ])
+    }
 }
 
-protocol SearchLocationViewModelDelegate: UISearchBarDelegate {
+@objc protocol SearchLocationViewModelDelegate: AnyObject {
+func userLocattionButtonPressed()
 }

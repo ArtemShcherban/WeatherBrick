@@ -14,8 +14,8 @@ struct MyWeather {
     var country: String
     var flag: String
     var temperature: String
-    var condition: String
-    var mainCondition: String
+    var conditionDetails: String
+    var conditionMain: String
     var stoneImage: String
       
     init(
@@ -23,36 +23,15 @@ struct MyWeather {
         country: String = "",
         flag: String = "",
         temperature: String = "N/A",
-        condition: String = "",
-        mainCondition: String = "",
+        conditionDetails: String = "",
+        conditionMain: String = "",
         stoneImage: String = ""
     ) { self.city = city
         self.country = country
         self.flag = flag
         self.temperature = temperature
-        self.condition = condition
-        self.mainCondition = mainCondition
+        self.conditionDetails = conditionDetails
+        self.conditionMain = conditionMain
         self.stoneImage = stoneImage
-    }
-}
-struct Country {
-    var codeISO: String
-    var name: String
-    var flag: String
-    var unicode: String
-}
-
-struct City: Hashable {
-    var name: String
-    var id: Int
-    var country: String
-    var population: Int = 0
-    
-    func hash(into hasher: inout Hasher) {
-        hasher.combine(id)
-    }
-    
-    static func == (lhs: City, rhs: City) -> Bool {
-        return lhs.id == rhs.id
     }
 }
