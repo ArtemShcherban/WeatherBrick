@@ -56,34 +56,6 @@ final class WeatherMainView: UIView {
         return view
     }()
     
-    //    lazy var gradientLayer: CAGradientLayer = {
-    //        let tempGradientlayer = CAGradientLayer()
-    //        tempGradientlayer.colors = [UIColor.black.cgColor, UIColor.red.cgColor]
-    //        tempGradientlayer.endPoint = CGPoint(x: 0.5, y: 0.5)
-    //        tempGradientlayer.frame = self.frame
-    //    return tempGradientlayer
-    //    }()
-    
-    //    lazy var gradientLayer: CAGradientLayer = {
-    //        let tempGradientLayer = CAGradientLayer()
-    //        tempGradientLayer.colors = [AppConstants.Color.orange.cgColor, AppConstants.Color.brightOrange]
-    //        tempGradientLayer.locations = [0, 1]
-    //        tempGradientLayer.startPoint = CGPoint(x: 0.25, y: 0.5)
-    //        tempGradientLayer.endPoint = CGPoint(x: 0.75, y: 0.5)
-    //        tempGradientLayer.transform = CATransform3DMakeAffineTransform(CGAffineTransform(
-    //            a: 0,
-    //            b: 0.87,
-    //            c: -0.87,
-    //            d: 0,
-    //            tx: 0.94,
-    //            ty: 0))
-    //        tempGradientLayer.bounds = popUpWindow.bounds.insetBy(
-    //            dx: -0.5 * popUpWindow.bounds.size.width,
-    //            dy: -0.5 * popUpWindow.bounds.size.height)
-    //        tempGradientLayer.position = popUpWindow.center
-    //        return tempGradientLayer
-    //    }()
-    
     func createMainView() {
         addSubview(backgroundImageView)
         addSubview(temperatureLabel)
@@ -190,27 +162,7 @@ final class WeatherMainView: UIView {
 }
 
 extension WeatherMainView {
-    func animateGradient() {
-        guard let gradientLayerInside = self.popUpWindow.containerView.layer.sublayers?[0]
-            as? CAGradientLayer else { return }
-        
-        let xCoordinate: CGFloat = self.popUpWindow.bounds.origin.x
-        let yCoordinate: CGFloat = self.popUpWindow.bounds.origin.y
-        let height = self.popUpWindow.bounds.size.height
-        let width = self.popUpWindow.bounds.size.width
-        
-        gradientLayerInside.frame = CGRect(x: xCoordinate, y: yCoordinate, width: width, height: height)
-        gradientLayerInside.position = CGPoint.zero
-        gradientLayerInside.anchorPoint = CGPoint.zero
-        gradientLayerInside.colors = [AppConstants.Color.orange.cgColor, AppConstants.Color.brightOrange.cgColor]
-        self.popUpWindow.containerView.layer.insertSublayer(gradientLayerInside, at: 0)
-        gradientLayerInside.startPoint = CGPoint(x: 0.25, y: 0.5)
-        gradientLayerInside.endPoint = CGPoint(x: 0.75, y: 0.5)
-        animatePopUpWindowIn(gradientLayerInside)
-    }
-    
-    func animatePopUpWindowIn(_ gradientLayerInside: CAGradientLayer) {
-        popUpWindow.isActive = true
+    func animatePopUpWindowIn() {
         self.axisYConstraint.constant = 0
         UIView.animate(
             withDuration: 1.2,
@@ -221,29 +173,13 @@ extension WeatherMainView {
                 for index in 1..<self.subviews.count - 1 {
                     self.subviews[index].alpha = 0
                 }
-                gradientLayerInside.removeAnimation(forKey: "progressAnimation")
-                let progressAnimation = CABasicAnimation(keyPath: "bounds.size.width")
-                progressAnimation.duration = 1.2
-                progressAnimation.toValue = 1000
-                progressAnimation.fillMode = .forwards
-                
-                progressAnimation.isRemovedOnCompletion = false
-                
-                gradientLayerInside.add(progressAnimation, forKey: "progressAnimation")
-                
+                self.popUpWindow.applyGradientAnimation()
+                self.popUpWindow.isActive = true
                 self.layoutIfNeeded()
         }
     }
     
     func animatePopUpWindowOut() {
-        guard let gradientLayerInside = self.popUpWindow.containerView.layer.sublayers?[0] as?
-            CAGradientLayer else { return }
-        
-        gradientLayerInside.colors = [AppConstants.Color.orange.cgColor, AppConstants.Color.brightOrange.cgColor]
-        gradientLayerInside.startPoint = CGPoint(x: 0.25, y: 0.5)
-        gradientLayerInside.endPoint = CGPoint(x: 0.75, y: 0.5)
-        
-        popUpWindow.isActive = false
         self.axisYConstraint.constant = 540
         UIView.animate(
             withDuration: 1.2,
@@ -254,16 +190,8 @@ extension WeatherMainView {
                 for index in 1..<self.subviews.count - 1 {
                     self.subviews[index].alpha = 1
                 }
-                gradientLayerInside.animation(forKey: "progressAnimation")
-                let progressAnimation = CABasicAnimation(keyPath: "bounds.size.width")
-                progressAnimation.duration = 1.2
-                progressAnimation.toValue = 1000
-                //                                progressAnimation.fillMode = .backwards
-                
-                progressAnimation.isRemovedOnCompletion = false
-                
-                gradientLayerInside.add(progressAnimation, forKey: "progressAnimation")
-                
+                self.popUpWindow.applyGradientAnimation()
+                self.popUpWindow.isActive = false
                 self.layoutIfNeeded()
         }
     }

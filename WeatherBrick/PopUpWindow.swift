@@ -46,7 +46,7 @@ class PopUpWindow: UIView {
             attributes: fontAttribbute as [NSAttributedString.Key: Any])
         tempHideButton.setAttributedTitle(buttonTitle, for: .normal)
         tempHideButton.layer.cornerRadius = 18
-        tempHideButton.addTarget(delegate, action: #selector(delegate?.animateSecond), for: .touchUpInside)
+        tempHideButton.addTarget(self, action: #selector(delegateActions), for: .touchUpInside)
         return tempHideButton
     }()
     
@@ -69,32 +69,13 @@ class PopUpWindow: UIView {
         return tempContainerView
     }()
     
-//        lazy var gradientLayer: CAGradientLayer = {
-//            let tempGradientLayer = CAGradientLayer()
-//            tempGradientLayer.colors = [AppConstants.Color.orange.cgColor, AppConstants.Color.brightOrange.cgColor]
-//            tempGradientLayer.locations = [0, 1]
-//            tempGradientLayer.startPoint = CGPoint(x: 0.25, y: 0.5)
-//            tempGradientLayer.endPoint = CGPoint(x: 0.75, y: 0.5)
-//            tempGradientLayer.transform = CATransform3DMakeAffineTransform(CGAffineTransform(
-//                a: 0,
-//                b: 0.87,
-//                c: -0.87,
-//                d: 0,
-//                tx: 0.94,
-//                ty: 0))
-//            tempGradientLayer.bounds = containerView.bounds.insetBy(
-//                dx: -0.5 * containerView.bounds.size.width,
-//                dy: -0.5 * containerView.bounds.size.height)
-//            tempGradientLayer.position = containerView.center
-//            return tempGradientLayer
-//        }()
-    
     lazy var gradientLayer: CAGradientLayer = {
         let tempGradientLayer = CAGradientLayer()
         tempGradientLayer.colors = [AppConstants.Color.orange.cgColor, AppConstants.Color.brightOrange.cgColor]
-        tempGradientLayer.startPoint = CGPoint(x: 0.25, y: 0.5)
-        tempGradientLayer.endPoint = CGPoint(x: 0.75, y: 0.5)
-        tempGradientLayer.frame = containerView.frame
+        tempGradientLayer.locations = [0, 0.9]
+        tempGradientLayer.startPoint = CGPoint(x: 0.0, y: 0.0)
+        tempGradientLayer.endPoint = CGPoint(x: 1.0, y: 0.0)
+        tempGradientLayer.frame = containerView.bounds
         return tempGradientLayer
     }()
     
@@ -104,11 +85,10 @@ class PopUpWindow: UIView {
 
         self.addSubview(windowBackgroundView)
         windowBackgroundView.addSubview(containerView)
+        containerView.layer.addSublayer(gradientLayer)
         containerView.addSubview(titleLabel)
         conditionLabels.forEach { containerView.addSubview($0) }
         containerView.addSubview(hideButton)
-        
-        containerView.layer.insertSublayer(gradientLayer, at: 0)
         
         setWindowBackgroundViewConstraints()
         setContainerViewConstraints()
@@ -135,9 +115,9 @@ class PopUpWindow: UIView {
     
     @objc func delegateActions() {
         if self.isActive {
-            delegate?.animateSecond()
+            delegate?.popWindowOut()
         } else {
-            delegate?.animateFirst()
+            delegate?.popWindowIn()
         }
     }
     
@@ -157,6 +137,23 @@ class PopUpWindow: UIView {
         self.layer.shadowOffset = CGSize(width: 1, height: 5)
         self.layer.shadowRadius = 3
         self.layer.shadowOpacity = 0.3
+    }
+    
+    func applyGradientAnimation() {
+        createGradientAnimation(layer: gradientLayer)
+    }
+
+    private func createGradientAnimation(layer: CAGradientLayer) {
+        let gradientMotion = CABasicAnimation(keyPath: "locations")
+        gradientMotion.fromValue = layer.locations
+        gradientMotion.duration = 1
+        if isActive == false {
+            gradientMotion.toValue = layer.locations = [1, 1.9]
+            layer.add(gradientMotion, forKey: nil)
+        } else if isActive == true {
+            gradientMotion.toValue = layer.locations = [0, 0.9]
+            layer.add(gradientMotion, forKey: nil)
+        }
     }
     
     @objc func animateIn() {
@@ -224,7 +221,7 @@ class PopUpWindow: UIView {
     }
 }
 
-@objc protocol PopUpWindowDelegate: AnyObject {
-    func animateFirst()
-    func animateSecond()
+protocol PopUpWindowDelegate: AnyObject {
+    func popWindowIn()
+    func popWindowOut()
 }

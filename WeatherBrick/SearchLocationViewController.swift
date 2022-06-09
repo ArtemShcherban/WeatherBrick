@@ -17,7 +17,6 @@ final class SearchLocationViewController: UIViewController {
     var mainQueue: Dispatching?
     
     let locationManager = CLLocationManager()
-//    lazy var locationManager = LocationManager.shared
     
     private lazy var weatherMainModel = WeatherMainModel.shared
     private lazy var weatherMainView = WeatherMainView.shared
@@ -113,19 +112,18 @@ extension SearchLocationViewController: UISearchBarDelegate {
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
         if searchText.isEmpty == true &&
             searchLocationViewModel.errorTextLabel.superview === self.view {
-            searchLocationViewModel.errorTextLabel.removeFromSuperview()
+            searchLocationViewModel.errorTextLabel.isActive = false
         }
     }
     
     func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
         if searchLocationViewModel.errorTextLabel.superview === self.view {
-            searchLocationViewModel.errorTextLabel.removeFromSuperview()
+            searchLocationViewModel.errorTextLabel.isActive = false
         }
     }
 }
 
 protocol SearchLocationViewControllerDelegate: AnyObject {
     func updateWeather(with myWeather: MyWeather)
-    
     func updateIcon(locator: Bool)
 }

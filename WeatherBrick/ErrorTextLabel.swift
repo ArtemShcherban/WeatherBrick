@@ -18,6 +18,14 @@ final class ErrorTextLabel: UILabel {
         super.init(coder: coder)
     }
     
+    var isActive = false {
+        didSet {
+            if isActive != oldValue {
+                applyAnimation()
+            }
+        }
+    }
+    
     private func configure() {
         backgroundColor = .clear
         textAlignment = .center
@@ -30,6 +38,20 @@ final class ErrorTextLabel: UILabel {
                 NSAttributedString.Key.foregroundColor: AppConstants.Color.lightGraphite
             ])
         attributedText = attributedString
+        layer.opacity = 0
+    }
+    
+    func applyAnimation() {
+        let labelAlpha = CABasicAnimation(keyPath: "opacity")
+        labelAlpha.duration = 0.5
+        labelAlpha.fromValue = layer.opacity
+        if isActive {
+            labelAlpha.toValue = layer.opacity = 1
+            layer.add(labelAlpha, forKey: nil)
+        } else {
+            labelAlpha.toValue = layer.opacity = 0
+            layer.add(labelAlpha, forKey: nil)
+        }
     }
     
     func setConstraints() {

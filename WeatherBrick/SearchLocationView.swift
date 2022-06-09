@@ -22,7 +22,7 @@ final class SearchLocationView: UIView {
     return tempSearchController
     }()
     
-private(set) lazy var errorTextLabel = ErrorTextLabel()
+    private(set) lazy var errorTextLabel = ErrorTextLabel()
     
     lazy var userLocationButton: LocationButton = {
         let tempUserLocationButton = LocationButton()
@@ -44,13 +44,14 @@ private(set) lazy var errorTextLabel = ErrorTextLabel()
     func createSearchLocationMainView() {
         addSubview(backgroundImageView)
         addSubview(userLocationButton)
+        addSubview(errorTextLabel)
+        errorTextLabel.setConstraints()
         setUserLocationButtonConstraints()
     }
     
     func addErrorTextLabel(with text: String) {
-        addSubview(errorTextLabel)
-        errorTextLabel.setConstraints()
         errorTextLabel.text = text
+        errorTextLabel.isActive = true
     }
     
     func setUserLocationButtonConstraints() {

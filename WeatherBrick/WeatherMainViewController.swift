@@ -67,8 +67,6 @@ extension WeatherMainViewController: WeatherMainViewDelegate {
     }
     
     func locationButtonPressed() {
-        print("Button pressed")
-        
         let storyboard = UIStoryboard(name: "Main", bundle: nil)
         guard let viewController =
             storyboard.instantiateViewController(withIdentifier:
@@ -79,13 +77,11 @@ extension WeatherMainViewController: WeatherMainViewDelegate {
 }
 
 extension WeatherMainViewController: PopUpWindowDelegate {
-    func animateFirst() {
-        print("Tap")
-        weatherMainView.animateGradient()
+    func popWindowIn() {
+        weatherMainView.animatePopUpWindowIn()
     }
     
-    func animateSecond() {
-        print("Hide")
+    func popWindowOut() {
         weatherMainView.animatePopUpWindowOut()
     }
 }
