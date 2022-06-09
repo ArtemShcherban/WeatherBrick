@@ -42,9 +42,10 @@ final class WeatherMainModel {
                     city: weather.cityName ?? "",
                     country: self.countriesWithFlags[weather.countryISO ?? ""]?.name ?? "",
                     flag: self.countriesWithFlags[weather.countryISO ?? ""]?.flag ?? "",
-                    temperature: String(Int(weather.temperature ?? 0.0)),
+                    temperature: String(Int(weather.temperature ?? 0.0)) + "°",
                     conditionDetails: weather.conditionDetails ?? "",
                     conditionMain: weather.conditionMain ?? "",
+                    wind: String(Int(weather.wind?.speed ?? 0.0)),
                     stoneImage: self.getStoneImage(dependingOn: weather))
                 if myWeather.country.isEmpty && myWeather.city.isEmpty {
                     let geoCoordinates = self.convertToGeo(coordinates: ((
@@ -131,7 +132,6 @@ final class WeatherMainModel {
                 longtitude = geoCoordinate + "W"
             }
         }
-        print(latitude, longtitude)
         return (latitude, longtitude)
     }
 }

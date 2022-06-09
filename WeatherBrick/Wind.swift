@@ -14,16 +14,16 @@ For support, please feel free to contact me at https://www.linkedin.com/in/syeda
 import Foundation
 struct Wind: Codable {
 	let speed: Double?
-	let deg: Int?
+	let degrees: Int?
 
 	enum CodingKeys: String, CodingKey {
 		case speed
-		case deg
+		case degrees = "deg"
 	}
 
 	init(from decoder: Decoder) throws {
 		let values = try decoder.container(keyedBy: CodingKeys.self)
 		speed = try values.decodeIfPresent(Double.self, forKey: .speed)
-		deg = try values.decodeIfPresent(Int.self, forKey: .deg)
+        degrees = try values.decodeIfPresent(Int.self, forKey: .degrees)
 	}
 }

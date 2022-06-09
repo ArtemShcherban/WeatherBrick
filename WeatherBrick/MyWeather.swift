@@ -16,6 +16,7 @@ struct MyWeather {
     var temperature: String
     var conditionDetails: String
     var conditionMain: String
+    var wind: String
     var stoneImage: String
       
     init(
@@ -25,6 +26,7 @@ struct MyWeather {
         temperature: String = "N/A",
         conditionDetails: String = "",
         conditionMain: String = "",
+        wind: String = "",
         stoneImage: String = ""
     ) { self.city = city
         self.country = country
@@ -32,6 +34,7 @@ struct MyWeather {
         self.temperature = temperature
         self.conditionDetails = conditionDetails
         self.conditionMain = conditionMain
+        self.wind = wind
         self.stoneImage = stoneImage
     }
 }

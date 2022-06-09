@@ -15,12 +15,8 @@ final class WeatherMainView: UIView {
     
     private lazy var backgroundImageView = BackgraundImageView()
     
-    lazy var stoneImageView: UIImageView = {
-        let tempStoneImageView = UIImageView()
-        tempStoneImageView.alpha = 1
-        return tempStoneImageView
-    }()
-    
+    lazy var stoneImageView = StoneImageView()
+
     lazy var temperatureLabel: UILabel = {
         let tempTemperatureLabel = UILabel(frame: (CGRect(x: 16, y: 461, width: 124, height: 126)))
         tempTemperatureLabel.font = UIFont(name: AppConstants.Font.ubuntuRegular, size: 83)
@@ -37,6 +33,17 @@ final class WeatherMainView: UIView {
         tempConditionLabel.numberOfLines = 3
         return tempConditionLabel
     }()
+    
+    lazy var windSpeedLabel: UILabel = {
+        let tempWindSpeedLabel = UILabel()
+        let attributedString = NSAttributedString(string: " ", attributes: [
+            NSAttributedString.Key.kern: -0.41,
+            NSAttributedString.Key.font: UIFont(name: AppConstants.Font.ubuntuLight, size: 20) ?? UIFont()
+        ])
+        tempWindSpeedLabel.attributedText = attributedString
+        return tempWindSpeedLabel
+    }()
+    
     lazy var locationButton = LocationButton()
     
     lazy var geoLocationImageView: UIImageView = {
@@ -60,14 +67,14 @@ final class WeatherMainView: UIView {
         addSubview(backgroundImageView)
         addSubview(temperatureLabel)
         addSubview(conditionLabel)
+        addSubview(windSpeedLabel)
         addSubview(locationButton)
         addSubview(stoneImageView)
         addSubview(popUpWindow)
         
-        //        createGradient()
         setConditionLabelConstraints()
+        setWindSpeedLabelConstraints()
         locationButton.setConstraints()
-        setStoneImageViewConstraints()
         setPopUpWindowConstraints()
         addTargetForLocationButton()
     }
@@ -84,6 +91,12 @@ final class WeatherMainView: UIView {
         temperatureLabel.text = myWeather.temperature
         conditionLabel.text = myWeather.conditionDetails.lowercased()
         locationButton.setButtonTitle("\(myWeather.city), \(myWeather.flag) \(myWeather.country) ")
+        windSpeedLabel.text = "wind: \(myWeather.wind) m/s."
+        if (Int(myWeather.wind) ?? 0) >= 8 {
+            stoneImageView.windAnimation()
+        } else {
+            stoneImageView.transform = CGAffineTransform(rotationAngle: 0)
+        }
         stoneImageView.image = UIImage(named: myWeather.stoneImage)
         if AppConstants.Precipitation.atmosphere.contains(myWeather.conditionMain) {
             stoneImageView.alpha = 0.3
@@ -120,6 +133,16 @@ final class WeatherMainView: UIView {
         ])
     }
     
+    func setWindSpeedLabelConstraints() {
+        windSpeedLabel.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.activate([
+            windSpeedLabel.topAnchor.constraint(equalTo: conditionLabel.bottomAnchor),
+            windSpeedLabel.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: AppConstants.Indent.left),
+            windSpeedLabel.widthAnchor.constraint(greaterThanOrEqualToConstant: 0),
+            windSpeedLabel.heightAnchor.constraint(greaterThanOrEqualToConstant: 0)
+        ])
+    }
+    
     func setGeoLocationViewConstraints() {
         geoLocationImageView.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
@@ -137,14 +160,6 @@ final class WeatherMainView: UIView {
             searchIconImageView.leadingAnchor.constraint(equalTo: locationButton.trailingAnchor, constant: 5),
             searchIconImageView.widthAnchor.constraint(equalToConstant: 16),
             searchIconImageView.heightAnchor.constraint(equalToConstant: 16)
-        ])
-    }
-    
-    func setStoneImageViewConstraints() {
-        stoneImageView.translatesAutoresizingMaskIntoConstraints = false
-        NSLayoutConstraint.activate([
-            stoneImageView.topAnchor.constraint(equalTo: self.topAnchor),
-            stoneImageView.centerXAnchor.constraint(equalTo: self.centerXAnchor)
         ])
     }
     
