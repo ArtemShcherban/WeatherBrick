@@ -4,15 +4,18 @@
 //
 
 import UIKit
+import Network
 import CoreLocation
 
 class WeatherMainViewController: UIViewController, SearchLocationViewControllerDelegate {
     static let reuseIdentifier = String(describing: WeatherMainViewController.self)
     static let shared = WeatherMainViewController()
+   
+    let userDefaultsManager = UserDefaultsManager.manager
     
+    let monitor = NWPathMonitor()
+  
     var mainQueue: Dispatching?
-    
-    var myWeatherVar: MyWeather?
     
     private lazy var weatherMainModel: WeatherMainModel = {
         WeatherMainModel.shared
@@ -31,22 +34,22 @@ class WeatherMainViewController: UIViewController, SearchLocationViewControllerD
     
     override func viewDidLoad() {
         super.viewDidLoad()
+//        userDefaultsManager.removeObject(forKey: "myWeather")
         mainQueue = AsyncQueue.main
+        monitorNetwork()
         weatherMainView.createMainView()
-        getMyWeather()
-
         weatherMainModel.getCountries()
     }
     
-    func getMyWeather() {
-        weatherMainModel.prepareLinkFor(location: AppConstants.ljubljana) { link in
+    func getMyWeatherFor<T>(_ location: T) {
+        weatherMainModel.prepareLinkFor(location: location) { link in
             self.weatherMainModel.createMyWeather(with: link) { myWeatherOrError in
                 switch myWeatherOrError {
                 case .failure(let error):
                     print(error.rawValue)
                 case .success(let myWeather):
                     self.mainQueue?.dispatch {
-                        self.weatherMainView.updateWeather(with: myWeather)
+                        self.updateWeather(with: myWeather)
                     }
                 }
             }
@@ -54,16 +57,35 @@ class WeatherMainViewController: UIViewController, SearchLocationViewControllerD
     }
     
     func updateWeather(with myWeather: MyWeather) {
+        userDefaultsManager.save(myWeather)
         weatherMainView.updateWeather(with: myWeather)
     }
  
     func updateIcon(locator: Bool) {
         weatherMainView.setIcon(for: locator)
     }
+    
+    func monitorNetwork() {
+        monitor.pathUpdateHandler = { path in
+            if path.status == .satisfied {
+                guard let location = self.userDefaultsManager.getLocation() else { return }
+                self.getMyWeatherFor(location)
+            } else {
+                self.mainQueue?.dispatch {
+                    self.weatherMainView.stoneImageView.image = UIImage(named: "image_NO_stone")
+                }
+            }
+        }
+        let queue = DispatchQueue(label: "Monitor")
+        monitor.start(queue: queue)
+    }
 }
 
 extension WeatherMainViewController: WeatherMainViewDelegate {
-    func testButtonPressed() {
+    func didSwipe() {
+        weatherMainView.stoneImageView.swipeAnimation()
+        guard let location = userDefaultsManager.getLocation() else { return }
+        getMyWeatherFor(location)
     }
     
     func locationButtonPressed() {

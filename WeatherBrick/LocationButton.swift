@@ -9,6 +9,8 @@
 import UIKit
 
 class LocationButton: UIButton {
+    var widthAnchorConstraint = NSLayoutConstraint()
+    
     override init(frame: CGRect) {
         super.init(frame: frame)
         configure()
@@ -19,25 +21,41 @@ class LocationButton: UIButton {
     }
     
     func configure() {
-        setButtonTitle()
+        let attributedTitle = NSAttributedString(
+            string: "Choose your location",
+            attributes: [
+                NSAttributedString.Key.kern: -0.41,
+                NSAttributedString.Key.font: UIFont(name: AppConstants.Font.ubuntuRegular, size: 17) ?? UIFont()
+            ])
+        setAttributedTitle(attributedTitle, for: .normal)
+        sizeToFit()
+        layer.borderWidth = 1.0
+        layer.borderColor = UIColor.black.cgColor
+        layer.cornerRadius = frame.height / 2
     }
     
-    func setButtonTitle(_ title: String = "Choose your location") {
-        let attributedTitle = NSAttributedString(string: title, attributes: [
-            NSAttributedString.Key.kern: -0.41,
-            NSAttributedString.Key.font: UIFont(name: AppConstants.Font.ubuntuMedium, size: 17) ?? UIFont()
-        ])
+    func updateAppearance(_ title: String) {
+        let attributedTitle = NSAttributedString(
+            string: title,
+            attributes: [
+                NSAttributedString.Key.kern: -0.41,
+                NSAttributedString.Key.font: UIFont(name: AppConstants.Font.ubuntuMedium, size: 17) ?? UIFont()
+            ])
         setAttributedTitle(attributedTitle, for: .normal)
+        layer.borderWidth = 0
+        layer.cornerRadius = 0
+        sizeToFit()
+        widthAnchorConstraint.constant = frame.width
     }
     
     func setConstraints() {
         guard let superview = superview as? WeatherMainView else { return }
         translatesAutoresizingMaskIntoConstraints = false
+        widthAnchorConstraint = widthAnchor.constraint(equalToConstant: frame.width + 20)
         NSLayoutConstraint.activate([
             topAnchor.constraint(equalTo: superview.topAnchor, constant: 700),
             centerXAnchor.constraint(equalTo: superview.centerXAnchor),
-            widthAnchor.constraint(greaterThanOrEqualToConstant: 0),
-            heightAnchor.constraint(equalToConstant: 22)
+            widthAnchorConstraint
         ])
     }
 }

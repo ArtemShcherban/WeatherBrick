@@ -12,7 +12,7 @@ import CoreLocation
 
 final class WeatherMainModel {
     static let shared = WeatherMainModel()
-    private lazy var networkServiceUrl = NetworkServiceURL.shared
+    private lazy var networkServiceManager = NetworkServiceManager.shared
     private lazy var countriesWithFlags: [String: Country] = [:]
     private lazy var geocoder = CLGeocoder()
     
@@ -33,7 +33,7 @@ final class WeatherMainModel {
     }
         
     func createMyWeather(with link: String, completion: @escaping((Result<MyWeather, NetworkServiceError>) -> Void)) {
-        networkServiceUrl.getDataFromOpenWeather(with: link) { resultOrError in
+        networkServiceManager.getDataFromOpenWeather(with: link) { resultOrError in
             switch resultOrError {
             case .failure(let error):
                 completion(.failure(error))
@@ -46,8 +46,10 @@ final class WeatherMainModel {
                     conditionDetails: weather.conditionDetails ?? "",
                     conditionMain: weather.conditionMain ?? "",
                     wind: String(Int(weather.wind?.speed ?? 0.0)),
-                    stoneImage: self.getStoneImage(dependingOn: weather))
-                if myWeather.country.isEmpty && myWeather.city.isEmpty {
+                    stoneImage: self.getStoneImage(dependingOn: weather),
+                    latitude: weather.coordinates?.latitude ?? 0.0,
+                    longitude: weather.coordinates?.longitude ?? 0.0)
+                if myWeather.country.isEmpty || myWeather.city.isEmpty {
                     let geoCoordinates = self.convertToGeo(coordinates: ((
                         weather.coordinates?.latitude ?? 0.0,
                         weather.coordinates?.longitude ?? 0.0)))
@@ -60,7 +62,7 @@ final class WeatherMainModel {
     }
     
     func getCountries() {
-        networkServiceUrl.getDataFromCoutriesJson { jsonArray in
+        networkServiceManager.getDataFromCoutriesJson { jsonArray in
             for item in jsonArray {
                 if let object = item as? [String: String] {
                     let codeIso = object["ISO"] ?? ""

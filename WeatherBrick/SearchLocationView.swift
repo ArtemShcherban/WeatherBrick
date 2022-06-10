@@ -24,16 +24,8 @@ final class SearchLocationView: UIView {
     
     private(set) lazy var errorTextLabel = ErrorTextLabel()
     
-    lazy var userLocationButton: LocationButton = {
-        let tempUserLocationButton = LocationButton()
-        tempUserLocationButton.backgroundColor = .clear
-        tempUserLocationButton.isSelected = false
-        tempUserLocationButton.setButtonTitle("Find your location")
-        tempUserLocationButton.setTitleColor(AppConstants.Color.lightGraphite, for: .normal)
-        tempUserLocationButton.layer.cornerRadius = 18
-        tempUserLocationButton.layer.borderColor = AppConstants.Color.lightGraphite.cgColor
-        tempUserLocationButton.layer.borderWidth = 2
-        tempUserLocationButton.titleLabel?.numberOfLines = 2
+    lazy var userLocationButton: UserLocationButton = {
+        let tempUserLocationButton = UserLocationButton()
         tempUserLocationButton.addTarget(
             delegate,
             action: #selector(delegate?.userLocattionButtonPressed),
@@ -46,24 +38,12 @@ final class SearchLocationView: UIView {
         addSubview(userLocationButton)
         addSubview(errorTextLabel)
         errorTextLabel.setConstraints()
-        setUserLocationButtonConstraints()
+        userLocationButton.setConstraints()
     }
     
     func addErrorTextLabel(with text: String) {
         errorTextLabel.text = text
         errorTextLabel.isActive = true
-    }
-    
-    func setUserLocationButtonConstraints() {
-        userLocationButton.translatesAutoresizingMaskIntoConstraints = false
-        NSLayoutConstraint.activate([
-            userLocationButton.topAnchor.constraint(equalTo: self.safeAreaLayoutGuide.topAnchor, constant: 100),
-            userLocationButton.leadingAnchor.constraint(
-                equalTo: self.leadingAnchor, constant: (AppConstants.Indent.left * 4)),
-            userLocationButton.trailingAnchor.constraint(
-                equalTo: self.trailingAnchor, constant: (AppConstants.Indent.right * 4)),
-            userLocationButton.heightAnchor.constraint(equalToConstant: 36)
-        ])
     }
 }
 

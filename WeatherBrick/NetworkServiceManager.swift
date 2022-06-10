@@ -1,5 +1,5 @@
 //
-//  NetworkService.swift
+//  NetworkServiceManager.swift
 //  WeatherBrick
 //
 //  Created by Artem Shcherban on 23.05.2022.
@@ -9,8 +9,8 @@
 import Foundation
 import UIKit
 
-class NetworkServiceURL {
-    static let shared = NetworkServiceURL()
+class NetworkServiceManager {
+    static let shared = NetworkServiceManager()
    
     func getDataFromOpenWeather(with link: String, completion: @escaping(Result<ResultOfRequest, NetworkServiceError>) -> Void) {
         guard let url = URL(string: link) else {

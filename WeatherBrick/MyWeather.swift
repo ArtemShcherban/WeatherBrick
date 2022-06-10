@@ -9,7 +9,7 @@
 import Foundation
 import UIKit
 
-struct MyWeather {
+struct MyWeather: Codable {
     var city: String
     var country: String
     var flag: String
@@ -18,7 +18,9 @@ struct MyWeather {
     var conditionMain: String
     var wind: String
     var stoneImage: String
-      
+    var latitude: Double
+    var longitude: Double
+    
     init(
         city: String = "",
         country: String = "",
@@ -27,7 +29,9 @@ struct MyWeather {
         conditionDetails: String = "",
         conditionMain: String = "",
         wind: String = "",
-        stoneImage: String = ""
+        stoneImage: String = "",
+        latitude: Double = 0.0,
+        longitude: Double = 0.0
     ) { self.city = city
         self.country = country
         self.flag = flag
@@ -36,5 +40,7 @@ struct MyWeather {
         self.conditionMain = conditionMain
         self.wind = wind
         self.stoneImage = stoneImage
+        self.latitude = latitude
+        self.longitude = longitude
     }
 }

@@ -25,7 +25,20 @@ final class StoneImageView: UIImageView {
         alpha = 1
         center.x = UIScreen.main.bounds.width / 2
         center.y = stoneImage.size.height / 2
+        isUserInteractionEnabled = true
         setAnchorPoint(CGPoint(x: 0.5, y: 0.0))
+    }
+    
+    func swipeAnimation() {
+        transform = CGAffineTransform(translationX: 0.0, y: 30)
+        UIView.animate(
+            withDuration: 2,
+            delay: 0,
+            usingSpringWithDamping: 0.2,
+            initialSpringVelocity: 0.0,
+            options: .curveEaseIn) {
+                self.transform = .identity
+        }
     }
     
     func windAnimation() {
@@ -35,6 +48,7 @@ final class StoneImageView: UIImageView {
             delay: 0.0,
             options: [
                 UIView.KeyframeAnimationOptions.repeat,
+                UIView.KeyframeAnimationOptions.allowUserInteraction,
                 UIView.KeyframeAnimationOptions.autoreverse
             ],
             animations: {

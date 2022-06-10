@@ -20,6 +20,11 @@ struct Coordinates: Codable {
 		case longitude = "lon"
 		case latitude = "lat"
 	}
+    
+    init(longitude: Double, latitude: Double) {
+        self.longitude = longitude
+        self.latitude = latitude
+    }
 
 	init(from decoder: Decoder) throws {
 		let values = try decoder.container(keyedBy: CodingKeys.self)

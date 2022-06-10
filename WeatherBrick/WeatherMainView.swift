@@ -16,7 +16,8 @@ final class WeatherMainView: UIView {
     private lazy var backgroundImageView = BackgraundImageView()
     
     lazy var stoneImageView = StoneImageView()
-
+    lazy var alphaValues: [Double] = []
+    
     lazy var temperatureLabel: UILabel = {
         let tempTemperatureLabel = UILabel(frame: (CGRect(x: 16, y: 461, width: 124, height: 126)))
         tempTemperatureLabel.font = UIFont(name: AppConstants.Font.ubuntuRegular, size: 83)
@@ -71,6 +72,7 @@ final class WeatherMainView: UIView {
         addSubview(locationButton)
         addSubview(stoneImageView)
         addSubview(popUpWindow)
+        addSwipeGesture()
         
         setConditionLabelConstraints()
         setWindSpeedLabelConstraints()
@@ -79,18 +81,29 @@ final class WeatherMainView: UIView {
         addTargetForLocationButton()
     }
     
+    func addSwipeGesture() {
+        let swipe = UISwipeGestureRecognizer(target: self, action: #selector(delegateAction))
+        swipe.direction = .down
+        swipe.location(in: stoneImageView)
+        stoneImageView.addGestureRecognizer(swipe)
+    }
+    
     func addTargetForLocationButton() {
         locationButton.addTarget(self, action: #selector(delegateAction), for: .touchUpInside)
     }
     
-    @objc func delegateAction(_ sender: UIButton) {
-        delegate?.locationButtonPressed()
+    @objc func delegateAction(_ sender: Any) {
+        if sender is UIButton {
+            delegate?.locationButtonPressed()
+        } else {
+            delegate?.didSwipe()
+        }
     }
     
     func updateWeather(with myWeather: MyWeather ) {
         temperatureLabel.text = myWeather.temperature
         conditionLabel.text = myWeather.conditionDetails.lowercased()
-        locationButton.setButtonTitle("\(myWeather.city), \(myWeather.flag) \(myWeather.country) ")
+        locationButton.updateAppearance("\(myWeather.city), \(myWeather.flag) \(myWeather.country) ")
         windSpeedLabel.text = "wind: \(myWeather.wind) m/s."
         if (Int(myWeather.wind) ?? 0) >= 8 {
             stoneImageView.windAnimation()
@@ -166,7 +179,6 @@ final class WeatherMainView: UIView {
     func setPopUpWindowConstraints() {
         popUpWindow.translatesAutoresizingMaskIntoConstraints = false
         axisYConstraint = popUpWindow.centerYAnchor.constraint(equalTo: self.centerYAnchor, constant: 540)
-        axisYConstraint.isActive = true
         NSLayoutConstraint.activate([
             axisYConstraint,
             popUpWindow.centerXAnchor.constraint(equalTo: self.centerXAnchor),
@@ -186,6 +198,7 @@ extension WeatherMainView {
             initialSpringVelocity: 1.0,
             options: .curveEaseInOut) {
                 for index in 1..<self.subviews.count - 1 {
+                    self.alphaValues.append(self.subviews[index].alpha)
                     self.subviews[index].alpha = 0
                 }
                 self.popUpWindow.applyGradientAnimation()
@@ -203,8 +216,9 @@ extension WeatherMainView {
             initialSpringVelocity: 1.0,
             options: .curveEaseInOut) {
                 for index in 1..<self.subviews.count - 1 {
-                    self.subviews[index].alpha = 1
+                    self.subviews[index].alpha = self.alphaValues[index - 1]
                 }
+                self.alphaValues = []
                 self.popUpWindow.applyGradientAnimation()
                 self.popUpWindow.isActive = false
                 self.layoutIfNeeded()
@@ -213,6 +227,6 @@ extension WeatherMainView {
 }
 
 protocol WeatherMainViewDelegate: AnyObject {
+    func didSwipe()
     func locationButtonPressed()
-    func testButtonPressed()
 }
