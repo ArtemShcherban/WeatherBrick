@@ -34,7 +34,7 @@ class WeatherMainViewController: UIViewController, SearchLocationViewControllerD
     
     override func viewDidLoad() {
         super.viewDidLoad()
-//        userDefaultsManager.removeObject(forKey: "myWeather")
+        //        userDefaultsManager.removeObject(forKey: "myWeather")
         mainQueue = AsyncQueue.main
         monitorNetwork()
         weatherMainView.createMainView()

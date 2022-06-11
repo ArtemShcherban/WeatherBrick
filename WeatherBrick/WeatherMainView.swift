@@ -19,7 +19,7 @@ final class WeatherMainView: UIView {
     lazy var alphaValues: [Double] = []
     
     lazy var temperatureLabel: UILabel = {
-        let tempTemperatureLabel = UILabel(frame: (CGRect(x: 16, y: 461, width: 124, height: 126)))
+        let tempTemperatureLabel = UILabel()
         tempTemperatureLabel.font = UIFont(name: AppConstants.Font.ubuntuRegular, size: 83)
         return tempTemperatureLabel
     }()
@@ -74,6 +74,7 @@ final class WeatherMainView: UIView {
         addSubview(popUpWindow)
         addSwipeGesture()
         
+        setTemperatureLabelConstraints()
         setConditionLabelConstraints()
         setWindSpeedLabelConstraints()
         locationButton.setConstraints()
@@ -133,6 +134,16 @@ final class WeatherMainView: UIView {
             insertSubview(searchIconImageView, belowSubview: popUpWindow)
             setSearchIconViewConstraints()
         }
+    }
+    
+    func setTemperatureLabelConstraints() {
+        temperatureLabel.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.activate([
+            temperatureLabel.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 16),
+            temperatureLabel.topAnchor.constraint(equalTo: self.topAnchor, constant: 461),
+            temperatureLabel.heightAnchor.constraint(equalToConstant: 126),
+            temperatureLabel.widthAnchor.constraint(greaterThanOrEqualToConstant: 0)
+        ])
     }
     
     func setConditionLabelConstraints() {

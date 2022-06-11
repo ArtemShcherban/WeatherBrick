@@ -14,6 +14,7 @@ enum AppConstants {
     static let weatherBy = "https://api.openweathermap.org/data/2.5/weather?lat="
     static let and = "&lon="
     static let apiKey = "&APPID=59a2b233df10c0b64ce48ebeb844ddf2"
+    static let alphabetletters = NSCharacterSet.letters
     static let metricUnits = "&units=metric"
     static let ljubljana = "Ljubljana"
     static let boston = "Boston"

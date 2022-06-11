@@ -12,7 +12,7 @@ import CoreLocation
 
 final class WeatherMainModel {
     static let shared = WeatherMainModel()
-    private lazy var networkServiceManager = NetworkServiceManager.shared
+    private lazy var networkServiceManager = NetworkService.shared
     private lazy var countriesWithFlags: [String: Country] = [:]
     private lazy var geocoder = CLGeocoder()
     
@@ -62,7 +62,7 @@ final class WeatherMainModel {
     }
     
     func getCountries() {
-        networkServiceManager.getDataFromCoutriesJson { jsonArray in
+        networkServiceManager.getDataFromCountriesJson { jsonArray in
             for item in jsonArray {
                 if let object = item as? [String: String] {
                     let codeIso = object["ISO"] ?? ""
