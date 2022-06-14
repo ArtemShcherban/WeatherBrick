@@ -32,7 +32,8 @@ struct MyWeather: Codable {
         stoneImage: String = "",
         latitude: Double = 0.0,
         longitude: Double = 0.0
-    ) { self.city = city
+    ) {
+        self.city = city
         self.country = country
         self.flag = flag
         self.temperature = temperature

@@ -8,14 +8,13 @@
 
 import UIKit
 
-class PopUpWindow: UIView {
+final class PopUpWindow: UIView {
     weak var delegate: PopUpWindowDelegate?
     
-    var tapGesture = UITapGestureRecognizer()
-    
+    private lazy var tapGesture = UITapGestureRecognizer()
     private lazy var conditionLabels: [UILabel] = []
     
-    var isActive = false {
+    lazy var isActive = false {
         didSet {
             if isActive {
                 removeTapGestureRecognizer()
@@ -29,7 +28,7 @@ class PopUpWindow: UIView {
         let label = UILabel()
         label.font = UIFont(name: AppConstants.Font.ubuntuBold, size: 18)
         label.textColor = AppConstants.Color.graphite
-        label.text = "INFO"
+        label.text = AppConstants.TitleFor.popUpWindow
         return label
     }()
     
@@ -42,7 +41,7 @@ class PopUpWindow: UIView {
             NSAttributedString.Key.foregroundColor: AppConstants.Color.lightGraphite
         ]
         let buttonTitle = NSAttributedString(
-            string: "Hide",
+            string: AppConstants.TitleFor.hideButton,
             attributes: fontAttribbute as [NSAttributedString.Key: Any])
         tempHideButton.setAttributedTitle(buttonTitle, for: .normal)
         tempHideButton.layer.cornerRadius = 18
@@ -57,7 +56,7 @@ class PopUpWindow: UIView {
         return tempbackgroundView
     }()
     
-    lazy var containerView: UIView = {
+    private lazy var containerView: UIView = {
         let tempContainerView = UIView(frame: CGRect(
             x: 0,
             y: 0,
@@ -69,7 +68,7 @@ class PopUpWindow: UIView {
         return tempContainerView
     }()
     
-    lazy var gradientLayer: CAGradientLayer = {
+    private lazy var gradientLayer: CAGradientLayer = {
         let tempGradientLayer = CAGradientLayer()
         tempGradientLayer.colors = [AppConstants.Color.orange.cgColor, AppConstants.Color.brightOrange.cgColor]
         tempGradientLayer.locations = [0, 0.9]
@@ -82,19 +81,8 @@ class PopUpWindow: UIView {
     override init(frame: CGRect) {
         super.init(frame: frame)
         createConditionLabels()
-
-        self.addSubview(windowBackgroundView)
-        windowBackgroundView.addSubview(containerView)
-        containerView.layer.addSublayer(gradientLayer)
-        containerView.addSubview(titleLabel)
-        conditionLabels.forEach { containerView.addSubview($0) }
-        containerView.addSubview(hideButton)
-        
-        setWindowBackgroundViewConstraints()
-        setContainerViewConstraints()
-        setTitleLabelConstraints()
-        setLabelsConstraints()
-        setHideButtonConstraints()
+        addSubviews()
+        setConstraints()
         addTapGestureRecognizer()
         createShadow()
         animateIn()
@@ -104,16 +92,33 @@ class PopUpWindow: UIView {
         super.init(coder: coder)
     }
     
-    func addTapGestureRecognizer() {
+    private func addSubviews() {
+        addSubview(windowBackgroundView)
+        windowBackgroundView.addSubview(containerView)
+        containerView.layer.addSublayer(gradientLayer)
+        containerView.addSubview(titleLabel)
+        conditionLabels.forEach { containerView.addSubview($0) }
+        containerView.addSubview(hideButton)
+    }
+    
+    private func setConstraints() {
+        setWindowBackgroundViewConstraints()
+        setContainerViewConstraints()
+        setTitleLabelConstraints()
+        setLabelsConstraints()
+        setHideButtonConstraints()
+    }
+    
+    private func addTapGestureRecognizer() {
         tapGesture = UITapGestureRecognizer(target: self, action: #selector(delegateActions))
         self.addGestureRecognizer(tapGesture)
     }
     
-    func removeTapGestureRecognizer() {
+    private func removeTapGestureRecognizer() {
         self.removeGestureRecognizer(tapGesture)
     }
     
-    @objc func delegateActions() {
+    @objc private func delegateActions() {
         if self.isActive {
             delegate?.popWindowOut()
         } else {
@@ -121,7 +126,7 @@ class PopUpWindow: UIView {
         }
     }
     
-    func createConditionLabels() {
+    private func createConditionLabels() {
         let conditions = AppConstants.conditions
         conditions.forEach { condition in
             let label = UILabel()
@@ -132,7 +137,7 @@ class PopUpWindow: UIView {
         }
     }
     
-    func createShadow() {
+    private func createShadow() {
         self.layer.shadowColor = UIColor.black.cgColor
         self.layer.shadowOffset = CGSize(width: 1, height: 5)
         self.layer.shadowRadius = 3
@@ -142,7 +147,7 @@ class PopUpWindow: UIView {
     func applyGradientAnimation() {
         createGradientAnimation(layer: gradientLayer)
     }
-
+    
     private func createGradientAnimation(layer: CAGradientLayer) {
         let gradientMotion = CABasicAnimation(keyPath: "locations")
         gradientMotion.fromValue = layer.locations
@@ -156,7 +161,7 @@ class PopUpWindow: UIView {
         }
     }
     
-    @objc func animateIn() {
+    @objc private func animateIn() {
         self.windowBackgroundView.transform = CGAffineTransform(translationX: 0, y: 500)
         UIView.animate(
             withDuration: 1,
@@ -168,7 +173,7 @@ class PopUpWindow: UIView {
         }
     }
     
-    func setWindowBackgroundViewConstraints() {
+    private func setWindowBackgroundViewConstraints() {
         windowBackgroundView.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
             windowBackgroundView.centerXAnchor.constraint(equalTo: self.centerXAnchor),
@@ -178,7 +183,7 @@ class PopUpWindow: UIView {
         ])
     }
     
-    func setContainerViewConstraints() {
+    private func setContainerViewConstraints() {
         containerView.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
             containerView.topAnchor.constraint(equalTo: windowBackgroundView.topAnchor),
@@ -188,7 +193,7 @@ class PopUpWindow: UIView {
         ])
     }
     
-    func setTitleLabelConstraints() {
+    private func setTitleLabelConstraints() {
         titleLabel.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
             titleLabel.topAnchor.constraint(equalTo: containerView.topAnchor, constant: 30),
@@ -196,7 +201,7 @@ class PopUpWindow: UIView {
         ])
     }
     
-    func setLabelsConstraints() {
+    private func setLabelsConstraints() {
         var topIndent: CGFloat = 30
         conditionLabels.forEach { label in
             label.translatesAutoresizingMaskIntoConstraints = false
@@ -210,7 +215,7 @@ class PopUpWindow: UIView {
         }
     }
     
-    func setHideButtonConstraints() {
+    private func setHideButtonConstraints() {
         hideButton.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
             hideButton.widthAnchor.constraint(equalToConstant: 115),

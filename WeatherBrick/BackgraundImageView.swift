@@ -8,21 +8,21 @@
 
 import UIKit
 
-class BackgraundImageView: UIImageView {
+final class BackgraundImageView: UIImageView {
     override init(frame: CGRect = CGRect(
         x: 0,
         y: 0,
         width: UIScreen.main.bounds.size.width,
         height: UIScreen.main.bounds.size.height)) {
-        super.init(frame: frame)
-        configure()
-    }
+            super.init(frame: frame)
+            configure()
+        }
     
     required init?(coder: NSCoder) {
         super.init(coder: coder)
     }
     
-    func configure() {
+    private func configure() {
         isUserInteractionEnabled = true
         backgroundColor = .white
         image = UIImage(named: AppConstants.Image.background)

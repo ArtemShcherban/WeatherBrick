@@ -8,7 +8,7 @@
 
 import UIKit
 
-class UserLocationButton: UIButton {
+final class UserLocationButton: UIButton {
     override init(frame: CGRect) {
         super.init(frame: frame)
         configure()
@@ -18,10 +18,10 @@ class UserLocationButton: UIButton {
         super.init(coder: coder)
     }
     
-    func configure() {
+    private func configure() {
         backgroundColor = .clear
         isSelected = false
-        let attributedTitle = NSAttributedString(string: "Find your location", attributes: [
+        let attributedTitle = NSAttributedString(string: AppConstants.TitleFor.userLocationButton, attributes: [
             NSAttributedString.Key.kern: -0.41,
             NSAttributedString.Key.font: UIFont(name: AppConstants.Font.ubuntuMedium, size: 17) ?? UIFont(),
             NSAttributedString.Key.foregroundColor: AppConstants.Color.lightGraphite
@@ -33,14 +33,25 @@ class UserLocationButton: UIButton {
         layer.borderWidth = 2
     }
     
-    func setConstraints() {
-        if let superview = superview as? SearchLocationView {
-            translatesAutoresizingMaskIntoConstraints = false
-            NSLayoutConstraint.activate([
-                topAnchor.constraint(equalTo: superview.safeAreaLayoutGuide.topAnchor, constant: 100),
-                centerXAnchor.constraint(equalTo: superview.centerXAnchor),
-                widthAnchor.constraint(equalToConstant: frame.width + 20)
-            ])
-        }
-    }
+//    func setConstraints() {
+//        if let superview = superview as? SearchLocationView {
+//            translatesAutoresizingMaskIntoConstraints = false
+//            NSLayoutConstraint.activate([
+//                topAnchor.constraint(equalTo: superview.messageTextLabel.bottomAnchor, constant: 24),
+//                centerXAnchor.constraint(equalTo: superview.centerXAnchor),
+//                widthAnchor.constraint(equalToConstant: frame.width + 20)
+//            ])
+//        }
+//    }
+//
+//    func setConstraints() {
+//        if let superview = superview as? MessageContainerView {
+//            translatesAutoresizingMaskIntoConstraints = false
+//            NSLayoutConstraint.activate([
+//                topAnchor.constraint(equalTo: superview.messageTextLabel.bottomAnchor, constant: 24),
+//                centerXAnchor.constraint(equalTo: superview.centerXAnchor),
+//                widthAnchor.constraint(equalToConstant: frame.width + 20)
+//            ])
+//        }
+//    }
 }

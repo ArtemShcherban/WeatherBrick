@@ -7,15 +7,17 @@ import UIKit
 import Network
 import CoreLocation
 
-class WeatherMainViewController: UIViewController, SearchLocationViewControllerDelegate {
+final class WeatherMainViewController: UIViewController, SearchLocationViewControllerDelegate {
     static let reuseIdentifier = String(describing: WeatherMainViewController.self)
     static let shared = WeatherMainViewController()
-   
+    
     let userDefaultsManager = UserDefaultsManager.manager
     
     let monitor = NWPathMonitor()
-  
+    
     var mainQueue: Dispatching?
+    
+    private lazy var networkServiceModel = NetworkServiceModel.shared
     
     private lazy var weatherMainModel: WeatherMainModel = {
         WeatherMainModel.shared
@@ -34,15 +36,13 @@ class WeatherMainViewController: UIViewController, SearchLocationViewControllerD
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        //        userDefaultsManager.removeObject(forKey: "myWeather")
         mainQueue = AsyncQueue.main
         monitorNetwork()
         weatherMainView.createMainView()
-        weatherMainModel.getCountries()
     }
     
-    func getMyWeatherFor<T>(_ location: T) {
-        weatherMainModel.prepareLinkFor(location: location) { link in
+    private func getMyWeatherFor<T>(_ location: T) {
+        networkServiceModel.prepareLinkFor(location: location) { link in
             self.weatherMainModel.createMyWeather(with: link) { myWeatherOrError in
                 switch myWeatherOrError {
                 case .failure(let error):
@@ -60,19 +60,19 @@ class WeatherMainViewController: UIViewController, SearchLocationViewControllerD
         userDefaultsManager.save(myWeather)
         weatherMainView.updateWeather(with: myWeather)
     }
- 
-    func updateIcon(locator: Bool) {
-        weatherMainView.setIcon(for: locator)
+    
+    func updateIconWith(_ geoLocation: Bool) {
+        weatherMainView.setIconFor(geoLocation)
     }
     
-    func monitorNetwork() {
+    private func monitorNetwork() {
         monitor.pathUpdateHandler = { path in
             if path.status == .satisfied {
                 guard let location = self.userDefaultsManager.getLocation() else { return }
                 self.getMyWeatherFor(location)
             } else {
                 self.mainQueue?.dispatch {
-                    self.weatherMainView.stoneImageView.image = UIImage(named: "image_NO_stone")
+                    self.weatherMainView.stoneImageView.image = UIImage(named: AppConstants.StoneImage.noStone)
                 }
             }
         }

@@ -9,9 +9,9 @@
 import Foundation
 import UIKit
 
-class NetworkService {
+final class NetworkService {
     static let shared = NetworkService()
-   
+    
     func getDataFromOpenWeather(with link: String, completion: @escaping(Result<ResultOfRequest, NetworkServiceError>) -> Void) {
         guard let url = URL(string: link) else {
             completion(.failure(NetworkServiceError.cannotCreateURL))
@@ -42,10 +42,10 @@ class NetworkService {
     
     func getDataFromCountriesJson(completion: @escaping(([Any]) -> Void) ) {
         guard let url = Bundle.main.url(forResource: "CountriesWithFlags", withExtension: "json"),
-            let data = try? Data(contentsOf: url),
-            let json = try? JSONSerialization.jsonObject(
-            with: data,
-            options: JSONSerialization.ReadingOptions.fragmentsAllowed) as? [Any] else { return }
+        let data = try? Data(contentsOf: url),
+        let json = try? JSONSerialization.jsonObject(
+        with: data,
+        options: JSONSerialization.ReadingOptions.fragmentsAllowed) as? [Any] else { return }
         completion(json)
     }
 }

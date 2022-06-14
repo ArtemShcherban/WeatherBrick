@@ -119,8 +119,8 @@ final class WeatherMainView: UIView {
         }
     }
     
-    func setIcon(for locator: Bool) {
-        switch locator {
+    func setIconFor(_ geoLocation: Bool) {
+        switch geoLocation {
         case true:
             if searchIconImageView.superview === self {
                 searchIconImageView.removeFromSuperview()

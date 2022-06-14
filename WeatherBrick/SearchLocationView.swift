@@ -13,40 +13,96 @@ final class SearchLocationView: UIView {
     weak var searchBarDelegate: UISearchBarDelegate?
     
     private lazy var backgroundImageView = BackgraundImageView()
- 
+    
     lazy var searchController: UISearchController = {
         let tempSearchController = UISearchController(searchResultsController: nil)
         tempSearchController.obscuresBackgroundDuringPresentation = false
-        tempSearchController.searchBar.placeholder = "Enter your location"
+        let attributedString = NSAttributedString(
+            string: "Search for a city or coordinates",
+            attributes: [
+                NSAttributedString.Key.kern: -0.41,
+                NSAttributedString.Key.font: UIFont(name: AppConstants.Font.ubuntuLight, size: 16) ?? UIFont()
+            ])
+        tempSearchController.searchBar.searchTextField.attributedPlaceholder = attributedString
         tempSearchController.searchBar.delegate = searchBarDelegate
-    return tempSearchController
+        return tempSearchController
     }()
     
-    private(set) lazy var errorTextLabel = ErrorTextLabel()
+    lazy var backButton: UIBarButtonItem = {
+        let tempBackButton = UIBarButtonItem(
+            title: "Back",
+            style: .plain,
+            target: self,
+            action: #selector(delegateActions(_:)))
+        return tempBackButton
+    }()
+    
+    private(set) lazy var messageTextLabel = MessageTextLabel()
+    private(set) lazy var containerView = UIView()
     
     lazy var userLocationButton: UserLocationButton = {
         let tempUserLocationButton = UserLocationButton()
         tempUserLocationButton.addTarget(
-            delegate,
-            action: #selector(delegate?.userLocattionButtonPressed),
+            self,
+            action: #selector(delegateActions(_:)),
             for: .touchUpInside)
         return tempUserLocationButton
     }()
-      
+    
     func createSearchLocationMainView() {
         addSubview(backgroundImageView)
-        addSubview(userLocationButton)
-        addSubview(errorTextLabel)
-        errorTextLabel.setConstraints()
-        userLocationButton.setConstraints()
+        addSubview(containerView)
+        containerView.addSubview(messageTextLabel)
+        containerView.addSubview(userLocationButton)
+        
+        setContainerViewConstraints()
+        setMessageTextLabelConstarints()
+        setUserLocationButtonConstraints()
+        containerView.bottomAnchor.constraint(equalTo: userLocationButton.bottomAnchor).isActive = true
     }
     
-    func addErrorTextLabel(with text: String) {
-        errorTextLabel.text = text
-        errorTextLabel.isActive = true
+    @objc private func delegateActions(_ sender: Any) {
+        if sender as? UIBarButtonItem != nil {
+            delegate?.backButtonPressed()
+        } else {
+            delegate?.userLocattionButtonPressed()
+        }
+    }
+    
+    func setContainerViewConstraints() {
+        containerView.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.activate([
+            containerView.topAnchor.constraint(equalTo: self.safeAreaLayoutGuide.topAnchor),
+            containerView.leadingAnchor.constraint(
+                equalTo: self.leadingAnchor,
+                constant: AppConstants.Indent.left),
+            containerView.trailingAnchor.constraint(
+                equalTo: self.trailingAnchor,
+                constant: AppConstants.Indent.right)
+        ])
+    }
+    
+    func setMessageTextLabelConstarints() {
+        messageTextLabel.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.activate([
+            messageTextLabel.topAnchor.constraint(equalTo: containerView.safeAreaLayoutGuide.topAnchor),
+            messageTextLabel.leadingAnchor.constraint(equalTo: containerView.leadingAnchor),
+            messageTextLabel.trailingAnchor.constraint(equalTo: containerView.trailingAnchor),
+            messageTextLabel.heightAnchor.constraint(equalToConstant: 156)
+        ])
+    }
+    
+    func setUserLocationButtonConstraints() {
+        userLocationButton.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.activate([
+            userLocationButton.topAnchor.constraint(equalTo: messageTextLabel.bottomAnchor, constant: 24),
+            userLocationButton.centerXAnchor.constraint(equalTo: messageTextLabel.centerXAnchor),
+            userLocationButton.widthAnchor.constraint(equalToConstant: userLocationButton.frame.width + 20)
+        ])
     }
 }
 
-@objc protocol SearchLocationViewModelDelegate: AnyObject {
-func userLocattionButtonPressed()
+protocol SearchLocationViewModelDelegate: AnyObject {
+    func userLocattionButtonPressed()
+    func backButtonPressed()
 }

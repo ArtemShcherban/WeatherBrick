@@ -13,5 +13,5 @@ enum NetworkServiceError: String, Error {
     case errorCallingGET = "Network access error, please check your wi-fi connection or network coverage and try again"
     case didNotRecieveData = "Error: did not recieve data"
     case httpRequestFailed =
-        "Error: We could not find your location, check spelling, coordinates, etc. and please try again."
+        "Error: We could not find your location, check your spelling or coordinates, please try again."
 }

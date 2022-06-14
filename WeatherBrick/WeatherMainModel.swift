@@ -12,26 +12,29 @@ import CoreLocation
 
 final class WeatherMainModel {
     static let shared = WeatherMainModel()
+    
     private lazy var networkServiceManager = NetworkService.shared
     private lazy var countriesWithFlags: [String: Country] = [:]
-    private lazy var geocoder = CLGeocoder()
     
-    func prepareLinkFor<T>(location: T, completion: @escaping(String) -> Void) {
-        if let location = location as? String {
-            let link = "\(AppConstants.weatherIn)\(location)\(AppConstants.apiKey)\(AppConstants.metricUnits)"
-            
-            completion(link)
-        }
-        
-        if let location = location as? CLLocation {
-            let latitude = location.coordinate.latitude.description
-            let longtitude = location.coordinate.longitude.description
-            let link = "\(AppConstants.weatherBy)\(latitude)\(AppConstants.and)\(longtitude)\(AppConstants.apiKey)\(AppConstants.metricUnits)"
-            
-            completion(link)
+    init() {
+        getCountries()
+    }
+    
+    private func getCountries() {
+        networkServiceManager.getDataFromCountriesJson { jsonArray in
+            for item in jsonArray {
+                if let object = item as? [String: String] {
+                    let codeIso = object["ISO"] ?? ""
+                    let countryName = object["Name"] ?? ""
+                    let countryFlag = object["Emoji"] ?? ""
+                    let unicode = object["Unicode"] ?? ""
+                    let country = Country(codeISO: codeIso, name: countryName, flag: countryFlag, unicode: unicode)
+                    self.countriesWithFlags.updateValue(country, forKey: codeIso)
+                }
+            }
         }
     }
-        
+    
     func createMyWeather(with link: String, completion: @escaping((Result<MyWeather, NetworkServiceError>) -> Void)) {
         networkServiceManager.getDataFromOpenWeather(with: link) { resultOrError in
             switch resultOrError {
@@ -61,22 +64,7 @@ final class WeatherMainModel {
         }
     }
     
-    func getCountries() {
-        networkServiceManager.getDataFromCountriesJson { jsonArray in
-            for item in jsonArray {
-                if let object = item as? [String: String] {
-                    let codeIso = object["ISO"] ?? ""
-                    let countryName = object["Name"] ?? ""
-                    let countryFlag = object["Emoji"] ?? ""
-                    let unicode = object["Unicode"] ?? ""
-                    let country = Country(codeISO: codeIso, name: countryName, flag: countryFlag, unicode: unicode)
-                    self.countriesWithFlags.updateValue(country, forKey: codeIso)
-                }
-            }
-        }
-    }
-    
-    func getStoneImage(dependingOn weather: ResultOfRequest) -> String {
+    private func getStoneImage(dependingOn weather: ResultOfRequest) -> String {
         guard let condition = weather.conditionMain,
             let temperature = weather.temperature else {
             return String()
@@ -108,7 +96,7 @@ final class WeatherMainModel {
         }
     }
     
-    func convertToGeo(coordinates: (Double, Double)) -> (String, String) {
+    private func convertToGeo(coordinates: (Double, Double)) -> (String, String) {
         var latitude = ""
         var longtitude = ""
         var doubleCoordinate = 0.0

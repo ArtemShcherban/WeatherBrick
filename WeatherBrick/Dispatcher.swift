@@ -20,13 +20,13 @@ protocol Dispatching {
     func dispatch(work: @escaping () -> Void)
 }
 
-class AsyncQueue: Dispatcher {
+final class AsyncQueue: Dispatcher {
     static let main = AsyncQueue(queue: .main)
     static let global = AsyncQueue(queue: .global())
     static let background = AsyncQueue(queue: .global(qos: .background))
 }
 
-class SyncQueue: Dispatcher {
+final class SyncQueue: Dispatcher {
     static let main = SyncQueue(queue: .main)
     static let global = SyncQueue(queue: .global())
     static let background = SyncQueue(queue: .global(qos: .background))

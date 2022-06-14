@@ -8,8 +8,8 @@
 
 import UIKit
 
-class LocationButton: UIButton {
-    var widthAnchorConstraint = NSLayoutConstraint()
+final class LocationButton: UIButton {
+    private lazy var widthAnchorConstraint = NSLayoutConstraint()
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -20,9 +20,9 @@ class LocationButton: UIButton {
         super.init(coder: coder)
     }
     
-    func configure() {
+    private func configure() {
         let attributedTitle = NSAttributedString(
-            string: "Choose your location",
+            string: AppConstants.TitleFor.locationButton,
             attributes: [
                 NSAttributedString.Key.kern: -0.41,
                 NSAttributedString.Key.font: UIFont(name: AppConstants.Font.ubuntuRegular, size: 17) ?? UIFont()
