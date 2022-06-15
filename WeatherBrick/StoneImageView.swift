@@ -5,8 +5,9 @@
 //  Created by Artem Shcherban on 09.06.2022.
 //  Copyright © 2022 VAndrJ. All rights reserved.
 //
-import Foundation
+
 import UIKit
+import DeviceKit
 
 final class StoneImageView: UIImageView {
     override init(frame: CGRect = .zero) {
@@ -19,12 +20,13 @@ final class StoneImageView: UIImageView {
     }
     
     private func configure() {
-        guard let stoneImage = UIImage(named: AppConstants.StoneImage.normal) else { return }
-        bounds.size = stoneImage.size
-        image = stoneImage
+        guard let stoneImage = UIImage(named: AppConstants.StoneImage.normal),
+        let risizaedImage = stoneImage.resized(toWidth: UIScreen.main.bounds.height * 0.27) else { return }
+        bounds.size = risizaedImage.size
+        image = risizaedImage
         alpha = 1
         center.x = UIScreen.main.bounds.width / 2
-        center.y = stoneImage.size.height / 2
+        center.y = risizaedImage.size.height / 2 - (AppConstants.bigScreenSize ? 0 : 12)
         isUserInteractionEnabled = true
         setAnchorPoint(CGPoint(x: 0.5, y: 0.0))
     }
@@ -75,5 +77,15 @@ extension StoneImageView {
         
         layer.position = position
         layer.anchorPoint = point
+    }
+}
+
+extension UIImage {
+    func resized(toWidth width: CGFloat) -> UIImage? {
+        let canvasSize = CGSize(width: width, height: CGFloat(ceil(width / size.width * size.height)))
+        UIGraphicsBeginImageContextWithOptions(canvasSize, false, scale)
+        defer { UIGraphicsEndImageContext() }
+        draw(in: CGRect(origin: .zero, size: canvasSize))
+        return UIGraphicsGetImageFromCurrentImageContext()
     }
 }

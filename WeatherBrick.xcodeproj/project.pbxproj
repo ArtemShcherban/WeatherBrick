@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 50;
+	objectVersion = 51;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -48,6 +48,8 @@
 		F4A9B83528533098003B7D78 /* UserLocationButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4A9B83428533098003B7D78 /* UserLocationButton.swift */; };
 		F4A9B83728533D87003B7D78 /* UserDefaultsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4A9B83628533D87003B7D78 /* UserDefaultsManager.swift */; };
 		F4B287862858601A005E1960 /* FadeTransitionExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4B287852858601A005E1960 /* FadeTransitionExtension.swift */; };
+		F4B287A9285881B6005E1960 /* Size.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4B287A8285881B6005E1960 /* Size.swift */; };
+		F4B287AB285884AC005E1960 /* DeviceOld.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4B287AA285884AC005E1960 /* DeviceOld.swift */; };
 		F4DF62BC283D4E7D004CAE1B /* SearchLocationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4DF62BB283D4E7D004CAE1B /* SearchLocationViewController.swift */; };
 		F4DF62BE283D4EAC004CAE1B /* SearchLocationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4DF62BD283D4EAC004CAE1B /* SearchLocationView.swift */; };
 		F4DF62C0283D55B6004CAE1B /* BackgraundImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4DF62BF283D55B6004CAE1B /* BackgraundImageView.swift */; };
@@ -124,6 +126,8 @@
 		F4A9B83428533098003B7D78 /* UserLocationButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserLocationButton.swift; sourceTree = "<group>"; };
 		F4A9B83628533D87003B7D78 /* UserDefaultsManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDefaultsManager.swift; sourceTree = "<group>"; };
 		F4B287852858601A005E1960 /* FadeTransitionExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FadeTransitionExtension.swift; sourceTree = "<group>"; };
+		F4B287A8285881B6005E1960 /* Size.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Size.swift; sourceTree = "<group>"; };
+		F4B287AA285884AC005E1960 /* DeviceOld.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeviceOld.swift; sourceTree = "<group>"; };
 		F4DF62BB283D4E7D004CAE1B /* SearchLocationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchLocationViewController.swift; sourceTree = "<group>"; };
 		F4DF62BD283D4EAC004CAE1B /* SearchLocationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchLocationView.swift; sourceTree = "<group>"; };
 		F4DF62BF283D55B6004CAE1B /* BackgraundImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BackgraundImageView.swift; sourceTree = "<group>"; };
@@ -222,6 +226,7 @@
 		A3ACF2DE27383B7400CEE97C /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				F4B287A728588185005E1960 /* DeviceSizes */,
 				F4B2878328585FDF005E1960 /* Extensions */,
 				F43B67472844B8520034FAEA /* NetworkServiceError */,
 				F43B674428448E680034FAEA /* Dispatcher */,
@@ -443,6 +448,15 @@
 			name = UIViewExtensions;
 			sourceTree = "<group>";
 		};
+		F4B287A728588185005E1960 /* DeviceSizes */ = {
+			isa = PBXGroup;
+			children = (
+				F4B287A8285881B6005E1960 /* Size.swift */,
+				F4B287AA285884AC005E1960 /* DeviceOld.swift */,
+			);
+			name = DeviceSizes;
+			sourceTree = "<group>";
+		};
 		F4DF62B6283CC805004CAE1B /* NetworkServiceModule */ = {
 			isa = PBXGroup;
 			children = (
@@ -511,6 +525,7 @@
 				A3475EF7273305F200BF5E86 /* Sources */,
 				A3475EF8273305F200BF5E86 /* Frameworks */,
 				A3475EF9273305F200BF5E86 /* Resources */,
+				56F6C930C65C7EE37A957069 /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -548,6 +563,7 @@
 				A3475F16273305F400BF5E86 /* Sources */,
 				A3475F17273305F400BF5E86 /* Frameworks */,
 				A3475F18273305F400BF5E86 /* Resources */,
+				FE89646DDD8743C14BC18472 /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -663,6 +679,23 @@
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
+		56F6C930C65C7EE37A957069 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-WeatherBrick/Pods-WeatherBrick-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-WeatherBrick/Pods-WeatherBrick-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-WeatherBrick/Pods-WeatherBrick-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
 		72D6ADB55009425183E1C6B1 /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -724,6 +757,23 @@
 			shellPath = /bin/sh;
 			shellScript = "\"${PODS_ROOT}/SwiftLint/swiftlint\"\n";
 		};
+		FE89646DDD8743C14BC18472 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-WeatherBrick-WeatherBrickUITests/Pods-WeatherBrick-WeatherBrickUITests-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-WeatherBrick-WeatherBrickUITests/Pods-WeatherBrick-WeatherBrickUITests-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-WeatherBrick-WeatherBrickUITests/Pods-WeatherBrick-WeatherBrickUITests-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
 /* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
@@ -740,8 +790,10 @@
 				F48F5B6A2854859600A1CA75 /* NetworkServiceModel.swift in Sources */,
 				A3475F01273305F200BF5E86 /* WeatherMainViewController.swift in Sources */,
 				F48BCC5E283BE8A500378711 /* LocationButton.swift in Sources */,
+				F4B287AB285884AC005E1960 /* DeviceOld.swift in Sources */,
 				A3475EFF273305F200BF5E86 /* AppDelegate.swift in Sources */,
 				F4A9B8302851B9FE003B7D78 /* StoneImageView.swift in Sources */,
+				F4B287A9285881B6005E1960 /* Size.swift in Sources */,
 				F48BCC50283B752500378711 /* Weather.swift in Sources */,
 				F48BCC53283B752500378711 /* ResultOfRequest.swift in Sources */,
 				F47DA1FB2837836900098B17 /* WeatherMainView.swift in Sources */,

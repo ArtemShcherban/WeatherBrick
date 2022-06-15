@@ -1,16 +1,20 @@
 PODS:
+  - DeviceKit (4.6.0)
   - SwiftLint (0.45.1)
 
 DEPENDENCIES:
+  - DeviceKit
   - SwiftLint
 
 SPEC REPOS:
   trunk:
+    - DeviceKit
     - SwiftLint
 
 SPEC CHECKSUMS:
+  DeviceKit: 834dd8aa1be53cd85364d8f49aa5d98bfac397c4
   SwiftLint: 06ac37e4d38c7068e0935bb30cda95f093bec761
 
-PODFILE CHECKSUM: 267286510b1a8db9f485c2e98cedee756493542e
+PODFILE CHECKSUM: ca9b5e157da11912f08d361d3d10532304c1d873
 
 COCOAPODS: 1.10.2

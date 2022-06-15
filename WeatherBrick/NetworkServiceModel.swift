@@ -12,7 +12,7 @@ import CoreLocation
 final class NetworkServiceModel {
     static let shared = NetworkServiceModel()
     
-    func prepareLinkFor<T>(location: T, completion: @escaping(String) -> Void) {
+    func prepareLinkFor<T: Locatable>(location: T, completion: @escaping(String) -> Void) {
         if let location = location as? String {
             let link = "\(AppConstants.weatherIn)\(location)\(AppConstants.apiKey)\(AppConstants.metricUnits)"
             

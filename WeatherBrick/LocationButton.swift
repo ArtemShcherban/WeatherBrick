@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import DeviceKit
 
 final class LocationButton: UIButton {
     private lazy var widthAnchorConstraint = NSLayoutConstraint()
@@ -53,9 +54,13 @@ final class LocationButton: UIButton {
         translatesAutoresizingMaskIntoConstraints = false
         widthAnchorConstraint = widthAnchor.constraint(equalToConstant: frame.width + 20)
         NSLayoutConstraint.activate([
-            topAnchor.constraint(equalTo: superview.topAnchor, constant: 700),
+            topAnchor.constraint(
+                equalTo: superview.topAnchor,
+                constant: UIScreen.main.bounds.size.height * CGFloat(AppConstants.bigScreenSize ? 0.83 : 0.8)),
             centerXAnchor.constraint(equalTo: superview.centerXAnchor),
             widthAnchorConstraint
         ])
+        print("Width of superView is \(UIScreen.main.bounds.width)")
+        print("Height of superView is \(UIScreen.main.bounds.size.height)")
     }
 }

@@ -7,6 +7,8 @@
 //
 
 import UIKit
+import DeviceKit
+
 final class WeatherMainView: UIView {
     static let shared = WeatherMainView()
     weak var delegate: WeatherMainViewDelegate?
@@ -20,7 +22,9 @@ final class WeatherMainView: UIView {
     
     lazy var temperatureLabel: UILabel = {
         let tempTemperatureLabel = UILabel()
-        tempTemperatureLabel.font = UIFont(name: AppConstants.Font.ubuntuRegular, size: 83)
+        tempTemperatureLabel.font = UIFont(
+            name: AppConstants.Font.ubuntuRegular,
+            size: AppConstants.bigScreenSize ? 83 : 63) ?? UIFont()
         return tempTemperatureLabel
     }()
     
@@ -28,7 +32,9 @@ final class WeatherMainView: UIView {
         let tempConditionLabel = UILabel(frame: CGRect(x: 16, y: 558, width: 124, height: 58))
         let attributedString = NSAttributedString(string: " ", attributes: [
             NSAttributedString.Key.kern: -0.41,
-            NSAttributedString.Key.font: UIFont(name: AppConstants.Font.ubuntuLight, size: 36) ?? UIFont()
+            NSAttributedString.Key.font: UIFont(
+                name: AppConstants.Font.ubuntuLight,
+                size: AppConstants.bigScreenSize ? 36 : 27) ?? UIFont()
         ])
         tempConditionLabel.attributedText = attributedString
         tempConditionLabel.numberOfLines = 3
@@ -39,7 +45,9 @@ final class WeatherMainView: UIView {
         let tempWindSpeedLabel = UILabel()
         let attributedString = NSAttributedString(string: " ", attributes: [
             NSAttributedString.Key.kern: -0.41,
-            NSAttributedString.Key.font: UIFont(name: AppConstants.Font.ubuntuLight, size: 20) ?? UIFont()
+            NSAttributedString.Key.font: UIFont(
+                name: AppConstants.Font.ubuntuLight,
+                size: AppConstants.bigScreenSize ? 20 : 15) ?? UIFont()
         ])
         tempWindSpeedLabel.attributedText = attributedString
         return tempWindSpeedLabel
@@ -66,11 +74,11 @@ final class WeatherMainView: UIView {
     
     func createMainView() {
         addSubview(backgroundImageView)
+        addSubview(stoneImageView)
         addSubview(temperatureLabel)
         addSubview(conditionLabel)
         addSubview(windSpeedLabel)
         addSubview(locationButton)
-        addSubview(stoneImageView)
         addSubview(popUpWindow)
         addSwipeGesture()
         
@@ -140,8 +148,10 @@ final class WeatherMainView: UIView {
         temperatureLabel.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
             temperatureLabel.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 16),
-            temperatureLabel.topAnchor.constraint(equalTo: self.topAnchor, constant: 461),
-            temperatureLabel.heightAnchor.constraint(equalToConstant: 126),
+            temperatureLabel.topAnchor.constraint(
+                equalTo: self.topAnchor,
+                constant: UIScreen.main.bounds.height * CGFloat(AppConstants.bigScreenSize ? 0.55 : 0.57)),
+            temperatureLabel.heightAnchor.constraint(equalToConstant: AppConstants.bigScreenSize ? 126 : 95),
             temperatureLabel.widthAnchor.constraint(greaterThanOrEqualToConstant: 0)
         ])
     }
@@ -151,7 +161,9 @@ final class WeatherMainView: UIView {
         NSLayoutConstraint.activate([
             conditionLabel.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 16),
             conditionLabel.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -16),
-            conditionLabel.topAnchor.constraint(equalTo: self.topAnchor, constant: 558),
+            conditionLabel.topAnchor.constraint(
+                equalTo: self.topAnchor,
+                constant: UIScreen.main.bounds.height * CGFloat(AppConstants.bigScreenSize ? 0.66 : 0.67)),
             conditionLabel.widthAnchor.constraint(greaterThanOrEqualToConstant: 0),
             conditionLabel.heightAnchor.constraint(greaterThanOrEqualToConstant: 0)
         ])
@@ -189,7 +201,8 @@ final class WeatherMainView: UIView {
     
     func setPopUpWindowConstraints() {
         popUpWindow.translatesAutoresizingMaskIntoConstraints = false
-        axisYConstraint = popUpWindow.centerYAnchor.constraint(equalTo: self.centerYAnchor, constant: 540)
+        axisYConstraint =
+        popUpWindow.centerYAnchor.constraint(equalTo: self.centerYAnchor, constant: UIScreen.main.bounds.height * 0.64)
         NSLayoutConstraint.activate([
             axisYConstraint,
             popUpWindow.centerXAnchor.constraint(equalTo: self.centerXAnchor),
@@ -219,7 +232,7 @@ extension WeatherMainView {
     }
     
     func animatePopUpWindowOut() {
-        self.axisYConstraint.constant = 540
+        self.axisYConstraint.constant = UIScreen.main.bounds.height * 0.64
         UIView.animate(
             withDuration: 1.2,
             delay: 0.0,

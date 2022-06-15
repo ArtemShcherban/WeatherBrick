@@ -8,8 +8,11 @@
 
 import Foundation
 import UIKit
+import DeviceKit
 
 enum AppConstants {
+    static let bigScreenSize = Device.screenSize() > Size.screen5x8Inch
+
     static let weatherIn = "https://api.openweathermap.org/data/2.5/weather?q="
     static let weatherBy = "https://api.openweathermap.org/data/2.5/weather?lat="
     static let and = "&lon="
@@ -89,4 +92,7 @@ enum AppConstants {
     enum UserDefaultsError {
         static let unableToEncode = "Unable to encode MyWeather"
     }
+    
+    static let screenWidth = UIScreen.main.bounds.width
+    static let screenHeight = UIScreen.main.bounds.height
 }

@@ -5,6 +5,7 @@
 
 import UIKit
 import Network
+import DeviceKit
 import CoreLocation
 
 final class WeatherMainViewController: UIViewController, SearchLocationViewControllerDelegate {
@@ -13,10 +14,10 @@ final class WeatherMainViewController: UIViewController, SearchLocationViewContr
     
     let userDefaultsManager = UserDefaultsManager.manager
     
-    let monitor = NWPathMonitor()
+    var monitor: NWPathMonitor?
     
     var mainQueue: Dispatching?
-    
+
     private lazy var networkServiceModel = NetworkServiceModel.shared
     
     private lazy var weatherMainModel: WeatherMainModel = {
@@ -39,9 +40,31 @@ final class WeatherMainViewController: UIViewController, SearchLocationViewContr
         mainQueue = AsyncQueue.main
         monitorNetwork()
         weatherMainView.createMainView()
+        createNotificationObserver()
     }
     
-    private func getMyWeatherFor<T>(_ location: T) {
+    func createNotificationObserver() {
+        NotificationCenter.default.addObserver(
+            self,
+            selector: #selector(applicationOnScreen(notification:)),
+            name: UIApplication.willEnterForegroundNotification,
+            object: nil)
+        NotificationCenter.default.addObserver(
+            self,
+            selector: #selector(applicationOnScreen(notification:)),
+            name: UIApplication.willResignActiveNotification,
+            object: nil)
+    }
+    
+    @objc func applicationOnScreen(notification: NSNotification) {
+        if notification.name == UIApplication.willEnterForegroundNotification {
+        monitorNetwork()
+        } else {
+            monitor?.cancel()
+        }
+    }
+    
+    private func getMyWeatherFor(_ location: CLLocation) {
         networkServiceModel.prepareLinkFor(location: location) { link in
             self.weatherMainModel.createMyWeather(with: link) { myWeatherOrError in
                 switch myWeatherOrError {
@@ -66,7 +89,8 @@ final class WeatherMainViewController: UIViewController, SearchLocationViewContr
     }
     
     private func monitorNetwork() {
-        monitor.pathUpdateHandler = { path in
+        self.monitor = NWPathMonitor()
+        monitor?.pathUpdateHandler = { path in
             if path.status == .satisfied {
                 guard let location = self.userDefaultsManager.getLocation() else { return }
                 self.getMyWeatherFor(location)
@@ -77,7 +101,7 @@ final class WeatherMainViewController: UIViewController, SearchLocationViewContr
             }
         }
         let queue = DispatchQueue(label: "Monitor")
-        monitor.start(queue: queue)
+        monitor?.start(queue: queue)
     }
 }
 

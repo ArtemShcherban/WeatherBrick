@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import DeviceKit
 
 final class PopUpWindow: UIView {
     weak var delegate: PopUpWindowDelegate?
@@ -26,7 +27,7 @@ final class PopUpWindow: UIView {
     
     private lazy var titleLabel: UILabel = {
         let label = UILabel()
-        label.font = UIFont(name: AppConstants.Font.ubuntuBold, size: 18)
+        label.font = UIFont(name: AppConstants.Font.ubuntuBold, size: AppConstants.bigScreenSize ? 18 : 16)
         label.textColor = AppConstants.Color.graphite
         label.text = AppConstants.TitleFor.popUpWindow
         return label
@@ -35,16 +36,18 @@ final class PopUpWindow: UIView {
     private lazy var hideButton: UIButton = {
         let tempHideButton = UIButton()
         tempHideButton.layer.borderColor = AppConstants.Color.lightGraphite.cgColor
-        tempHideButton.layer.borderWidth = 2
+        tempHideButton.layer.borderWidth = AppConstants.bigScreenSize ? 2 : 1
         let fontAttribbute = [
-            NSAttributedString.Key.font: UIFont(name: AppConstants.Font.ubuntuMedium, size: 15),
+            NSAttributedString.Key.font: UIFont(
+                name: AppConstants.Font.ubuntuMedium,
+                size: AppConstants.bigScreenSize ? 15 : 14),
             NSAttributedString.Key.foregroundColor: AppConstants.Color.lightGraphite
         ]
         let buttonTitle = NSAttributedString(
             string: AppConstants.TitleFor.hideButton,
             attributes: fontAttribbute as [NSAttributedString.Key: Any])
         tempHideButton.setAttributedTitle(buttonTitle, for: .normal)
-        tempHideButton.layer.cornerRadius = 18
+        tempHideButton.layer.cornerRadius = AppConstants.bigScreenSize ? 18 : 14
         tempHideButton.addTarget(self, action: #selector(delegateActions), for: .touchUpInside)
         return tempHideButton
     }()
@@ -130,7 +133,9 @@ final class PopUpWindow: UIView {
         let conditions = AppConstants.conditions
         conditions.forEach { condition in
             let label = UILabel()
-            label.font = UIFont(name: AppConstants.Font.ubuntuRegular, size: 15)
+            label.font = UIFont(
+                name: AppConstants.Font.ubuntuRegular,
+                size: AppConstants.bigScreenSize ? 15 : 13)
             label.textColor = AppConstants.Color.graphite
             label.text = condition
             conditionLabels.append(label)
@@ -196,31 +201,35 @@ final class PopUpWindow: UIView {
     private func setTitleLabelConstraints() {
         titleLabel.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
-            titleLabel.topAnchor.constraint(equalTo: containerView.topAnchor, constant: 30),
+            titleLabel.topAnchor.constraint(
+                equalTo: containerView.topAnchor,
+                constant: containerView.frame.height * 0.08),
             titleLabel.centerXAnchor.constraint(equalTo: windowBackgroundView.centerXAnchor)
         ])
     }
     
     private func setLabelsConstraints() {
-        var topIndent: CGFloat = 30
+        var topIndent: CGFloat = containerView.frame.height * 0.08
         conditionLabels.forEach { label in
             label.translatesAutoresizingMaskIntoConstraints = false
             NSLayoutConstraint.activate([
                 label.topAnchor.constraint(equalTo: titleLabel.bottomAnchor, constant: topIndent),
                 label.leadingAnchor.constraint(equalTo: containerView.leadingAnchor, constant: 32),
                 label.widthAnchor.constraint(greaterThanOrEqualToConstant: 0),
-                label.heightAnchor.constraint(equalToConstant: 20)
+                label.heightAnchor.constraint(equalToConstant: containerView.frame.height * 0.05)
             ])
-            topIndent += 30
+            topIndent += containerView.frame.height * 0.08
         }
     }
     
     private func setHideButtonConstraints() {
         hideButton.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
-            hideButton.widthAnchor.constraint(equalToConstant: 115),
-            hideButton.heightAnchor.constraint(equalToConstant: 36),
-            hideButton.bottomAnchor.constraint(equalTo: containerView.bottomAnchor, constant: -30),
+            hideButton.widthAnchor.constraint(equalToConstant: AppConstants.bigScreenSize ? 115 : 87),
+            hideButton.heightAnchor.constraint(equalToConstant: AppConstants.bigScreenSize ? 36 : 28),
+            hideButton.bottomAnchor.constraint(
+                equalTo: containerView.bottomAnchor,
+                constant: containerView.frame.height * -0.08),
             hideButton.centerXAnchor.constraint(equalTo: windowBackgroundView.centerXAnchor)
         ])
     }

@@ -50,7 +50,7 @@ final class SearchLocationViewController: UIViewController {
         navigationItem.leftBarButtonItem = searchLocationView.backButton
     }
     
-    func getMyWeatherFor<T>(_ location: T, compleation: @escaping(MyWeather) -> Void) {
+    func getMyWeatherFor<T: Locatable>(_ location: T, compleation: @escaping(MyWeather) -> Void) {
         networkServiceModel.prepareLinkFor(location: location) { link in
             self.weatherMainModel.createMyWeather(with: link) { myWeatherOrError in
                 switch myWeatherOrError {
@@ -77,7 +77,11 @@ final class SearchLocationViewController: UIViewController {
 
 extension SearchLocationViewController: SearchLocationViewModelDelegate {
     func backButtonPressed() {
-        guard let myWeather = userDefaultsManager.getMyWeather() else { return }
+        print("Back button pressed")
+        guard let myWeather = userDefaultsManager.getMyWeather() else {
+            navigationController?.popViewController(animated: true)
+            return
+        }
         delgate?.updateWeather(with: myWeather)
         navigationController?.popViewController(animated: true)
     }
@@ -160,3 +164,7 @@ protocol SearchLocationViewControllerDelegate: AnyObject {
     func updateWeather(with myWeather: MyWeather)
     func updateIconWith(_ geoLocation: Bool)
 }
+
+protocol Locatable {}
+extension CLLocation: Locatable {}
+extension String: Locatable {}
