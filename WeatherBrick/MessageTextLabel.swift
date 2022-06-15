@@ -40,12 +40,12 @@ final class MessageTextLabel: UILabel {
         createFormatsAttributedString()
     }
     
-        func messageLabelAnimation(_ updateAttributeString: () -> Void) {
-            fadeTransition(0.5)
-            updateAttributeString()
-        }
+    func messageLabelAnimation(_ updateAttributeString: () -> Void) {
+        fadeTransition(0.5)
+        updateAttributeString()
+    }
     
-    func createFormatsAttributedString() {
+    private func createFormatsAttributedString() {
         textAlignment = .center
         numberOfLines = 0
         let attributedString = NSMutableAttributedString(
@@ -73,7 +73,7 @@ final class MessageTextLabel: UILabel {
         attributedText = attributedString
     }
     
-    func createErrorAttributedString() {
+    private func createErrorAttributedString() {
         textAlignment = .center
         numberOfLines = 2
         let attributedString = NSMutableAttributedString(

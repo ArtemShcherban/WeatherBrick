@@ -12,7 +12,7 @@ import DeviceKit
 
 enum AppConstants {
     static let bigScreenSize = Device.screenSize() > Size.screen5x8Inch
-
+    
     static let weatherIn = "https://api.openweathermap.org/data/2.5/weather?q="
     static let weatherBy = "https://api.openweathermap.org/data/2.5/weather?lat="
     static let and = "&lon="
@@ -52,8 +52,11 @@ enum AppConstants {
         static let popUpWindow = "INFO"
         static let hideButton = "Hide"
         static let locationButton = "Choose your location"
+        static let backButtonTitle = "Back"
+        static let searchBarPlaceHolder = "Search for a city or coordinates"
         static let userLocationButton = "Use your location"
     }
+    
     enum Font {
         static let ubuntuRegular = "Ubuntu-Regular"
         static let ubuntuMedium = "Ubuntu-Medium"
@@ -79,7 +82,7 @@ enum AppConstants {
         "Brick is swinging - windy",
         "Brick is gone - No Internet"
     ]
-    
+
     static let inputFormats = """
     Try use the following formats, for cities:
     New York
@@ -88,11 +91,4 @@ enum AppConstants {
     for coordinates:
     40.7638157, -73.9729552
     """
-    
-    enum UserDefaultsError {
-        static let unableToEncode = "Unable to encode MyWeather"
-    }
-    
-    static let screenWidth = UIScreen.main.bounds.width
-    static let screenHeight = UIScreen.main.bounds.height
 }

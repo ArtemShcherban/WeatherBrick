@@ -12,12 +12,10 @@ final class WeatherMainViewController: UIViewController, SearchLocationViewContr
     static let reuseIdentifier = String(describing: WeatherMainViewController.self)
     static let shared = WeatherMainViewController()
     
-    let userDefaultsManager = UserDefaultsManager.manager
-    
-    var monitor: NWPathMonitor?
-    
+    private var monitor: NWPathMonitor?
     var mainQueue: Dispatching?
-
+    
+    private lazy var userDefaultsManager = UserDefaultsManager.manager
     private lazy var networkServiceModel = NetworkServiceModel.shared
     
     private lazy var weatherMainModel: WeatherMainModel = {
@@ -43,7 +41,7 @@ final class WeatherMainViewController: UIViewController, SearchLocationViewContr
         createNotificationObserver()
     }
     
-    func createNotificationObserver() {
+    private func createNotificationObserver() {
         NotificationCenter.default.addObserver(
             self,
             selector: #selector(applicationOnScreen(notification:)),
@@ -56,9 +54,9 @@ final class WeatherMainViewController: UIViewController, SearchLocationViewContr
             object: nil)
     }
     
-    @objc func applicationOnScreen(notification: NSNotification) {
+    @objc private func applicationOnScreen(notification: NSNotification) {
         if notification.name == UIApplication.willEnterForegroundNotification {
-        monitorNetwork()
+            monitorNetwork()
         } else {
             monitor?.cancel()
         }
@@ -116,7 +114,7 @@ extension WeatherMainViewController: WeatherMainViewDelegate {
         let storyboard = UIStoryboard(name: "Main", bundle: nil)
         guard let viewController =
             storyboard.instantiateViewController(withIdentifier:
-            SearchLocationViewController.reuseIdentifier) as? SearchLocationViewController else { return }
+                SearchLocationViewController.reuseIdentifier) as? SearchLocationViewController else { return }
         viewController.delgate = self
         navigationController?.pushViewController(viewController, animated: true)
     }

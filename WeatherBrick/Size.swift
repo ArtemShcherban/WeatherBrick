@@ -1,14 +1,14 @@
 //
 //  Size.swift
-//  Device
+//  WeatherBrick
 //
-//  Created by Lucas Ortis on 30/10/2015.
-//  Copyright © 2015 Ekhoo. All rights reserved.
+//  Created by Artem Shcherban on 14.06.2022.
+//  Copyright © 2022 VAndrJ. All rights reserved.
 //
 
 public enum Size: Int, Comparable {
     case unknownSize = 0
-//    #if os(iOS)
+    
     /// iPhone 6, 6s, 7, 8
     case screen4x7Inch
     /// iPhone 6+, 6s+, 7+, 8+, 12 mini, 13mini
@@ -23,7 +23,6 @@ public enum Size: Int, Comparable {
     case screen6x5Inch
     /// iPhone 12 Pro Max, 13 Pro Max
     case screen6x7Inch
-//    #endif
 }
 
 public func < (lhs: Size, rhs: Size) -> Bool {

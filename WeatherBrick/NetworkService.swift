@@ -42,10 +42,10 @@ final class NetworkService {
     
     func getDataFromCountriesJson(completion: @escaping(([Any]) -> Void) ) {
         guard let url = Bundle.main.url(forResource: "CountriesWithFlags", withExtension: "json"),
-        let data = try? Data(contentsOf: url),
-        let json = try? JSONSerialization.jsonObject(
-        with: data,
-        options: JSONSerialization.ReadingOptions.fragmentsAllowed) as? [Any] else { return }
+            let data = try? Data(contentsOf: url),
+                let json = try? JSONSerialization.jsonObject(
+                with: data,
+                options: JSONSerialization.ReadingOptions.fragmentsAllowed) as? [Any] else { return }
         completion(json)
     }
 }

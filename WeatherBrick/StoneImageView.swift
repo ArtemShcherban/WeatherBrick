@@ -21,7 +21,7 @@ final class StoneImageView: UIImageView {
     
     private func configure() {
         guard let stoneImage = UIImage(named: AppConstants.StoneImage.normal),
-        let risizaedImage = stoneImage.resized(toWidth: UIScreen.main.bounds.height * 0.27) else { return }
+            let risizaedImage = stoneImage.resized(toWidth: UIScreen.main.bounds.height * 0.27) else { return }
         bounds.size = risizaedImage.size
         image = risizaedImage
         alpha = 1
@@ -77,15 +77,5 @@ extension StoneImageView {
         
         layer.position = position
         layer.anchorPoint = point
-    }
-}
-
-extension UIImage {
-    func resized(toWidth width: CGFloat) -> UIImage? {
-        let canvasSize = CGSize(width: width, height: CGFloat(ceil(width / size.width * size.height)))
-        UIGraphicsBeginImageContextWithOptions(canvasSize, false, scale)
-        defer { UIGraphicsEndImageContext() }
-        draw(in: CGRect(origin: .zero, size: canvasSize))
-        return UIGraphicsGetImageFromCurrentImageContext()
     }
 }

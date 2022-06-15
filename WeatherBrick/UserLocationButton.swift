@@ -32,26 +32,4 @@ final class UserLocationButton: UIButton {
         layer.borderColor = AppConstants.Color.lightGraphite.cgColor
         layer.borderWidth = 2
     }
-    
-//    func setConstraints() {
-//        if let superview = superview as? SearchLocationView {
-//            translatesAutoresizingMaskIntoConstraints = false
-//            NSLayoutConstraint.activate([
-//                topAnchor.constraint(equalTo: superview.messageTextLabel.bottomAnchor, constant: 24),
-//                centerXAnchor.constraint(equalTo: superview.centerXAnchor),
-//                widthAnchor.constraint(equalToConstant: frame.width + 20)
-//            ])
-//        }
-//    }
-//
-//    func setConstraints() {
-//        if let superview = superview as? MessageContainerView {
-//            translatesAutoresizingMaskIntoConstraints = false
-//            NSLayoutConstraint.activate([
-//                topAnchor.constraint(equalTo: superview.messageTextLabel.bottomAnchor, constant: 24),
-//                centerXAnchor.constraint(equalTo: superview.centerXAnchor),
-//                widthAnchor.constraint(equalToConstant: frame.width + 20)
-//            ])
-//        }
-//    }
 }

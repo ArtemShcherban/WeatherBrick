@@ -18,13 +18,13 @@ final class UserDefaultsManager: UserDefaults {
             let data = try encoder.encode(myWeather)
             set(data, forKey: AppConstants.myWeather)
         } catch {
-            print("\(AppConstants.UserDefaultsError.unableToEncode) \(error)")
+            print("\(UserDefaultsError.unableToEncode.rawValue) \(error)")
         }
     }
     
     func getLocation() -> CLLocation? {
         if let data = object(forKey: AppConstants.myWeather) as? Data,
-        let myWeather = try? JSONDecoder().decode(MyWeather.self, from: data) {
+            let myWeather = try? JSONDecoder().decode(MyWeather.self, from: data) {
             let location = CLLocation(latitude: myWeather.latitude, longitude: myWeather.longitude)
             return location
         }
@@ -33,7 +33,7 @@ final class UserDefaultsManager: UserDefaults {
     
     func getMyWeather() -> MyWeather? {
         if let data = object(forKey: AppConstants.myWeather) as? Data,
-        let myWeather = try? JSONDecoder().decode(MyWeather.self, from: data) {
+            let myWeather = try? JSONDecoder().decode(MyWeather.self, from: data) {
             return myWeather
         }
         return nil

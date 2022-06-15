@@ -9,7 +9,7 @@
 import Foundation
 import CoreLocation
 
-class SearchLocationModel {
+final class SearchLocationModel {
     static let shared = SearchLocationModel()
     
     func textLooksLikeCoordinates(_ text: String) -> Bool {
@@ -30,9 +30,9 @@ class SearchLocationModel {
             before: searchBarText.endIndex)])
         
         if let latitude = Double(firstString),
-        let longitude = Double(secondString) {
-        let location = CLLocation(latitude: latitude, longitude: longitude)
-        print(location)
+            let longitude = Double(secondString) {
+            let location = CLLocation(latitude: latitude, longitude: longitude)
+            print(location)
             return location
         }
         return nil

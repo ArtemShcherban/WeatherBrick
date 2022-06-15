@@ -16,7 +16,7 @@ final class SearchLocationViewController: UIViewController {
     
     var mainQueue: Dispatching?
     
-    let locationManager = CLLocationManager()
+    private lazy var locationManager = CLLocationManager()
     
     private lazy var userDefaultsManager = UserDefaultsManager.manager
     private lazy var networkServiceModel = NetworkServiceModel.shared
@@ -44,13 +44,13 @@ final class SearchLocationViewController: UIViewController {
         configureNavigationController()
     }
     
-    func configureNavigationController() {
+    private func configureNavigationController() {
         navigationItem.searchController = searchLocationView.searchController
         navigationItem.hidesBackButton = true
         navigationItem.leftBarButtonItem = searchLocationView.backButton
     }
     
-    func getMyWeatherFor<T: Locatable>(_ location: T, compleation: @escaping(MyWeather) -> Void) {
+    private func getMyWeatherFor<T: Locatable>(_ location: T, compleation: @escaping(MyWeather) -> Void) {
         networkServiceModel.prepareLinkFor(location: location) { link in
             self.weatherMainModel.createMyWeather(with: link) { myWeatherOrError in
                 switch myWeatherOrError {
@@ -61,14 +61,14 @@ final class SearchLocationViewController: UIViewController {
                     }
                 case .success(let myWeather):
                     self.mainQueue?.dispatch {
-                    compleation(myWeather)
+                        compleation(myWeather)
                     }
                 }
             }
         }
     }
-     
-    func returnNewLocationWith(_ myWeather: MyWeather, geoLocation: Bool) {
+    
+    private func returnNewLocationWith(_ myWeather: MyWeather, geoLocation: Bool) {
         delgate?.updateWeather(with: myWeather)
         delgate?.updateIconWith(geoLocation)
         navigationController?.popViewController(animated: true)
@@ -77,7 +77,6 @@ final class SearchLocationViewController: UIViewController {
 
 extension SearchLocationViewController: SearchLocationViewModelDelegate {
     func backButtonPressed() {
-        print("Back button pressed")
         guard let myWeather = userDefaultsManager.getMyWeather() else {
             navigationController?.popViewController(animated: true)
             return
@@ -115,7 +114,7 @@ extension SearchLocationViewController: CLLocationManagerDelegate {
     }
     
     func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
-        print("Error: \(error.localizedDescription)")
+        print(error.localizedDescription)
     }
 }
 
@@ -141,8 +140,8 @@ extension SearchLocationViewController: UISearchBarDelegate {
             }
         }
     }
+    
     func searchBarShouldBeginEditing(_ searchBar: UISearchBar) -> Bool {
-        print("SearhBar tetField begin editing")
         searchLocationView.messageTextLabel.isActive = false
         searchLocationView.containerView.fadeTransition(0.5)
         return true

@@ -31,6 +31,7 @@
 		F47DA21628381C2900098B17 /* Ubuntu-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = F47DA21528381C2900098B17 /* Ubuntu-Regular.ttf */; };
 		F47DA21828381C3800098B17 /* Ubuntu-Light.ttf in Resources */ = {isa = PBXBuildFile; fileRef = F47DA21728381C3800098B17 /* Ubuntu-Light.ttf */; };
 		F47DA21A2838AF8000098B17 /* Ubuntu-Medium.ttf in Resources */ = {isa = PBXBuildFile; fileRef = F47DA2192838AF8000098B17 /* Ubuntu-Medium.ttf */; };
+		F48B0A9B2859F77200E56A4E /* ResizeExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = F48B0A9A2859F77200E56A4E /* ResizeExtension.swift */; };
 		F48BCC4D283B752500378711 /* Temperature.swift in Sources */ = {isa = PBXBuildFile; fileRef = F48BCC46283B752400378711 /* Temperature.swift */; };
 		F48BCC4E283B752500378711 /* CountryCode.swift in Sources */ = {isa = PBXBuildFile; fileRef = F48BCC47283B752400378711 /* CountryCode.swift */; };
 		F48BCC50283B752500378711 /* Weather.swift in Sources */ = {isa = PBXBuildFile; fileRef = F48BCC49283B752400378711 /* Weather.swift */; };
@@ -49,7 +50,8 @@
 		F4A9B83728533D87003B7D78 /* UserDefaultsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4A9B83628533D87003B7D78 /* UserDefaultsManager.swift */; };
 		F4B287862858601A005E1960 /* FadeTransitionExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4B287852858601A005E1960 /* FadeTransitionExtension.swift */; };
 		F4B287A9285881B6005E1960 /* Size.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4B287A8285881B6005E1960 /* Size.swift */; };
-		F4B287AB285884AC005E1960 /* DeviceOld.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4B287AA285884AC005E1960 /* DeviceOld.swift */; };
+		F4B287AB285884AC005E1960 /* DeviceScreenSizeExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4B287AA285884AC005E1960 /* DeviceScreenSizeExtension.swift */; };
+		F4B287AD2859ED17005E1960 /* UserDefaultsError.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4B287AC2859ED17005E1960 /* UserDefaultsError.swift */; };
 		F4DF62BC283D4E7D004CAE1B /* SearchLocationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4DF62BB283D4E7D004CAE1B /* SearchLocationViewController.swift */; };
 		F4DF62BE283D4EAC004CAE1B /* SearchLocationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4DF62BD283D4EAC004CAE1B /* SearchLocationView.swift */; };
 		F4DF62C0283D55B6004CAE1B /* BackgraundImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4DF62BF283D55B6004CAE1B /* BackgraundImageView.swift */; };
@@ -109,6 +111,7 @@
 		F47DA21528381C2900098B17 /* Ubuntu-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Ubuntu-Regular.ttf"; sourceTree = "<group>"; };
 		F47DA21728381C3800098B17 /* Ubuntu-Light.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Ubuntu-Light.ttf"; sourceTree = "<group>"; };
 		F47DA2192838AF8000098B17 /* Ubuntu-Medium.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Ubuntu-Medium.ttf"; sourceTree = "<group>"; };
+		F48B0A9A2859F77200E56A4E /* ResizeExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResizeExtension.swift; sourceTree = "<group>"; };
 		F48BCC46283B752400378711 /* Temperature.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Temperature.swift; sourceTree = "<group>"; };
 		F48BCC47283B752400378711 /* CountryCode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CountryCode.swift; sourceTree = "<group>"; };
 		F48BCC49283B752400378711 /* Weather.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Weather.swift; sourceTree = "<group>"; };
@@ -127,7 +130,8 @@
 		F4A9B83628533D87003B7D78 /* UserDefaultsManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDefaultsManager.swift; sourceTree = "<group>"; };
 		F4B287852858601A005E1960 /* FadeTransitionExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FadeTransitionExtension.swift; sourceTree = "<group>"; };
 		F4B287A8285881B6005E1960 /* Size.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Size.swift; sourceTree = "<group>"; };
-		F4B287AA285884AC005E1960 /* DeviceOld.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeviceOld.swift; sourceTree = "<group>"; };
+		F4B287AA285884AC005E1960 /* DeviceScreenSizeExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeviceScreenSizeExtension.swift; sourceTree = "<group>"; };
+		F4B287AC2859ED17005E1960 /* UserDefaultsError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDefaultsError.swift; sourceTree = "<group>"; };
 		F4DF62BB283D4E7D004CAE1B /* SearchLocationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchLocationViewController.swift; sourceTree = "<group>"; };
 		F4DF62BD283D4EAC004CAE1B /* SearchLocationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchLocationView.swift; sourceTree = "<group>"; };
 		F4DF62BF283D55B6004CAE1B /* BackgraundImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BackgraundImageView.swift; sourceTree = "<group>"; };
@@ -198,6 +202,7 @@
 			children = (
 				A3ACF2DE27383B7400CEE97C /* Supporting Files */,
 				F4A9B804284F291B003B7D78 /* CommonModels */,
+				F48BCC5C283BE86000378711 /* Elements Views */,
 				F4A9B83828537A0A003B7D78 /* Managers */,
 				F47DA1FC2837931300098B17 /* WeatherMainModule */,
 				F4DF62B7283D4E30004CAE1B /* SearchLocationModule */,
@@ -226,9 +231,8 @@
 		A3ACF2DE27383B7400CEE97C /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
-				F4B287A728588185005E1960 /* DeviceSizes */,
 				F4B2878328585FDF005E1960 /* Extensions */,
-				F43B67472844B8520034FAEA /* NetworkServiceError */,
+				F43B67472844B8520034FAEA /* Errors */,
 				F43B674428448E680034FAEA /* Dispatcher */,
 				F47DA1FD2837934400098B17 /* Constants */,
 				F47DA1F8283782C700098B17 /* Application */,
@@ -267,12 +271,13 @@
 			name = Dispatcher;
 			sourceTree = "<group>";
 		};
-		F43B67472844B8520034FAEA /* NetworkServiceError */ = {
+		F43B67472844B8520034FAEA /* Errors */ = {
 			isa = PBXGroup;
 			children = (
 				F43B67482844B87D0034FAEA /* NetworkServiceError.swift */,
+				F4B287AC2859ED17005E1960 /* UserDefaultsError.swift */,
 			);
-			name = NetworkServiceError;
+			name = Errors;
 			sourceTree = "<group>";
 		};
 		F47DA1F52837826900098B17 /* Controller */ = {
@@ -286,7 +291,6 @@
 		F47DA1F62837827F00098B17 /* View */ = {
 			isa = PBXGroup;
 			children = (
-				F48BCC5C283BE86000378711 /* Elements Views */,
 				F47DA1FA2837836900098B17 /* WeatherMainView.swift */,
 			);
 			name = View;
@@ -295,7 +299,7 @@
 		F47DA1F72837828A00098B17 /* Model */ = {
 			isa = PBXGroup;
 			children = (
-				F48BCC57283BA81500378711 /* WeatherMainModel */,
+				F48BCC58283BB82D00378711 /* WeatherMainModel.swift */,
 			);
 			name = Model;
 			sourceTree = "<group>";
@@ -355,6 +359,23 @@
 			path = Ubuntu;
 			sourceTree = "<group>";
 		};
+		F48B0A992859F73D00E56A4E /* UIImageExtensions */ = {
+			isa = PBXGroup;
+			children = (
+				F48B0A9A2859F77200E56A4E /* ResizeExtension.swift */,
+			);
+			name = UIImageExtensions;
+			sourceTree = "<group>";
+		};
+		F48B0A9C2859FE4100E56A4E /* DeviceExtensions */ = {
+			isa = PBXGroup;
+			children = (
+				F4B287AA285884AC005E1960 /* DeviceScreenSizeExtension.swift */,
+				F4B287A8285881B6005E1960 /* Size.swift */,
+			);
+			name = DeviceExtensions;
+			sourceTree = "<group>";
+		};
 		F48BCC54283B752F00378711 /* ResponseModels */ = {
 			isa = PBXGroup;
 			children = (
@@ -366,14 +387,6 @@
 				F48BCC49283B752400378711 /* Weather.swift */,
 			);
 			name = ResponseModels;
-			sourceTree = "<group>";
-		};
-		F48BCC57283BA81500378711 /* WeatherMainModel */ = {
-			isa = PBXGroup;
-			children = (
-				F48BCC58283BB82D00378711 /* WeatherMainModel.swift */,
-			);
-			name = WeatherMainModel;
 			sourceTree = "<group>";
 		};
 		F48BCC5C283BE86000378711 /* Elements Views */ = {
@@ -435,6 +448,8 @@
 		F4B2878328585FDF005E1960 /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
+				F48B0A9C2859FE4100E56A4E /* DeviceExtensions */,
+				F48B0A992859F73D00E56A4E /* UIImageExtensions */,
 				F4B2878428585FF2005E1960 /* UIViewExtensions */,
 			);
 			name = Extensions;
@@ -446,15 +461,6 @@
 				F4B287852858601A005E1960 /* FadeTransitionExtension.swift */,
 			);
 			name = UIViewExtensions;
-			sourceTree = "<group>";
-		};
-		F4B287A728588185005E1960 /* DeviceSizes */ = {
-			isa = PBXGroup;
-			children = (
-				F4B287A8285881B6005E1960 /* Size.swift */,
-				F4B287AA285884AC005E1960 /* DeviceOld.swift */,
-			);
-			name = DeviceSizes;
 			sourceTree = "<group>";
 		};
 		F4DF62B6283CC805004CAE1B /* NetworkServiceModule */ = {
@@ -785,12 +791,13 @@
 				F48BCC4E283B752500378711 /* CountryCode.swift in Sources */,
 				F4DF62C0283D55B6004CAE1B /* BackgraundImageView.swift in Sources */,
 				F43B6774284515D50034FAEA /* MessageTextLabel.swift in Sources */,
+				F4B287AD2859ED17005E1960 /* UserDefaultsError.swift in Sources */,
 				F48BCC5B283BC5FC00378711 /* MyWeather.swift in Sources */,
 				F43B67492844B87D0034FAEA /* NetworkServiceError.swift in Sources */,
 				F48F5B6A2854859600A1CA75 /* NetworkServiceModel.swift in Sources */,
 				A3475F01273305F200BF5E86 /* WeatherMainViewController.swift in Sources */,
 				F48BCC5E283BE8A500378711 /* LocationButton.swift in Sources */,
-				F4B287AB285884AC005E1960 /* DeviceOld.swift in Sources */,
+				F4B287AB285884AC005E1960 /* DeviceScreenSizeExtension.swift in Sources */,
 				A3475EFF273305F200BF5E86 /* AppDelegate.swift in Sources */,
 				F4A9B8302851B9FE003B7D78 /* StoneImageView.swift in Sources */,
 				F4B287A9285881B6005E1960 /* Size.swift in Sources */,
@@ -811,6 +818,7 @@
 				F47DA2062837B9C800098B17 /* PopUpWindow.swift in Sources */,
 				F4DF62BE283D4EAC004CAE1B /* SearchLocationView.swift in Sources */,
 				F48BCC56283B849200378711 /* NetworkService.swift in Sources */,
+				F48B0A9B2859F77200E56A4E /* ResizeExtension.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

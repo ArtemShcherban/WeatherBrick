@@ -14,11 +14,11 @@ final class SearchLocationView: UIView {
     
     private lazy var backgroundImageView = BackgraundImageView()
     
-    lazy var searchController: UISearchController = {
+    private(set) lazy var searchController: UISearchController = {
         let tempSearchController = UISearchController(searchResultsController: nil)
         tempSearchController.obscuresBackgroundDuringPresentation = false
         let attributedString = NSAttributedString(
-            string: "Search for a city or coordinates",
+            string: AppConstants.TitleFor.searchBarPlaceHolder,
             attributes: [
                 NSAttributedString.Key.kern: -0.41,
                 NSAttributedString.Key.font: UIFont(name: AppConstants.Font.ubuntuLight, size: 16) ?? UIFont()
@@ -28,9 +28,9 @@ final class SearchLocationView: UIView {
         return tempSearchController
     }()
     
-    lazy var backButton: UIBarButtonItem = {
+    private(set) lazy var backButton: UIBarButtonItem = {
         let tempBackButton = UIBarButtonItem(
-            title: "Back",
+            title: AppConstants.TitleFor.backButtonTitle,
             style: .plain,
             target: self,
             action: #selector(delegateActions(_:)))
@@ -50,11 +50,18 @@ final class SearchLocationView: UIView {
     }()
     
     func createSearchLocationMainView() {
+        addSubviews()
+        setAllConstraints()
+    }
+    
+    private func addSubviews() {
         addSubview(backgroundImageView)
         addSubview(containerView)
         containerView.addSubview(messageTextLabel)
         containerView.addSubview(userLocationButton)
-        
+    }
+    
+    private func setAllConstraints() {
         setContainerViewConstraints()
         setMessageTextLabelConstarints()
         setUserLocationButtonConstraints()
@@ -69,7 +76,7 @@ final class SearchLocationView: UIView {
         }
     }
     
-    func setContainerViewConstraints() {
+    private func setContainerViewConstraints() {
         containerView.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
             containerView.topAnchor.constraint(equalTo: self.safeAreaLayoutGuide.topAnchor),
@@ -82,7 +89,7 @@ final class SearchLocationView: UIView {
         ])
     }
     
-    func setMessageTextLabelConstarints() {
+    private func setMessageTextLabelConstarints() {
         messageTextLabel.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
             messageTextLabel.topAnchor.constraint(equalTo: containerView.safeAreaLayoutGuide.topAnchor),
@@ -92,7 +99,7 @@ final class SearchLocationView: UIView {
         ])
     }
     
-    func setUserLocationButtonConstraints() {
+    private func setUserLocationButtonConstraints() {
         userLocationButton.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
             userLocationButton.topAnchor.constraint(equalTo: messageTextLabel.bottomAnchor, constant: 24),

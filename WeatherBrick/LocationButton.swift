@@ -60,7 +60,5 @@ final class LocationButton: UIButton {
             centerXAnchor.constraint(equalTo: superview.centerXAnchor),
             widthAnchorConstraint
         ])
-        print("Width of superView is \(UIScreen.main.bounds.width)")
-        print("Height of superView is \(UIScreen.main.bounds.size.height)")
     }
 }
