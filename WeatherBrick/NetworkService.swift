@@ -18,7 +18,7 @@ final class NetworkService {
             return }
         
         let request = URLRequest(url: url)
-        
+//        sleep(UInt32(3))
         URLSession.shared.dataTask(with: request) { data, response, error in
             guard error == nil else {
                 completion(.failure(NetworkServiceError.errorCallingGET))
