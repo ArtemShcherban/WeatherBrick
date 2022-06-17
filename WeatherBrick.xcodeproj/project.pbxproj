@@ -52,6 +52,7 @@
 		F4B287A9285881B6005E1960 /* Size.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4B287A8285881B6005E1960 /* Size.swift */; };
 		F4B287AB285884AC005E1960 /* DeviceScreenSizeExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4B287AA285884AC005E1960 /* DeviceScreenSizeExtension.swift */; };
 		F4B287AD2859ED17005E1960 /* UserDefaultsError.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4B287AC2859ED17005E1960 /* UserDefaultsError.swift */; };
+		F4BCC394285C86BB0067404C /* ErrorMessageTextLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4BCC393285C86BB0067404C /* ErrorMessageTextLabel.swift */; };
 		F4DF62BC283D4E7D004CAE1B /* SearchLocationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4DF62BB283D4E7D004CAE1B /* SearchLocationViewController.swift */; };
 		F4DF62BE283D4EAC004CAE1B /* SearchLocationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4DF62BD283D4EAC004CAE1B /* SearchLocationView.swift */; };
 		F4DF62C0283D55B6004CAE1B /* BackgraundImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4DF62BF283D55B6004CAE1B /* BackgraundImageView.swift */; };
@@ -132,6 +133,7 @@
 		F4B287A8285881B6005E1960 /* Size.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Size.swift; sourceTree = "<group>"; };
 		F4B287AA285884AC005E1960 /* DeviceScreenSizeExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeviceScreenSizeExtension.swift; sourceTree = "<group>"; };
 		F4B287AC2859ED17005E1960 /* UserDefaultsError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDefaultsError.swift; sourceTree = "<group>"; };
+		F4BCC393285C86BB0067404C /* ErrorMessageTextLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ErrorMessageTextLabel.swift; sourceTree = "<group>"; };
 		F4DF62BB283D4E7D004CAE1B /* SearchLocationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchLocationViewController.swift; sourceTree = "<group>"; };
 		F4DF62BD283D4EAC004CAE1B /* SearchLocationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchLocationView.swift; sourceTree = "<group>"; };
 		F4DF62BF283D55B6004CAE1B /* BackgraundImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BackgraundImageView.swift; sourceTree = "<group>"; };
@@ -394,6 +396,7 @@
 			children = (
 				F4DF62BF283D55B6004CAE1B /* BackgraundImageView.swift */,
 				F47DA2052837B9C800098B17 /* PopUpWindow.swift */,
+				F4BCC393285C86BB0067404C /* ErrorMessageTextLabel.swift */,
 				F48BCC5D283BE8A500378711 /* LocationButton.swift */,
 				F4A9B83428533098003B7D78 /* UserLocationButton.swift */,
 				F43B6773284515D50034FAEA /* MessageTextLabel.swift */,
@@ -800,6 +803,7 @@
 				F4B287AB285884AC005E1960 /* DeviceScreenSizeExtension.swift in Sources */,
 				A3475EFF273305F200BF5E86 /* AppDelegate.swift in Sources */,
 				F4A9B8302851B9FE003B7D78 /* StoneImageView.swift in Sources */,
+				F4BCC394285C86BB0067404C /* ErrorMessageTextLabel.swift in Sources */,
 				F4B287A9285881B6005E1960 /* Size.swift in Sources */,
 				F48BCC50283B752500378711 /* Weather.swift in Sources */,
 				F48BCC53283B752500378711 /* ResultOfRequest.swift in Sources */,

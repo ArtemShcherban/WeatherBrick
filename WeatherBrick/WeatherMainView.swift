@@ -53,6 +53,8 @@ final class WeatherMainView: UIView {
         return tempWindSpeedLabel
     }()
     
+    lazy var errorMessageTextLabel = ErrorMessageTextLabel()
+    
     lazy var locationButton = LocationButton()
     
     lazy var geoLocationImageView: UIImageView = {
@@ -73,21 +75,30 @@ final class WeatherMainView: UIView {
     }()
     
     func createMainView() {
+        addSubviews()
+        addSwipeGesture()
+        addTargetForLocationButton()
+        setConstraints()
+    }
+    
+    func addSubviews() {
         addSubview(backgroundImageView)
         addSubview(stoneImageView)
         addSubview(temperatureLabel)
         addSubview(conditionLabel)
         addSubview(windSpeedLabel)
         addSubview(locationButton)
+        addSubview(errorMessageTextLabel)
         addSubview(popUpWindow)
-        addSwipeGesture()
-        
+    }
+    
+    func setConstraints() {
         setTemperatureLabelConstraints()
         setConditionLabelConstraints()
         setWindSpeedLabelConstraints()
         locationButton.setConstraints()
+        setErrorMessageTextLabelConstraint()
         setPopUpWindowConstraints()
-        addTargetForLocationButton()
     }
     
     func addSwipeGesture() {
@@ -112,6 +123,7 @@ final class WeatherMainView: UIView {
     func updateWeather(with myWeather: MyWeather ) {
         temperatureLabel.text = myWeather.temperature
         conditionLabel.text = myWeather.conditionDetails.lowercased()
+        locationButton.isEnabled = true
         locationButton.updateAppearance("\(myWeather.city), \(myWeather.flag) \(myWeather.country) ")
         windSpeedLabel.text = "wind: \(myWeather.wind) m/s."
         if (Int(myWeather.wind) ?? 0) >= 8 {
@@ -176,6 +188,18 @@ final class WeatherMainView: UIView {
             windSpeedLabel.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: AppConstants.Indent.left),
             windSpeedLabel.widthAnchor.constraint(greaterThanOrEqualToConstant: 0),
             windSpeedLabel.heightAnchor.constraint(greaterThanOrEqualToConstant: 0)
+        ])
+    }
+    
+    func setErrorMessageTextLabelConstraint() {
+        errorMessageTextLabel.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.activate([
+            errorMessageTextLabel.leadingAnchor.constraint(
+                equalTo: self.leadingAnchor, constant: AppConstants.Indent.left),
+            errorMessageTextLabel.trailingAnchor.constraint(
+                equalTo: self.trailingAnchor, constant: AppConstants.Indent.right),
+            errorMessageTextLabel.bottomAnchor.constraint(equalTo: locationButton.topAnchor, constant: -5),
+            errorMessageTextLabel.heightAnchor.constraint(greaterThanOrEqualToConstant: 0)
         ])
     }
     

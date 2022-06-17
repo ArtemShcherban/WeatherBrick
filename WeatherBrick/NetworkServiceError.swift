@@ -14,4 +14,8 @@ enum NetworkServiceError: String, Error {
     case didNotRecieveData = "Error: did not recieve data"
     case httpRequestFailed =
         "Error: We could not find your location, check your spelling or coordinates, please try again."
+    case badNetworkQuality =
+        "Unfortunately, the time for the request has expired. There is a problem with the quality of the network."
+    case couldNotConnect = "Unfortunately, we could not connect to the server."
+    case sslConectError = "An SSL error has occurred and a secure connection to the server cannot be made."
 }

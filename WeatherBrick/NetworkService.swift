@@ -18,10 +18,25 @@ final class NetworkService {
             return }
         
         let request = URLRequest(url: url)
-//        sleep(UInt32(3))
-        URLSession.shared.dataTask(with: request) { data, response, error in
+        
+        let sessionConfig = URLSessionConfiguration.default
+        sessionConfig.timeoutIntervalForResource = 10.0
+        let urlSession = URLSession(configuration: sessionConfig)
+        
+        urlSession.dataTask(with: request) { data, response, error in
             guard error == nil else {
-                completion(.failure(NetworkServiceError.errorCallingGET))
+                if let error = error {
+                    switch error._code {
+                    case -1001:
+                        completion(.failure(NetworkServiceError.badNetworkQuality))
+                    case -1004:
+                        completion(.failure(NetworkServiceError.couldNotConnect))
+                    case -1200:
+                        completion(.failure(NetworkServiceError.sslConectError))
+                    default:
+                        completion(.failure(NetworkServiceError.errorCallingGET))
+                    }
+                }
                 return
             }
             guard let data = data else {

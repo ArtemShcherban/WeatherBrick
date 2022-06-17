@@ -22,6 +22,8 @@ enum AppConstants {
     static let alphabetletters = NSCharacterSet.letters
     
     static let myWeather = "myWeather"
+    static let monitor = "Monitor"
+    static let main = "Main"
     
     enum Precipitation {
         static let rain = ["Thunderstorm", "Drizzle", "Rain"]

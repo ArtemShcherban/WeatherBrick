@@ -12,14 +12,25 @@ final class MessageTextLabel: UILabel {
     lazy var retrieveError = String()
     private let informationString = AppConstants.inputFormats
     
+    lazy var activityIndicator: UIActivityIndicatorView? = {
+        let indicator = UIActivityIndicatorView()
+        indicator.style = .large
+        indicator.color = AppConstants.Color.lightGraphite
+        return indicator
+    }()
+    
     lazy var isActive = false {
         didSet {
             if isActive == true {
-                messageLabelAnimation {
+                messageTextAnimation {
+                    activityIndicator?.stopAnimating()
+                    activityIndicator?.removeFromSuperview()
                     createErrorAttributedString()
                 }
             } else {
-                messageLabelAnimation {
+                messageTextAnimation {
+                    activityIndicator?.stopAnimating()
+                    activityIndicator?.removeFromSuperview()
                     createFormatsAttributedString()
                 }
             }
@@ -40,7 +51,16 @@ final class MessageTextLabel: UILabel {
         createFormatsAttributedString()
     }
     
-    func messageLabelAnimation(_ updateAttributeString: () -> Void) {
+    func startActivityIndicatorAnimation() {
+        fadeTransition(0.2)
+        textColor = .clear
+        guard let activityIndicator = activityIndicator else { return }
+        addSubview(activityIndicator)
+        setActivityIndicatorConstrints()
+        activityIndicator.startAnimating()
+    }
+    
+    func messageTextAnimation(_ updateAttributeString: () -> Void) {
         fadeTransition(0.5)
         updateAttributeString()
     }
@@ -84,5 +104,14 @@ final class MessageTextLabel: UILabel {
                 NSAttributedString.Key.foregroundColor: AppConstants.Color.lightGraphite
             ])
         attributedText = attributedString
+    }
+    
+    func setActivityIndicatorConstrints() {
+        guard let activityIndicator = activityIndicator else { return }
+        activityIndicator.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.activate([
+            activityIndicator.centerXAnchor.constraint(equalTo: self.centerXAnchor),
+            activityIndicator.centerYAnchor.constraint(equalTo: self.centerYAnchor)
+        ])
     }
 }

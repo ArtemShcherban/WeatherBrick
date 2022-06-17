@@ -21,6 +21,12 @@ final class LocationButton: UIButton {
         super.init(coder: coder)
     }
     
+    var isActive = true {
+        didSet {
+            setButtonEnabled()
+        }
+    }
+    
     private func configure() {
         let attributedTitle = NSAttributedString(
             string: AppConstants.TitleFor.locationButton,
@@ -33,6 +39,12 @@ final class LocationButton: UIButton {
         layer.borderWidth = 1.0
         layer.borderColor = UIColor.black.cgColor
         layer.cornerRadius = frame.height / 2
+    }
+    
+    func setButtonEnabled() {
+        fadeTransition(0.5)
+        alpha = isActive ? 1 : 0.2
+        isEnabled = isActive
     }
     
     func updateAppearance(_ title: String) {

@@ -107,6 +107,7 @@ extension SearchLocationViewController: CLLocationManagerDelegate {
     
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         if let location = locations.first {
+            searchLocationView.messageTextLabel.startActivityIndicatorAnimation()
             getMyWeatherFor(location) { myWeather in
                 self.returnNewLocationWith(myWeather, geoLocation: true)
             }
@@ -121,6 +122,7 @@ extension SearchLocationViewController: CLLocationManagerDelegate {
 extension SearchLocationViewController: UISearchBarDelegate {
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
         if let searchBartext = searchBar.text {
+            searchLocationView.messageTextLabel.startActivityIndicatorAnimation()
             if searchLocationModel.textLooksLikeCoordinates(searchBartext) {
                 guard let location = searchLocationModel.tryCreateLocationFrom(searchBartext) else {
                     searchLocationView.messageTextLabel.retrieveError =
@@ -129,7 +131,7 @@ extension SearchLocationViewController: UISearchBarDelegate {
                     return
                 }
                 getMyWeatherFor(location) { myWeather in
-                    self.returnNewLocationWith(myWeather, geoLocation: true)
+                    self.returnNewLocationWith(myWeather, geoLocation: false)
                 }
             } else {
                 guard let location = searchBar.text?.replacingOccurrences(of: " ", with: "+") else { return }

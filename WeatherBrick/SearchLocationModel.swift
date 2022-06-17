@@ -32,7 +32,6 @@ final class SearchLocationModel {
         if let latitude = Double(firstString),
             let longitude = Double(secondString) {
             let location = CLLocation(latitude: latitude, longitude: longitude)
-            print(location)
             return location
         }
         return nil

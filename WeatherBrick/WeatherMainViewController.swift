@@ -12,25 +12,13 @@ final class WeatherMainViewController: UIViewController, SearchLocationViewContr
     static let reuseIdentifier = String(describing: WeatherMainViewController.self)
     static let shared = WeatherMainViewController()
     
-    var monitor = NWPathMonitor()
-    
-    var networkStatus = NWPath.Status.unsatisfied {
+    var mainQueue: Dispatching?
+    var monitor: NWPathMonitor?
+    var networkStatus = NWPath.Status.satisfied {
         didSet {
             сhangeNetworkStatusFrom(oldValue)
         }
     }
-    
-//    lazy var statusOfNetWork = "NOT OK" {
-//        didSet {
-//            if statusOfNetWork == "OK" && oldValue != "OK" {
-//                print("SEND REQUEST TO SERVER")
-//            } else if statusOfNetWork == "NOT OK" {
-//                print("NO STONE")
-//            }
-//        }
-//    }
-    
-    var mainQueue: Dispatching?
     
     private lazy var userDefaultsManager = UserDefaultsManager.manager
     private lazy var networkServiceModel = NetworkServiceModel.shared
@@ -53,33 +41,48 @@ final class WeatherMainViewController: UIViewController, SearchLocationViewContr
     override func viewDidLoad() {
         super.viewDidLoad()
         mainQueue = AsyncQueue.main
-        monitorNetwork()
-        
-        guard let location = self.userDefaultsManager.getLocation() else { return }
-        self.getMyWeatherFor(location)
         weatherMainView.createMainView()
-//        createNotificationObserver()
+        getlocationFromUserDefaults()
+        createNotificationObserver()
+        readMyWeatherFromUserDefaults()
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        monitor = NWPathMonitor()
+        monitorNetwork()
+    }
+    
+    func readMyWeatherFromUserDefaults() {
+        guard let myWeather = self.userDefaultsManager.getMyWeather() else { return }
+        self.updateWeather(with: myWeather)
     }
     
     private func createNotificationObserver() {
-//        NotificationCenter.default.addObserver(
-//            self,
-//            selector: #selector(applicationOnScreen(notification:)),
-//            name: UIApplication.willEnterForegroundNotification,
-//            object: nil)
-//        NotificationCenter.default.addObserver(
-//            self,
-//            selector: #selector(applicationOnScreen(notification:)),
-//            name: UIApplication.willResignActiveNotification,
-//            object: nil)
+        NotificationCenter.default.addObserver(
+            self,
+            selector: #selector(handlingOf(notification:)),
+            name: UIApplication.willEnterForegroundNotification,
+            object: nil)
+        NotificationCenter.default.addObserver(
+            self,
+            selector: #selector(handlingOf(notification:)),
+            name: UIApplication.didEnterBackgroundNotification,
+            object: nil)
     }
     
-    @objc private func applicationOnScreen(notification: NSNotification) {
+    @objc private func handlingOf(notification: NSNotification) {
         if notification.name == UIApplication.willEnterForegroundNotification {
+            monitor = NWPathMonitor()
             monitorNetwork()
         } else {
-            monitor.cancel()
+            monitor?.cancel()
         }
+    }
+    
+    private func getlocationFromUserDefaults() {
+        guard let location = self.userDefaultsManager.getLocation() else { return }
+        self.getMyWeatherFor(location)
     }
     
     private func getMyWeatherFor(_ location: CLLocation) {
@@ -87,9 +90,12 @@ final class WeatherMainViewController: UIViewController, SearchLocationViewContr
             self.weatherMainModel.createMyWeather(with: link) { myWeatherOrError in
                 switch myWeatherOrError {
                 case .failure(let error):
-                    print(error.rawValue)
+                    self.mainQueue?.dispatch {
+                        self.weatherMainView.errorMessageTextLabel.retrieveError = error.rawValue
+                    }
                 case .success(let myWeather):
                     self.mainQueue?.dispatch {
+                        self.weatherMainView.errorMessageTextLabel.isActive = false
                         self.updateWeather(with: myWeather)
                     }
                 }
@@ -108,46 +114,28 @@ final class WeatherMainViewController: UIViewController, SearchLocationViewContr
     
     func сhangeNetworkStatusFrom(_ oldValue: NWPath.Status) {
         if networkStatus == NWPath.Status.satisfied && oldValue != NWPath.Status.satisfied {
-            sleep(UInt32(3))
+            sleep(UInt32(3.0))
             guard let location = self.userDefaultsManager.getLocation() else { return }
             self.getMyWeatherFor(location)
-            print("SEND REQUEST TO SERVER")
-        } else if networkStatus == NWPath.Status.unsatisfied && oldValue != NWPath.Status.unsatisfied {
+            mainQueue?.dispatch {
+                self.weatherMainView.errorMessageTextLabel.isActive = false
+                self.weatherMainView.locationButton.isActive = true
+            }
+        } else if networkStatus == NWPath.Status.unsatisfied {
             self.mainQueue?.dispatch {
+                self.weatherMainView.locationButton.isActive = false
+                self.weatherMainView.errorMessageTextLabel.retrieveError = NetworkServiceError.errorCallingGET.rawValue
                 self.weatherMainView.stoneImageView.image = UIImage(named: AppConstants.StoneImage.noStone)
-                print("NO STONE")
             }
         }
     }
     
-//    private func monitorNetwork() {
-//        //        self.monitor = NWPathMonitor()
-//        monitor.pathUpdateHandler = { path in
-//            if path.status == .satisfied {
-//                //                self.statusOfNetWork = "OK"
-//                self.currentStatus = path.status
-//                print("NETWORK IS OK")
-//                //                guard let location = self.userDefaultsManager.getLocation() else { return }
-//                //                self.getMyWeatherFor(location)
-//            } else {
-//                //                self.statusOfNetWork = "NOT OK"
-//                self.currentStatus = path.status
-//                print("CONNECTION LOST")
-//                //                self.mainQueue?.dispatch {
-//                //                    self.weatherMainView.stoneImageView.image = UIImage(named: AppConstants.StoneImage.noStone)
-//                //                }
-//            }
-//        }
-//        let queue = DispatchQueue(label: "Monitor")
-//        monitor.start(queue: queue)
-//    }
-    
     private func monitorNetwork() {
-        monitor.pathUpdateHandler = { path in
+        monitor?.pathUpdateHandler = { path in
             self.networkStatus = path.status
         }
-        let queue = DispatchQueue(label: "Monitor")
-        monitor.start(queue: queue)
+        let queue = DispatchQueue(label: AppConstants.monitor)
+        monitor?.start(queue: queue)
     }
 }
 
@@ -159,7 +147,8 @@ extension WeatherMainViewController: WeatherMainViewDelegate {
     }
     
     func locationButtonPressed() {
-        let storyboard = UIStoryboard(name: "Main", bundle: nil)
+        weatherMainView.errorMessageTextLabel.isActive = false
+        let storyboard = UIStoryboard(name: AppConstants.main, bundle: nil)
         guard let viewController =
             storyboard.instantiateViewController(withIdentifier:
                 SearchLocationViewController.reuseIdentifier) as? SearchLocationViewController else { return }
