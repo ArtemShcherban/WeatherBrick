@@ -34,8 +34,16 @@ enum AppConstants {
     }
     
     enum Indent {
-        static let left: CGFloat = 16
-        static let right: CGFloat = -16
+        static let left: CGFloat = 16.0
+        static let right: CGFloat = -16.0
+    }
+    
+    enum IconSize {
+        static let width: CGFloat = 16.0
+    }
+    
+    enum AnimationSize {
+        static let width: CGFloat = 200.0
     }
     
     enum Image {
@@ -48,6 +56,11 @@ enum AppConstants {
         static let withSnow = "image_stone_snow"
         static let withCracks = "image_stone_cracks"
         static let noStone = "image_NO_stone"
+    }
+    
+    enum Icon {
+        static let location = UIImage(named: "icon_location")
+        static let search = UIImage(named: "icon_search")
     }
     
     enum TitleFor {

@@ -10,21 +10,19 @@ import UIKit
 
 class ErrorMessageTextLabel: UILabel {
     var retrieveError = String() {
-        didSet {
-            if oldValue.isEmpty {
-                isActive = true
+        willSet {
+            if  retrieveError != newValue && !newValue.isEmpty {
+                willChangeStringTo(newValue)
             }
         }
     }
     
     lazy var isActive = false {
         didSet {
-            if isActive {
-                fadeTransition(0.5)
+            if !isActive {
+                retrieveError = String()
+                fadeTransition(0.2)
                 text = retrieveError
-            } else {
-                fadeTransition(0.5)
-                text = String()
             }
         }
     }
@@ -38,12 +36,20 @@ class ErrorMessageTextLabel: UILabel {
         super.init(coder: coder)
     }
     
+    func willChangeStringTo(_ value: String) {
+        isActive = true
+        fadeTransition(0.5)
+        text = value
+    }
+    
     func configure() {
         let attributedString = NSAttributedString(
             string:
                 " ",
             attributes: [
-                NSAttributedString.Key.font: UIFont(name: AppConstants.Font.ubuntuLight, size: 15) ?? UIFont(),
+                NSAttributedString.Key.font: UIFont(
+                    name: AppConstants.Font.ubuntuLight,
+                    size: AppConstants.bigScreenSize ? 15 : 13) ?? UIFont(),
                 NSAttributedString.Key.kern: -0.41,
                 NSAttributedString.Key.foregroundColor: AppConstants.Color.lightGraphite
             ])

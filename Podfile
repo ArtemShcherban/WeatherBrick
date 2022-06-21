@@ -8,6 +8,7 @@ target 'WeatherBrick' do
   # Pods for WeatherBrick
   pod 'SwiftLint'
   pod 'DeviceKit'
+  pod 'lottie-ios'
 
   target 'WeatherBrickTests' do
     inherit! :search_paths

@@ -20,6 +20,11 @@
 		A3ACF2E1273847B000CEE97C /* SF-Pro-Display-Light.otf in Resources */ = {isa = PBXBuildFile; fileRef = A3ACF2E0273847B000CEE97C /* SF-Pro-Display-Light.otf */; };
 		A3ACF2E3273847B800CEE97C /* SF-Pro-Display-Semibold.otf in Resources */ = {isa = PBXBuildFile; fileRef = A3ACF2E2273847B800CEE97C /* SF-Pro-Display-Semibold.otf */; };
 		A3ACF2E727384B9800CEE97C /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = A3ACF2E627384B9800CEE97C /* Localizable.strings */; };
+		F404027C285EFE8200621A1C /* circularAnimationBlue.json in Resources */ = {isa = PBXBuildFile; fileRef = F404027A285EFE8200621A1C /* circularAnimationBlue.json */; };
+		F4040281285F031200621A1C /* CircleAnimationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4040280285F031200621A1C /* CircleAnimationView.swift */; };
+		F4040285285F66B800621A1C /* WeatherMainViewConstraintsExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4040284285F66B800621A1C /* WeatherMainViewConstraintsExtension.swift */; };
+		F4040288285F6A3000621A1C /* WeatherMainViewAnimationExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4040287285F6A3000621A1C /* WeatherMainViewAnimationExtension.swift */; };
+		F404028A285F6F0F00621A1C /* SearchLocationViewConstraintsExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4040289285F6F0F00621A1C /* SearchLocationViewConstraintsExtension.swift */; };
 		F43B674328436BE80034FAEA /* CountriesWithFlags.json in Resources */ = {isa = PBXBuildFile; fileRef = F43B674228436BE80034FAEA /* CountriesWithFlags.json */; };
 		F43B674628448E8B0034FAEA /* Dispatcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = F43B674528448E8B0034FAEA /* Dispatcher.swift */; };
 		F43B67492844B87D0034FAEA /* NetworkServiceError.swift in Sources */ = {isa = PBXBuildFile; fileRef = F43B67482844B87D0034FAEA /* NetworkServiceError.swift */; };
@@ -101,6 +106,11 @@
 		A3ACF2E627384B9800CEE97C /* Localizable.strings */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; path = Localizable.strings; sourceTree = "<group>"; };
 		A5D7E17997DCC46CE2999FB0 /* Pods-WeatherBrick-WeatherBrickUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-WeatherBrick-WeatherBrickUITests.release.xcconfig"; path = "Target Support Files/Pods-WeatherBrick-WeatherBrickUITests/Pods-WeatherBrick-WeatherBrickUITests.release.xcconfig"; sourceTree = "<group>"; };
 		D97144F82122F3B87CF109F0 /* Pods-WeatherBrickTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-WeatherBrickTests.debug.xcconfig"; path = "Target Support Files/Pods-WeatherBrickTests/Pods-WeatherBrickTests.debug.xcconfig"; sourceTree = "<group>"; };
+		F404027A285EFE8200621A1C /* circularAnimationBlue.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = circularAnimationBlue.json; sourceTree = "<group>"; };
+		F4040280285F031200621A1C /* CircleAnimationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CircleAnimationView.swift; sourceTree = "<group>"; };
+		F4040284285F66B800621A1C /* WeatherMainViewConstraintsExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherMainViewConstraintsExtension.swift; sourceTree = "<group>"; };
+		F4040287285F6A3000621A1C /* WeatherMainViewAnimationExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherMainViewAnimationExtension.swift; sourceTree = "<group>"; };
+		F4040289285F6F0F00621A1C /* SearchLocationViewConstraintsExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchLocationViewConstraintsExtension.swift; sourceTree = "<group>"; };
 		F43B674228436BE80034FAEA /* CountriesWithFlags.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = CountriesWithFlags.json; sourceTree = "<group>"; };
 		F43B674528448E8B0034FAEA /* Dispatcher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Dispatcher.swift; sourceTree = "<group>"; };
 		F43B67482844B87D0034FAEA /* NetworkServiceError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkServiceError.swift; sourceTree = "<group>"; };
@@ -257,12 +267,38 @@
 		A3ACF2E4273847C600CEE97C /* Resources */ = {
 			isa = PBXGroup;
 			children = (
-				A3475F05273305F400BF5E86 /* Assets.xcassets */,
+				F404026F285EF19400621A1C /* Assets */,
 				A3ACF2DF2738479300CEE97C /* Fonts */,
 				A3ACF2E627384B9800CEE97C /* Localizable.strings */,
 				F43B674228436BE80034FAEA /* CountriesWithFlags.json */,
 			);
 			name = Resources;
+			sourceTree = "<group>";
+		};
+		F404026F285EF19400621A1C /* Assets */ = {
+			isa = PBXGroup;
+			children = (
+				A3475F05273305F400BF5E86 /* Assets.xcassets */,
+				F404027A285EFE8200621A1C /* circularAnimationBlue.json */,
+			);
+			path = Assets;
+			sourceTree = "<group>";
+		};
+		F4040286285F66C100621A1C /* WeatherMainViewExtensions */ = {
+			isa = PBXGroup;
+			children = (
+				F4040284285F66B800621A1C /* WeatherMainViewConstraintsExtension.swift */,
+				F4040287285F6A3000621A1C /* WeatherMainViewAnimationExtension.swift */,
+			);
+			name = WeatherMainViewExtensions;
+			sourceTree = "<group>";
+		};
+		F404028B285F6F1600621A1C /* SearchLocationViewExtensions */ = {
+			isa = PBXGroup;
+			children = (
+				F4040289285F6F0F00621A1C /* SearchLocationViewConstraintsExtension.swift */,
+			);
+			name = SearchLocationViewExtensions;
 			sourceTree = "<group>";
 		};
 		F43B674428448E680034FAEA /* Dispatcher */ = {
@@ -401,6 +437,7 @@
 				F4A9B83428533098003B7D78 /* UserLocationButton.swift */,
 				F43B6773284515D50034FAEA /* MessageTextLabel.swift */,
 				F4A9B82F2851B9FE003B7D78 /* StoneImageView.swift */,
+				F4040280285F031200621A1C /* CircleAnimationView.swift */,
 			);
 			name = "Elements Views";
 			sourceTree = "<group>";
@@ -454,6 +491,8 @@
 				F48B0A9C2859FE4100E56A4E /* DeviceExtensions */,
 				F48B0A992859F73D00E56A4E /* UIImageExtensions */,
 				F4B2878428585FF2005E1960 /* UIViewExtensions */,
+				F4040286285F66C100621A1C /* WeatherMainViewExtensions */,
+				F404028B285F6F1600621A1C /* SearchLocationViewExtensions */,
 			);
 			name = Extensions;
 			sourceTree = "<group>";
@@ -646,6 +685,7 @@
 				A3ACF2E1273847B000CEE97C /* SF-Pro-Display-Light.otf in Resources */,
 				F47DA21828381C3800098B17 /* Ubuntu-Light.ttf in Resources */,
 				A3475F04273305F200BF5E86 /* Main.storyboard in Resources */,
+				F404027C285EFE8200621A1C /* circularAnimationBlue.json in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -790,6 +830,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F4040285285F66B800621A1C /* WeatherMainViewConstraintsExtension.swift in Sources */,
 				F48BCC4D283B752500378711 /* Temperature.swift in Sources */,
 				F48BCC4E283B752500378711 /* CountryCode.swift in Sources */,
 				F4DF62C0283D55B6004CAE1B /* BackgraundImageView.swift in Sources */,
@@ -799,6 +840,7 @@
 				F43B67492844B87D0034FAEA /* NetworkServiceError.swift in Sources */,
 				F48F5B6A2854859600A1CA75 /* NetworkServiceModel.swift in Sources */,
 				A3475F01273305F200BF5E86 /* WeatherMainViewController.swift in Sources */,
+				F404028A285F6F0F00621A1C /* SearchLocationViewConstraintsExtension.swift in Sources */,
 				F48BCC5E283BE8A500378711 /* LocationButton.swift in Sources */,
 				F4B287AB285884AC005E1960 /* DeviceScreenSizeExtension.swift in Sources */,
 				A3475EFF273305F200BF5E86 /* AppDelegate.swift in Sources */,
@@ -812,8 +854,10 @@
 				F48BCC52283B752500378711 /* Coordinates.swift in Sources */,
 				F48F5B6428546CBA00A1CA75 /* SearchLocationModel.swift in Sources */,
 				F4DF62BC283D4E7D004CAE1B /* SearchLocationViewController.swift in Sources */,
+				F4040288285F6A3000621A1C /* WeatherMainViewAnimationExtension.swift in Sources */,
 				F47DA1FF2837938C00098B17 /* AppConstants.swift in Sources */,
 				F43B674628448E8B0034FAEA /* Dispatcher.swift in Sources */,
+				F4040281285F031200621A1C /* CircleAnimationView.swift in Sources */,
 				F48BCC59283BB82D00378711 /* WeatherMainModel.swift in Sources */,
 				F4A9B7FD284E1668003B7D78 /* Wind.swift in Sources */,
 				F4B287862858601A005E1960 /* FadeTransitionExtension.swift in Sources */,

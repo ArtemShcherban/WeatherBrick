@@ -56,11 +56,13 @@ final class SearchLocationViewController: UIViewController {
                 switch myWeatherOrError {
                 case .failure(let error):
                     self.mainQueue?.dispatch {
+                        self.searchLocationView.circleAnimation.stop()
                         self.searchLocationView.messageTextLabel.retrieveError = error.rawValue
                         self.searchLocationView.messageTextLabel.isActive = true
                     }
                 case .success(let myWeather):
                     self.mainQueue?.dispatch {
+                        self.searchLocationView.circleAnimation.stop()
                         compleation(myWeather)
                     }
                 }
@@ -107,7 +109,7 @@ extension SearchLocationViewController: CLLocationManagerDelegate {
     
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         if let location = locations.first {
-            searchLocationView.messageTextLabel.startActivityIndicatorAnimation()
+            searchLocationView.startCircleAnimation()
             getMyWeatherFor(location) { myWeather in
                 self.returnNewLocationWith(myWeather, geoLocation: true)
             }
@@ -122,7 +124,7 @@ extension SearchLocationViewController: CLLocationManagerDelegate {
 extension SearchLocationViewController: UISearchBarDelegate {
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
         if let searchBartext = searchBar.text {
-            searchLocationView.messageTextLabel.startActivityIndicatorAnimation()
+            searchLocationView.startCircleAnimation()
             if searchLocationModel.textLooksLikeCoordinates(searchBartext) {
                 guard let location = searchLocationModel.tryCreateLocationFrom(searchBartext) else {
                     searchLocationView.messageTextLabel.retrieveError =
@@ -135,7 +137,6 @@ extension SearchLocationViewController: UISearchBarDelegate {
                 }
             } else {
                 guard let location = searchBar.text?.replacingOccurrences(of: " ", with: "+") else { return }
-                
                 getMyWeatherFor(location) { myWeather in
                     self.returnNewLocationWith(myWeather, geoLocation: false)
                 }

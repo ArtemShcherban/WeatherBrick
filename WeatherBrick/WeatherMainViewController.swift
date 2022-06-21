@@ -44,7 +44,6 @@ final class WeatherMainViewController: UIViewController, SearchLocationViewContr
         weatherMainView.createMainView()
         getlocationFromUserDefaults()
         createNotificationObserver()
-        readMyWeatherFromUserDefaults()
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -52,12 +51,7 @@ final class WeatherMainViewController: UIViewController, SearchLocationViewContr
         monitor = NWPathMonitor()
         monitorNetwork()
     }
-    
-    func readMyWeatherFromUserDefaults() {
-        guard let myWeather = self.userDefaultsManager.getMyWeather() else { return }
-        self.updateWeather(with: myWeather)
-    }
-    
+
     private func createNotificationObserver() {
         NotificationCenter.default.addObserver(
             self,
@@ -81,6 +75,9 @@ final class WeatherMainViewController: UIViewController, SearchLocationViewContr
     }
     
     private func getlocationFromUserDefaults() {
+        mainQueue?.dispatch {
+            self.weatherMainView.circleAnimation.start()
+        }
         guard let location = self.userDefaultsManager.getLocation() else { return }
         self.getMyWeatherFor(location)
     }
@@ -91,10 +88,12 @@ final class WeatherMainViewController: UIViewController, SearchLocationViewContr
                 switch myWeatherOrError {
                 case .failure(let error):
                     self.mainQueue?.dispatch {
+                        self.weatherMainView.circleAnimation.stop()
                         self.weatherMainView.errorMessageTextLabel.retrieveError = error.rawValue
                     }
                 case .success(let myWeather):
                     self.mainQueue?.dispatch {
+                        self.weatherMainView.circleAnimation.stop()
                         self.weatherMainView.errorMessageTextLabel.isActive = false
                         self.updateWeather(with: myWeather)
                     }
@@ -112,12 +111,12 @@ final class WeatherMainViewController: UIViewController, SearchLocationViewContr
         weatherMainView.setIconFor(geoLocation)
     }
     
-    func сhangeNetworkStatusFrom(_ oldValue: NWPath.Status) {
+    private func сhangeNetworkStatusFrom(_ oldValue: NWPath.Status) {
         if networkStatus == NWPath.Status.satisfied && oldValue != NWPath.Status.satisfied {
             sleep(UInt32(3.0))
-            guard let location = self.userDefaultsManager.getLocation() else { return }
-            self.getMyWeatherFor(location)
+            getlocationFromUserDefaults()
             mainQueue?.dispatch {
+                self.weatherMainView.stoneImageView.image = UIImage(named: AppConstants.StoneImage.normal)
                 self.weatherMainView.errorMessageTextLabel.isActive = false
                 self.weatherMainView.locationButton.isActive = true
             }
@@ -141,9 +140,9 @@ final class WeatherMainViewController: UIViewController, SearchLocationViewContr
 
 extension WeatherMainViewController: WeatherMainViewDelegate {
     func didSwipe() {
+        weatherMainView.errorMessageTextLabel.isActive = false
         weatherMainView.stoneImageView.swipeAnimation()
-        guard let location = userDefaultsManager.getLocation() else { return }
-        getMyWeatherFor(location)
+        getlocationFromUserDefaults()
     }
     
     func locationButtonPressed() {

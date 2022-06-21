@@ -142,11 +142,15 @@ final class PopUpWindow: UIView {
         }
     }
     
-    private func createShadow() {
+   func createShadow() {
+        //        layer.masksToBounds = false
         self.layer.shadowColor = UIColor.black.cgColor
         self.layer.shadowOffset = CGSize(width: 1, height: 5)
         self.layer.shadowRadius = 3
         self.layer.shadowOpacity = 0.3
+//                layer.shadowPath = UIBezierPath(rect: self.bounds).cgPath
+        //        layer.shouldRasterize = true
+        //        layer.rasterizationScale = UIScreen.main.scale
     }
     
     func applyGradientAnimation() {

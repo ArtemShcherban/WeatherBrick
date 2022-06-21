@@ -12,7 +12,7 @@ final class SearchLocationView: UIView {
     weak var delegate: SearchLocationViewModelDelegate?
     weak var searchBarDelegate: UISearchBarDelegate?
     
-    private lazy var backgroundImageView = BackgraundImageView()
+    private(set) lazy var backgroundImageView = BackgraundImageView()
     
     private(set) lazy var searchController: UISearchController = {
         let tempSearchController = UISearchController(searchResultsController: nil)
@@ -39,8 +39,9 @@ final class SearchLocationView: UIView {
     
     private(set) lazy var messageTextLabel = MessageTextLabel()
     private(set) lazy var containerView = UIView()
+    private(set) lazy var circleAnimation = CircleAnimationView()
     
-    lazy var userLocationButton: UserLocationButton = {
+    private(set) lazy var userLocationButton: UserLocationButton = {
         let tempUserLocationButton = UserLocationButton()
         tempUserLocationButton.addTarget(
             self,
@@ -58,14 +59,14 @@ final class SearchLocationView: UIView {
         addSubview(backgroundImageView)
         addSubview(containerView)
         containerView.addSubview(messageTextLabel)
+        messageTextLabel.addSubview(circleAnimation)
         containerView.addSubview(userLocationButton)
     }
     
-    private func setAllConstraints() {
-        setContainerViewConstraints()
-        setMessageTextLabelConstarints()
-        setUserLocationButtonConstraints()
-        containerView.bottomAnchor.constraint(equalTo: userLocationButton.bottomAnchor).isActive = true
+    func startCircleAnimation() {
+        fadeTransition(0.2)
+        messageTextLabel.text = String()
+        circleAnimation.start()
     }
     
     @objc private func delegateActions(_ sender: Any) {
@@ -74,38 +75,6 @@ final class SearchLocationView: UIView {
         } else {
             delegate?.userLocattionButtonPressed()
         }
-    }
-    
-    private func setContainerViewConstraints() {
-        containerView.translatesAutoresizingMaskIntoConstraints = false
-        NSLayoutConstraint.activate([
-            containerView.topAnchor.constraint(equalTo: self.safeAreaLayoutGuide.topAnchor),
-            containerView.leadingAnchor.constraint(
-                equalTo: self.leadingAnchor,
-                constant: AppConstants.Indent.left),
-            containerView.trailingAnchor.constraint(
-                equalTo: self.trailingAnchor,
-                constant: AppConstants.Indent.right)
-        ])
-    }
-    
-    private func setMessageTextLabelConstarints() {
-        messageTextLabel.translatesAutoresizingMaskIntoConstraints = false
-        NSLayoutConstraint.activate([
-            messageTextLabel.topAnchor.constraint(equalTo: containerView.safeAreaLayoutGuide.topAnchor),
-            messageTextLabel.leadingAnchor.constraint(equalTo: containerView.leadingAnchor),
-            messageTextLabel.trailingAnchor.constraint(equalTo: containerView.trailingAnchor),
-            messageTextLabel.heightAnchor.constraint(equalToConstant: 156)
-        ])
-    }
-    
-    private func setUserLocationButtonConstraints() {
-        userLocationButton.translatesAutoresizingMaskIntoConstraints = false
-        NSLayoutConstraint.activate([
-            userLocationButton.topAnchor.constraint(equalTo: messageTextLabel.bottomAnchor, constant: 24),
-            userLocationButton.centerXAnchor.constraint(equalTo: messageTextLabel.centerXAnchor),
-            userLocationButton.widthAnchor.constraint(equalToConstant: userLocationButton.frame.width + 20)
-        ])
     }
 }
 
