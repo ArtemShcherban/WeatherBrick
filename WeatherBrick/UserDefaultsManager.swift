@@ -12,7 +12,7 @@ import CoreLocation
 final class UserDefaultsManager: UserDefaults {
     static let manager = UserDefaultsManager()
     
-    func save(_ myWeather: MyWeather) {
+    func save(_ myWeather: WeatherInfo) {
         do {
             let encoder = JSONEncoder()
             let data = try encoder.encode(myWeather)
@@ -24,16 +24,16 @@ final class UserDefaultsManager: UserDefaults {
     
     func getLocation() -> CLLocation? {
         if let data = object(forKey: AppConstants.myWeather) as? Data,
-            let myWeather = try? JSONDecoder().decode(MyWeather.self, from: data) {
+            let myWeather = try? JSONDecoder().decode(WeatherInfo.self, from: data) {
             let location = CLLocation(latitude: myWeather.latitude, longitude: myWeather.longitude)
             return location
         }
         return nil
     }
     
-    func getMyWeather() -> MyWeather? {
+    func getMyWeather() -> WeatherInfo? {
         if let data = object(forKey: AppConstants.myWeather) as? Data,
-            let myWeather = try? JSONDecoder().decode(MyWeather.self, from: data) {
+            let myWeather = try? JSONDecoder().decode(WeatherInfo.self, from: data) {
             return myWeather
         }
         return nil

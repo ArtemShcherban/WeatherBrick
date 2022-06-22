@@ -10,6 +10,7 @@ import UIKit
 
 extension SearchLocationView {
     func setAllConstraints() {
+        backgroundImageView.setConstraints()
         setContainerViewConstraints()
         setMessageTextLabelConstarints()
         setUserLocationButtonConstraints()

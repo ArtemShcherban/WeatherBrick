@@ -15,8 +15,7 @@ final class WeatherMainView: UIView {
     
     lazy var axisYConstraint = NSLayoutConstraint()
     
-    private lazy var backgroundImageView = BackgraundImageView()
-    
+    private(set) lazy var backgroundImageView = BackgraundImageView()
     lazy var stoneImageView = StoneImageView()
     lazy var alphaValues: [Double] = []
     
@@ -112,7 +111,7 @@ final class WeatherMainView: UIView {
         }
     }
     
-    func updateWeather(with myWeather: MyWeather ) {
+    func updateWeather(with myWeather: WeatherInfo ) {
         temperatureLabel.text = myWeather.temperature
         conditionLabel.text = myWeather.conditionDetails.lowercased()
         locationButton.isEnabled = true

@@ -19,7 +19,7 @@ final class SearchLocationViewController: UIViewController {
     private lazy var locationManager = CLLocationManager()
     
     private lazy var userDefaultsManager = UserDefaultsManager.manager
-    private lazy var networkServiceModel = NetworkServiceModel.shared
+    private lazy var weatherNetworkServiceModel = WeatherNetworkServiceModel.shared
     private lazy var searchLocationModel = SearchLocationModel.shared
     private lazy var weatherMainModel = WeatherMainModel.shared
     private lazy var weatherMainView = WeatherMainView.shared
@@ -50,27 +50,36 @@ final class SearchLocationViewController: UIViewController {
         navigationItem.leftBarButtonItem = searchLocationView.backButton
     }
     
-    private func getMyWeatherFor<T: Locatable>(_ location: T, compleation: @escaping(MyWeather) -> Void) {
-        networkServiceModel.prepareLinkFor(location: location) { link in
-            self.weatherMainModel.createMyWeather(with: link) { myWeatherOrError in
-                switch myWeatherOrError {
-                case .failure(let error):
-                    self.mainQueue?.dispatch {
-                        self.searchLocationView.circleAnimation.stop()
-                        self.searchLocationView.messageTextLabel.retrieveError = error.rawValue
-                        self.searchLocationView.messageTextLabel.isActive = true
-                    }
-                case .success(let myWeather):
-                    self.mainQueue?.dispatch {
-                        self.searchLocationView.circleAnimation.stop()
-                        compleation(myWeather)
+    private func getMyWeatherFor<T: Locatable>(_ location: T, compleation: @escaping(WeatherInfo) -> Void) {
+        weatherNetworkServiceModel.prepareLinkFor(location: location) { result in
+            switch result {
+            case .failure(let error):
+                self.received(error: error)
+            case .success(let url):
+                self.weatherMainModel.createWeatherInfo(with: url) { myWeatherOrError in
+                    switch myWeatherOrError {
+                    case .failure(let error):
+                        self.received(error: error)
+                    case .success(let myWeather):
+                        self.mainQueue?.dispatch {
+                            self.searchLocationView.circleAnimation.stop()
+                            compleation(myWeather)
+                        }
                     }
                 }
             }
         }
     }
     
-    private func returnNewLocationWith(_ myWeather: MyWeather, geoLocation: Bool) {
+    private func received(error: NetworkServiceError) {
+        self.mainQueue?.dispatch {
+            self.searchLocationView.circleAnimation.stop()
+            self.searchLocationView.messageTextLabel.retrieveError = error.localizedDescription
+            self.searchLocationView.messageTextLabel.isActive = true
+        }
+    }
+    
+    private func returnNewLocationWith(_ myWeather: WeatherInfo, geoLocation: Bool) {
         delgate?.updateWeather(with: myWeather)
         delgate?.updateIconWith(geoLocation)
         navigationController?.popViewController(animated: true)
@@ -89,7 +98,7 @@ extension SearchLocationViewController: SearchLocationViewModelDelegate {
     
     func userLocattionButtonPressed() {
         searchLocationView.userLocationButton.isSelected = true
-        let status = locationManager.authorizationStatus
+        let status = CLLocationManager.authorizationStatus()
         if status == .authorizedWhenInUse {
             locationManager.requestLocation()
             searchLocationView.userLocationButton.isSelected = false
@@ -101,7 +110,7 @@ extension SearchLocationViewController: SearchLocationViewModelDelegate {
 
 extension SearchLocationViewController: CLLocationManagerDelegate {
     func locationManagerDidChangeAuthorization(_ manager: CLLocationManager) {
-        let status = locationManager.authorizationStatus
+        let status = CLLocationManager.authorizationStatus()
         if status == .authorizedWhenInUse && searchLocationView.userLocationButton.isSelected {
             userLocattionButtonPressed()
         }
@@ -163,7 +172,7 @@ extension SearchLocationViewController: UISearchBarDelegate {
 }
 
 protocol SearchLocationViewControllerDelegate: AnyObject {
-    func updateWeather(with myWeather: MyWeather)
+    func updateWeather(with myWeather: WeatherInfo)
     func updateIconWith(_ geoLocation: Bool)
 }
 

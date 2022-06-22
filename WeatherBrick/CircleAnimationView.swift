@@ -17,6 +17,7 @@ final class CircleAnimationView: UIView {
     
     required init?(coder: NSCoder) {
         super.init(coder: coder)
+        configure()
     }
     
     private lazy var animationSubview: AnimationView = {

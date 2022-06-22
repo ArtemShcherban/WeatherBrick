@@ -1,8 +1,8 @@
 import Foundation
 
-struct Wind: Codable {
-    let speed: Double?
-    let degrees: Int?
+struct WindParameters: Codable {
+    let speed: Double
+    let degrees: Int
     
     enum CodingKeys: String, CodingKey {
         case speed
@@ -11,7 +11,7 @@ struct Wind: Codable {
     
     init(from decoder: Decoder) throws {
         let values = try decoder.container(keyedBy: CodingKeys.self)
-        speed = try values.decodeIfPresent(Double.self, forKey: .speed)
-        degrees = try values.decodeIfPresent(Int.self, forKey: .degrees)
+        speed = try values.decodeIfPresent(Double.self, forKey: .speed) ?? 0.0
+        degrees = try values.decodeIfPresent(Int.self, forKey: .degrees) ?? 0
     }
 }

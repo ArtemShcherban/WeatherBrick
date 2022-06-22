@@ -34,6 +34,7 @@ class ErrorMessageTextLabel: UILabel {
     
     required init?(coder: NSCoder) {
         super.init(coder: coder)
+        configure()
     }
     
     func willChangeStringTo(_ value: String) {

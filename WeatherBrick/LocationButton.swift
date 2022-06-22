@@ -19,6 +19,7 @@ final class LocationButton: UIButton {
     
     required init?(coder: NSCoder) {
         super.init(coder: coder)
+        configure()
     }
     
     var isActive = true {
@@ -41,7 +42,7 @@ final class LocationButton: UIButton {
         layer.cornerRadius = frame.height / 2
     }
     
-    func setButtonEnabled() {
+    private func setButtonEnabled() {
         fadeTransition(0.5)
         alpha = isActive ? 1 : 0.2
         isEnabled = isActive
@@ -62,15 +63,16 @@ final class LocationButton: UIButton {
     }
     
     func setConstraints() {
-        guard let superview = superview as? WeatherMainView else { return }
-        translatesAutoresizingMaskIntoConstraints = false
-        widthAnchorConstraint = widthAnchor.constraint(equalToConstant: frame.width + 20)
-        NSLayoutConstraint.activate([
-            topAnchor.constraint(
-                equalTo: superview.topAnchor,
-                constant: UIScreen.main.bounds.size.height * CGFloat(AppConstants.bigScreenSize ? 0.83 : 0.8)),
-            centerXAnchor.constraint(equalTo: superview.centerXAnchor),
-            widthAnchorConstraint
-        ])
+        if let superview = superview {
+            translatesAutoresizingMaskIntoConstraints = false
+            widthAnchorConstraint = widthAnchor.constraint(equalToConstant: frame.width + 20)
+            NSLayoutConstraint.activate([
+                topAnchor.constraint(
+                    equalTo: superview.topAnchor,
+                    constant: UIScreen.main.bounds.size.height * CGFloat(AppConstants.bigScreenSize ? 0.83 : 0.8)),
+                centerXAnchor.constraint(equalTo: superview.centerXAnchor),
+                widthAnchorConstraint
+            ])
+        }
     }
 }

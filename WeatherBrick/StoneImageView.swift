@@ -17,6 +17,7 @@ final class StoneImageView: UIImageView {
     
     required init?(coder: NSCoder) {
         super.init(coder: coder)
+        configure()
     }
     
     private func configure() {

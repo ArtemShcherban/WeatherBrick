@@ -9,7 +9,7 @@
 import Foundation
 
 enum NetworkServiceError: String, Error {
-    case cannotCreateURL = "Error: Cannot create URL"
+    case cannotCreateURL = "We cannot create URL"
     case errorCallingGET = "Network access error, please check your wi-fi connection or network coverage and try again"
     case didNotRecieveData = "Error: did not recieve data"
     case httpRequestFailed =
@@ -18,4 +18,8 @@ enum NetworkServiceError: String, Error {
         "Unfortunately, the time for the request has expired. There is a problem with the quality of the network."
     case couldNotConnect = "Unfortunately, we could not connect to the server."
     case sslConectError = "An SSL error has occurred and a secure connection to the server cannot be made."
+}
+
+extension NetworkServiceError: LocalizedError {
+    var errorDescription: String? { return NSLocalizedString(rawValue, comment: "") }
 }

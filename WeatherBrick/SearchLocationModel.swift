@@ -13,7 +13,7 @@ final class SearchLocationModel {
     static let shared = SearchLocationModel()
     
     func textLooksLikeCoordinates(_ text: String) -> Bool {
-        if (text.rangeOfCharacter(from: AppConstants.alphabetletters) == nil) &&
+        if (text.rangeOfCharacter(from: AppConstants.alphabetLetters) == nil) &&
             text.prefix(4).contains(".") &&
             text.contains(" ") &&
             text.last != " " {

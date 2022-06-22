@@ -12,14 +12,19 @@ import DeviceKit
 
 enum AppConstants {
     static let bigScreenSize = Device.screenSize() > Size.screen5x8Inch
+   
+    static let scheme = "https"
+    static let baseURL = "api.openweathermap.org"
+    static let path = "/data/2.5/weather"
+    static let query = "q"
+    static let latitude = "lat"
+    static let longitude = "lon"
+    static let appId = "APPID"
+    static let apiKey = "59a2b233df10c0b64ce48ebeb844ddf2"
+    static let units = "units"
+    static let metric = "metric"
     
-    static let weatherIn = "https://api.openweathermap.org/data/2.5/weather?q="
-    static let weatherBy = "https://api.openweathermap.org/data/2.5/weather?lat="
-    static let and = "&lon="
-    static let apiKey = "&APPID=59a2b233df10c0b64ce48ebeb844ddf2"
-    static let metricUnits = "&units=metric"
-    
-    static let alphabetletters = NSCharacterSet.letters
+    static let alphabetLetters = NSCharacterSet.letters
     
     static let myWeather = "myWeather"
     static let monitor = "Monitor"
@@ -97,7 +102,7 @@ enum AppConstants {
         "Brick is swinging - windy",
         "Brick is gone - No Internet"
     ]
-
+    
     static let inputFormats = """
     Try use the following formats, for cities:
     New York

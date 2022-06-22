@@ -1,7 +1,7 @@
 import Foundation
 
 struct CountryCode: Codable {
-    let isoCode: String?
+    let isoCode: String
     
     enum CodingKeys: String, CodingKey {
         case isoCode = "country"
@@ -9,6 +9,6 @@ struct CountryCode: Codable {
     
     init(from decoder: Decoder) throws {
         let values = try decoder.container(keyedBy: CodingKeys.self)
-        isoCode = try values.decodeIfPresent(String.self, forKey: .isoCode)
+        isoCode = try values.decodeIfPresent(String.self, forKey: .isoCode) ?? String()
     }
 }

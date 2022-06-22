@@ -13,15 +13,16 @@ import CoreLocation
 final class WeatherMainModel {
     static let shared = WeatherMainModel()
     
-    private lazy var networkServiceManager = NetworkService.shared
+    private lazy var weatherNetworkService = WeatherNetworkService()
+    private lazy var additionalServiceModels = AdditionalServiceModels()
     private lazy var countriesWithFlags: [String: Country] = [:]
     
     init() {
-        getCountries()
+        createCountries()
     }
     
-    private func getCountries() {
-        networkServiceManager.getDataFromCountriesJson { jsonArray in
+    private func createCountries() {
+        additionalServiceModels.getCountries { jsonArray in
             for item in jsonArray {
                 if let object = item as? [String: String] {
                     let codeIso = object["ISO"] ?? ""
@@ -35,20 +36,20 @@ final class WeatherMainModel {
         }
     }
     
-    func createMyWeather(with link: String, completion: @escaping((Result<MyWeather, NetworkServiceError>) -> Void)) {
-        networkServiceManager.getDataFromOpenWeather(with: link) { resultOrError in
+    func createWeatherInfo(with link: URL, completion: @escaping((Result<WeatherInfo, NetworkServiceError>) -> Void)) {
+        weatherNetworkService.getWeather(with: link) { resultOrError in
             switch resultOrError {
             case .failure(let error):
                 completion(.failure(error))
             case .success(let weather):
-                var myWeather = MyWeather(
+                var myWeather = WeatherInfo(
                     city: weather.cityName ?? "",
                     country: self.countriesWithFlags[weather.countryISO ?? ""]?.name ?? "",
                     flag: self.countriesWithFlags[weather.countryISO ?? ""]?.flag ?? "",
                     temperature: String(Int(weather.temperature ?? 0.0)) + "°",
                     conditionDetails: weather.conditionDetails ?? "",
                     conditionMain: weather.conditionMain ?? "",
-                    wind: String(Int(weather.wind?.speed ?? 0.0)),
+                    wind: String(Int(weather.windParameters?.speed ?? 0.0)),
                     stoneImage: self.getStoneImage(dependingOn: weather),
                     latitude: weather.coordinates?.latitude ?? 0.0,
                     longitude: weather.coordinates?.longitude ?? 0.0)

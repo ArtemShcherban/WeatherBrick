@@ -10,6 +10,7 @@ import UIKit
 
 extension WeatherMainView {
     func setConstraints() {
+        backgroundImageView.setConstraints()
         setTemperatureLabelConstraints()
         setConditionLabelConstraints()
         setWindSpeedLabelConstraints()

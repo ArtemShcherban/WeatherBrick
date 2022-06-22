@@ -16,6 +16,7 @@ final class UserLocationButton: UIButton {
     
     required init?(coder: NSCoder) {
         super.init(coder: coder)
+        configure()
     }
     
     private func configure() {

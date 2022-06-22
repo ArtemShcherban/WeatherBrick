@@ -34,6 +34,7 @@ final class MessageTextLabel: UILabel {
     
     required init?(coder: NSCoder) {
         super.init(coder: coder)
+        configure()
     }
     
     private func configure() {

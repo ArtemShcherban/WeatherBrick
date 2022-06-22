@@ -93,6 +93,12 @@ final class PopUpWindow: UIView {
     
     required init?(coder: NSCoder) {
         super.init(coder: coder)
+        createConditionLabels()
+        addSubviews()
+        setConstraints()
+        addTapGestureRecognizer()
+        createShadow()
+        animateIn()
     }
     
     private func addSubviews() {
