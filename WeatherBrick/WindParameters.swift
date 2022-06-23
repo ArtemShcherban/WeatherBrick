@@ -11,7 +11,7 @@ struct WindParameters: Codable {
     
     init(from decoder: Decoder) throws {
         let values = try decoder.container(keyedBy: CodingKeys.self)
-        speed = try values.decodeIfPresent(Double.self, forKey: .speed) ?? Double()
-        degrees = try values.decodeIfPresent(Int.self, forKey: .degrees) ?? Int()
+        speed = try values.decode(Double.self, forKey: .speed)
+        degrees = try values.decode(Int.self, forKey: .degrees)
     }
 }

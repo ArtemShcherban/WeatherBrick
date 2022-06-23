@@ -9,6 +9,6 @@ struct Temperature: Codable {
     
     init(from decoder: Decoder) throws {
         let values = try decoder.container(keyedBy: CodingKeys.self)
-        сelsius = try values.decodeIfPresent(Double.self, forKey: .сelsius) ?? Double()
+        сelsius = try values.decode(Double.self, forKey: .сelsius)
     }
 }

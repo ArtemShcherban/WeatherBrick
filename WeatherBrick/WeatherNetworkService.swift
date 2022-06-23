@@ -9,7 +9,7 @@
 import Foundation
 import UIKit
 
-final class WeatherNetworkService {  
+final class WeatherNetworkService {
     func getWeather(with link: URL, completion: @escaping(Result<WeatherParameters, NetworkServiceError>) -> Void) {   let request = URLRequest(url: link)
         
         let sessionConfig = URLSessionConfiguration.default

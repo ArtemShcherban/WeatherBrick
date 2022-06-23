@@ -25,10 +25,10 @@ final class WeatherViewModel {
         additionalServiceModels.getCountries { jsonArray in
             for item in jsonArray {
                 if let object = item as? [String: String] {
-                    let codeIso = object["ISO"] ?? ""
-                    let countryName = object["Name"] ?? ""
-                    let countryFlag = object["Emoji"] ?? ""
-                    let unicode = object["Unicode"] ?? ""
+                    let codeIso = object["ISO"] ?? String()
+                    let countryName = object["Name"] ?? String()
+                    let countryFlag = object["Emoji"] ?? String()
+                    let unicode = object["Unicode"] ?? String()
                     let country = Country(codeISO: codeIso, name: countryName, flag: countryFlag, unicode: unicode)
                     self.countriesWithFlags.updateValue(country, forKey: codeIso)
                 }
@@ -43,20 +43,20 @@ final class WeatherViewModel {
                 completion(.failure(error))
             case .success(let weather):
                 var myWeather = WeatherInfo(
-                    city: weather.cityName ?? "",
-                    country: self.countriesWithFlags[weather.countryISO ?? ""]?.name ?? "",
-                    flag: self.countriesWithFlags[weather.countryISO ?? ""]?.flag ?? "",
-                    temperature: String(Int(weather.temperature ?? 0.0)) + "°",
-                    conditionDetails: weather.conditionDetails ?? "",
-                    conditionMain: weather.conditionMain ?? "",
-                    wind: String(Int(weather.windParameters?.speed ?? 0.0)),
+                    city: weather.cityName,
+                    country: self.countriesWithFlags[weather.countryISO]?.name ?? String(),
+                    flag: self.countriesWithFlags[weather.countryISO]?.flag ?? String(),
+                    temperature: String(Int(weather.temperature)) + "°",
+                    conditionDetails: weather.conditionDetails,
+                    conditionMain: weather.conditionMain,
+                    wind: String(Int(weather.windParameters.speed)),
                     stoneImage: self.getStoneImage(dependingOn: weather),
-                    latitude: weather.coordinates?.latitude ?? 0.0,
-                    longitude: weather.coordinates?.longitude ?? 0.0)
+                    latitude: weather.coordinates.latitude,
+                    longitude: weather.coordinates.longitude)
                 if myWeather.country.isEmpty || myWeather.city.isEmpty {
                     let geoCoordinates = self.convertToGeo(coordinates: ((
-                        weather.coordinates?.latitude ?? 0.0,
-                        weather.coordinates?.longitude ?? 0.0)))
+                        weather.coordinates.latitude,
+                        weather.coordinates.longitude)))
                     myWeather.city = geoCoordinates.0
                     myWeather.country = geoCoordinates.1
                 }
@@ -66,11 +66,8 @@ final class WeatherViewModel {
     }
     
     private func getStoneImage(dependingOn weather: WeatherParameters) -> String {
-        guard let condition = weather.conditionMain,
-            let temperature = weather.temperature else {
-            return String()
-        }
-        
+        let temperature = weather.temperature
+        let condition = weather.conditionMain
         let checkedValue = true
         
         if temperature >= 33.0 {

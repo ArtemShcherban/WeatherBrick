@@ -114,9 +114,6 @@ final class WeatherMainViewController: UIViewController, SearchLocationViewContr
         weatherMainView.updateWeather(with: myWeather)
     }
     
-//    func updateIcon(isGeo geoLocation: Bool) {
-//        <#code#>
-//    }
     func updateIcon(isGeo geoLocation: Bool) {
         weatherMainView.setIcon(isGeo: geoLocation)
     }

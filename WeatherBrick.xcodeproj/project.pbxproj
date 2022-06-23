@@ -36,7 +36,6 @@
 		F41FAC962863250F00675E13 /* FontsConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = F41FAC952863250F00675E13 /* FontsConstants.swift */; };
 		F41FAC982863260B00675E13 /* ImagesConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = F41FAC972863260B00675E13 /* ImagesConstants.swift */; };
 		F41FAC9A286326CD00675E13 /* TitlesConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = F41FAC99286326CD00675E13 /* TitlesConstants.swift */; };
-		F41FAC9C2864658B00675E13 /* Ljubljana.json in Resources */ = {isa = PBXBuildFile; fileRef = F41FAC9B2864658B00675E13 /* Ljubljana.json */; };
 		F43B674328436BE80034FAEA /* CountriesWithFlags.json in Resources */ = {isa = PBXBuildFile; fileRef = F43B674228436BE80034FAEA /* CountriesWithFlags.json */; };
 		F43B674628448E8B0034FAEA /* Dispatcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = F43B674528448E8B0034FAEA /* Dispatcher.swift */; };
 		F43B67492844B87D0034FAEA /* NetworkServiceError.swift in Sources */ = {isa = PBXBuildFile; fileRef = F43B67482844B87D0034FAEA /* NetworkServiceError.swift */; };
@@ -134,7 +133,6 @@
 		F41FAC952863250F00675E13 /* FontsConstants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FontsConstants.swift; sourceTree = "<group>"; };
 		F41FAC972863260B00675E13 /* ImagesConstants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImagesConstants.swift; sourceTree = "<group>"; };
 		F41FAC99286326CD00675E13 /* TitlesConstants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TitlesConstants.swift; sourceTree = "<group>"; };
-		F41FAC9B2864658B00675E13 /* Ljubljana.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = Ljubljana.json; sourceTree = "<group>"; };
 		F43B674228436BE80034FAEA /* CountriesWithFlags.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = CountriesWithFlags.json; sourceTree = "<group>"; };
 		F43B674528448E8B0034FAEA /* Dispatcher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Dispatcher.swift; sourceTree = "<group>"; };
 		F43B67482844B87D0034FAEA /* NetworkServiceError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkServiceError.swift; sourceTree = "<group>"; };
@@ -296,7 +294,6 @@
 				A3ACF2DF2738479300CEE97C /* Fonts */,
 				A3ACF2E627384B9800CEE97C /* Localizable.strings */,
 				F43B674228436BE80034FAEA /* CountriesWithFlags.json */,
-				F41FAC9B2864658B00675E13 /* Ljubljana.json */,
 			);
 			name = Resources;
 			sourceTree = "<group>";
@@ -730,7 +727,6 @@
 				A3475F09273305F400BF5E86 /* LaunchScreen.storyboard in Resources */,
 				A3ACF2E727384B9800CEE97C /* Localizable.strings in Resources */,
 				A3475F06273305F400BF5E86 /* Assets.xcassets in Resources */,
-				F41FAC9C2864658B00675E13 /* Ljubljana.json in Resources */,
 				A3ACF2E3273847B800CEE97C /* SF-Pro-Display-Semibold.otf in Resources */,
 				F43B674328436BE80034FAEA /* CountriesWithFlags.json in Resources */,
 				F47DA21428381BBB00098B17 /* Ubuntu-Bold.ttf in Resources */,

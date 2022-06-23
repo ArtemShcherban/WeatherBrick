@@ -16,7 +16,7 @@ struct LocationCoordinate: Codable {
     
     init(from decoder: Decoder) throws {
         let values = try decoder.container(keyedBy: CodingKeys.self)
-        longitude = try values.decodeIfPresent(Double.self, forKey: .longitude) ?? Double()
-        latitude = try values.decodeIfPresent(Double.self, forKey: .latitude) ?? Double()
+        longitude = try values.decode(Double.self, forKey: .longitude)
+        latitude = try values.decode(Double.self, forKey: .latitude)
     }
 }
