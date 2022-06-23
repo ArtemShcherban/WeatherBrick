@@ -1,6 +1,6 @@
 import Foundation
 
-struct ResultOfRequest: Codable {
+struct WeatherParameters: Codable {
     let coordinates: LocationCoordinate?
     let conditionMain: String?
     let conditionDetails: String?

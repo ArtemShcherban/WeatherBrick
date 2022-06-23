@@ -20,10 +20,10 @@ final class WeatherMainViewController: UIViewController, SearchLocationViewContr
     }
     
     private var userDefaultsManager = UserDefaultsManager.manager
-    private var weatherNetworkServiceModel = WeatherNetworkServiceModel.shared
+    private var weatherNetworkServiceModel = URLModel.shared
     
-    private lazy var weatherMainModel: WeatherMainModel = {
-        WeatherMainModel.shared
+    private lazy var weatherMainModel: WeatherViewModel = {
+        WeatherViewModel.shared
     }()
     
     private lazy var weatherMainView: WeatherMainView = {
@@ -82,21 +82,20 @@ final class WeatherMainViewController: UIViewController, SearchLocationViewContr
     }
     
     private func getWeatherFor(_ location: CLLocation) {
-        weatherNetworkServiceModel.prepareLinkFor(location: location) { result in
-            switch result {
-            case .failure(let error):
-                self.received(error: error)
-            case .success(let url):
-                self.weatherMainModel.createWeatherInfo(with: url) { myWeatherOrError in
-                    switch myWeatherOrError {
-                    case .failure(let error):
-                        self.received(error: error)
-                    case .success(let myWeather):
-                        self.mainQueue?.dispatch {
-                            self.weatherMainView.circleAnimation.stop()
-                            self.weatherMainView.errorMessageTextLabel.isActive = false
-                            self.updateWeather(with: myWeather)
-                        }
+        let result = weatherNetworkServiceModel.prepareLinkFor(location: location)
+        switch result {
+        case .failure(let error):
+            self.received(error: error)
+        case .success(let url):
+            self.weatherMainModel.createWeatherInfo(with: url) { myWeatherOrError in
+                switch myWeatherOrError {
+                case .failure(let error):
+                    self.received(error: error)
+                case .success(let myWeather):
+                    self.mainQueue?.dispatch {
+                        self.weatherMainView.circleAnimation.stop()
+                        self.weatherMainView.errorMessageTextLabel.isActive = false
+                        self.updateWeather(with: myWeather)
                     }
                 }
             }
@@ -115,8 +114,11 @@ final class WeatherMainViewController: UIViewController, SearchLocationViewContr
         weatherMainView.updateWeather(with: myWeather)
     }
     
-    func updateIconWith(_ geoLocation: Bool) {
-        weatherMainView.setIconFor(geoLocation)
+//    func updateIcon(isGeo geoLocation: Bool) {
+//        <#code#>
+//    }
+    func updateIcon(isGeo geoLocation: Bool) {
+        weatherMainView.setIcon(isGeo: geoLocation)
     }
     
     private func сhangeNetworkStatus(from oldValue: NWPath.Status) {
@@ -124,7 +126,7 @@ final class WeatherMainViewController: UIViewController, SearchLocationViewContr
             sleep(UInt32(3.0))
             getDataFromNetwork()
             mainQueue?.dispatch {
-                self.weatherMainView.stoneImageView.image = UIImage(named: AppConstants.StoneImage.normal)
+                self.weatherMainView.stoneImageView.image = UIImage(named: ImagesConstants.StoneImage.normal)
                 self.weatherMainView.errorMessageTextLabel.isActive = false
                 self.weatherMainView.locationButton.isActive = true
             }
@@ -132,7 +134,7 @@ final class WeatherMainViewController: UIViewController, SearchLocationViewContr
             self.mainQueue?.dispatch {
                 self.weatherMainView.locationButton.isActive = false
                 self.weatherMainView.errorMessageTextLabel.retrieveError = NetworkServiceError.errorCallingGET.rawValue
-                self.weatherMainView.stoneImageView.image = UIImage(named: AppConstants.StoneImage.noStone)
+                self.weatherMainView.stoneImageView.image = UIImage(named: ImagesConstants.StoneImage.noStone)
             }
         }
     }
@@ -166,7 +168,7 @@ extension WeatherMainViewController: WeatherMainViewDelegate {
 }
 
 extension WeatherMainViewController: PopUpWindowDelegate {
-    func popWindowIn() {
+    func popWindowPush() {
         weatherMainView.animatePopUpWindowIn()
     }
     

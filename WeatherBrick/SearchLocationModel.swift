@@ -12,7 +12,7 @@ import CoreLocation
 final class SearchLocationModel {
     static let shared = SearchLocationModel()
     
-    func textLooksLikeCoordinates(_ text: String) -> Bool {
+    func hasValidCoordinates(_ text: String) -> Bool {
         if (text.rangeOfCharacter(from: AppConstants.alphabetLetters) == nil) &&
             text.prefix(4).contains(".") &&
             text.contains(" ") &&
@@ -22,12 +22,12 @@ final class SearchLocationModel {
         return false
     }
     
-    func tryCreateLocationFrom(_ searchBarText: String) -> CLLocation? {
-        let firstIndex = searchBarText.firstIndex(of: ",") ?? searchBarText.endIndex
-        let secondIndex = searchBarText.firstIndex(of: " ") ?? searchBarText.endIndex
-        let firstString = String(searchBarText[..<firstIndex])
-        let secondString = String(searchBarText[searchBarText.index(after: secondIndex)...searchBarText.index(
-            before: searchBarText.endIndex)])
+    func location(from string: String) -> CLLocation? {
+        let firstIndex = string.firstIndex(of: ",") ?? string.endIndex
+        let secondIndex = string.firstIndex(of: " ") ?? string.endIndex
+        let firstString = String(string[..<firstIndex])
+        let secondString = String(string[string.index(after: secondIndex)...string.index(
+            before: string.endIndex)])
         
         if let latitude = Double(firstString),
             let longitude = Double(secondString) {

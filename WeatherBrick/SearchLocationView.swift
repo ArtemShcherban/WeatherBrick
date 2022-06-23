@@ -9,19 +9,19 @@
 import UIKit
 
 final class SearchLocationView: UIView {
-    weak var delegate: SearchLocationViewModelDelegate?
+    weak var delegate: SearchLocationViewDelegate?
     weak var searchBarDelegate: UISearchBarDelegate?
     
-    private(set) lazy var backgroundImageView = BackgraundImageView()
+    private(set) lazy var backgroundImageView = BackgroundImageView()
     
     private(set) lazy var searchController: UISearchController = {
         let tempSearchController = UISearchController(searchResultsController: nil)
         tempSearchController.obscuresBackgroundDuringPresentation = false
         let attributedString = NSAttributedString(
-            string: AppConstants.TitleFor.searchBarPlaceHolder,
+            string: TitlesConstants.searchBarPlaceHolder,
             attributes: [
                 NSAttributedString.Key.kern: -0.41,
-                NSAttributedString.Key.font: UIFont(name: AppConstants.Font.ubuntuLight, size: 16) ?? UIFont()
+                NSAttributedString.Key.font: UIFont(name: FontsConstants.ubuntuLight, size: 16) ?? UIFont()
             ])
         tempSearchController.searchBar.searchTextField.attributedPlaceholder = attributedString
         tempSearchController.searchBar.delegate = searchBarDelegate
@@ -30,10 +30,10 @@ final class SearchLocationView: UIView {
     
     private(set) lazy var backButton: UIBarButtonItem = {
         let tempBackButton = UIBarButtonItem(
-            title: AppConstants.TitleFor.backButtonTitle,
+            title: TitlesConstants.backButtonTitle,
             style: .plain,
             target: self,
-            action: #selector(delegateActions(_:)))
+            action: #selector(backButtonDelegateAction))
         return tempBackButton
     }()
     
@@ -45,7 +45,7 @@ final class SearchLocationView: UIView {
         let tempUserLocationButton = UserLocationButton()
         tempUserLocationButton.addTarget(
             self,
-            action: #selector(delegateActions(_:)),
+            action: #selector(userLocationButtonDelegateAction),
             for: .touchUpInside)
         return tempUserLocationButton
     }()
@@ -69,16 +69,16 @@ final class SearchLocationView: UIView {
         circleAnimation.start()
     }
     
-    @objc private func delegateActions(_ sender: Any) {
-        if sender as? UIBarButtonItem != nil {
-            delegate?.backButtonPressed()
-        } else {
-            delegate?.userLocattionButtonPressed()
-        }
+    @objc private func userLocationButtonDelegateAction() {
+        delegate?.userLocattionButtonPressed()
+    }
+    
+    @objc private func backButtonDelegateAction() {
+        delegate?.backButtonPressed()
     }
 }
 
-protocol SearchLocationViewModelDelegate: AnyObject {
+protocol SearchLocationViewDelegate: AnyObject {
     func userLocattionButtonPressed()
     func backButtonPressed()
 }

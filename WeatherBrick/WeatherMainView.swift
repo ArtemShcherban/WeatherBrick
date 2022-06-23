@@ -9,30 +9,35 @@
 import UIKit
 import DeviceKit
 
+protocol WeatherMainViewDelegate: AnyObject {
+    func didSwipe()
+    func locationButtonPressed()
+}
+
 final class WeatherMainView: UIView {
     static let shared = WeatherMainView()
     weak var delegate: WeatherMainViewDelegate?
     
     lazy var axisYConstraint = NSLayoutConstraint()
     
-    private(set) lazy var backgroundImageView = BackgraundImageView()
+    private(set) lazy var backgroundImageView = BackgroundImageView()
     lazy var stoneImageView = StoneImageView()
     lazy var alphaValues: [Double] = []
     
     private(set) lazy var temperatureLabel: UILabel = {
         let tempTemperatureLabel = UILabel()
         tempTemperatureLabel.font = UIFont(
-            name: AppConstants.Font.ubuntuRegular,
+            name: FontsConstants.ubuntuRegular,
             size: AppConstants.bigScreenSize ? 83 : 63) ?? UIFont()
         return tempTemperatureLabel
     }()
     
     private(set) lazy var conditionLabel: UILabel = {
-        let tempConditionLabel = UILabel(frame: CGRect(x: 16, y: 558, width: 124, height: 58))
+        let tempConditionLabel = UILabel()
         let attributedString = NSAttributedString(string: " ", attributes: [
             NSAttributedString.Key.kern: -0.41,
             NSAttributedString.Key.font: UIFont(
-                name: AppConstants.Font.ubuntuLight,
+                name: FontsConstants.ubuntuLight,
                 size: AppConstants.bigScreenSize ? 36 : 27) ?? UIFont()
         ])
         tempConditionLabel.attributedText = attributedString
@@ -45,7 +50,7 @@ final class WeatherMainView: UIView {
         let attributedString = NSAttributedString(string: " ", attributes: [
             NSAttributedString.Key.kern: -0.41,
             NSAttributedString.Key.font: UIFont(
-                name: AppConstants.Font.ubuntuLight,
+                name: FontsConstants.ubuntuLight,
                 size: AppConstants.bigScreenSize ? 20 : 15) ?? UIFont()
         ])
         tempWindSpeedLabel.attributedText = attributedString
@@ -58,20 +63,17 @@ final class WeatherMainView: UIView {
     
     private(set) lazy var geoLocationImageView: UIImageView = {
         let tempGeoLocationLabel = UIImageView()
-        tempGeoLocationLabel.image = AppConstants.Icon.location
+        tempGeoLocationLabel.image = ImagesConstants.Icon.location
         return tempGeoLocationLabel
     }()
     
     private(set) lazy var searchIconImageView: UIImageView = {
         let tempSearchIconView = UIImageView()
-        tempSearchIconView.image = AppConstants.Icon.search
+        tempSearchIconView.image = ImagesConstants.Icon.search
         return tempSearchIconView
     }()
     
-    private(set) lazy var popUpWindow: PopUpWindow = {
-        let view = PopUpWindow()
-        return view
-    }()
+    private(set) lazy var popUpWindow = PopUpWindow()
     
     func createMainView() {
         addSubviews()
@@ -90,28 +92,29 @@ final class WeatherMainView: UIView {
         addSubview(circleAnimation)
         addSubview(errorMessageTextLabel)
         addSubview(popUpWindow)
+//        popUpWindow.createShadow()
     }
     
     private func addSwipeGesture() {
-        let swipe = UISwipeGestureRecognizer(target: self, action: #selector(delegateAction))
+        let swipe = UISwipeGestureRecognizer(target: self, action: #selector(swipeDelegateAction))
         swipe.direction = .down
         swipe.location(in: stoneImageView)
         stoneImageView.addGestureRecognizer(swipe)
     }
     
     private func addTargetForLocationButton() {
-        locationButton.addTarget(self, action: #selector(delegateAction), for: .touchUpInside)
+        locationButton.addTarget(self, action: #selector(locationButtonDelegateAction), for: .touchUpInside)
     }
     
-    @objc private func delegateAction(_ sender: Any) {
-        if sender is UIButton {
-            delegate?.locationButtonPressed()
-        } else {
-            delegate?.didSwipe()
-        }
+    @objc private func locationButtonDelegateAction() {
+        delegate?.locationButtonPressed()
     }
     
-    func updateWeather(with myWeather: WeatherInfo ) {
+    @objc private func swipeDelegateAction() {
+        delegate?.didSwipe()
+    }
+    
+    func updateWeather(with myWeather: WeatherInfo) {
         temperatureLabel.text = myWeather.temperature
         conditionLabel.text = myWeather.conditionDetails.lowercased()
         locationButton.isEnabled = true
@@ -123,22 +126,21 @@ final class WeatherMainView: UIView {
             stoneImageView.transform = CGAffineTransform(rotationAngle: 0)
         }
         stoneImageView.image = UIImage(named: myWeather.stoneImage)
-        if AppConstants.Precipitation.atmosphere.contains(myWeather.conditionMain) {
+        if PrecipitationConstants.atmosphere.contains(myWeather.conditionMain) {
             stoneImageView.alpha = 0.3
         } else {
             stoneImageView.alpha = 1
         }
     }
     
-    func setIconFor(_ geoLocation: Bool) {
-        switch geoLocation {
-        case true:
+    func setIcon(isGeo: Bool) {
+        if isGeo {
             if searchIconImageView.superview === self {
                 searchIconImageView.removeFromSuperview()
             }
             insertSubview(geoLocationImageView, belowSubview: popUpWindow)
             setGeoLocationIconConstraints()
-        case false:
+        } else {
             if geoLocationImageView.superview === self {
                 geoLocationImageView.removeFromSuperview()
             }
@@ -146,9 +148,4 @@ final class WeatherMainView: UIView {
             setSearchIconConstraints()
         }
     }
-}
-
-protocol WeatherMainViewDelegate: AnyObject {
-    func didSwipe()
-    func locationButtonPressed()
 }

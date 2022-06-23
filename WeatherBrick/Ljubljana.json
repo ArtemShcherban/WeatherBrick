@@ -1,0 +1,44 @@
+{
+    "coord": {
+        "lon": 14.5051,
+        "lat": 46.0511
+    },
+    "weather": [
+        {
+            "id": 803,
+            "main": "nil",
+            "description": "broken clouds",
+            "icon": "04d"
+        }
+    ],
+    "base": "stations",
+    "main": {
+        "temp": 25.73,
+        "feels_like": 26.03,
+        "temp_min": 25.19,
+        "temp_max": 26.32,
+        "pressure": 1015,
+        "humidity": 64
+    },
+    "visibility": 10000,
+    "wind": {
+        "speed": 0.89,
+        "deg": 190,
+        "gust": 3.13
+    },
+    "clouds": {
+        "all": 71
+    },
+    "dt": 1655975373,
+    "sys": {
+        "type": 2,
+        "id": 2003318,
+        "country": "SI",
+        "sunrise": 1655953882,
+        "sunset": 1656010610
+    },
+    "timezone": 7200,
+    "id": 3196359,
+    "name": "Ljubljana",
+    "cod": 200
+}

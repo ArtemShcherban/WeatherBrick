@@ -9,6 +9,11 @@
 import UIKit
 import CoreLocation
 
+protocol SearchLocationViewControllerDelegate: AnyObject {
+    func updateWeather(with myWeather: WeatherInfo)
+    func updateIcon(isGeo geoLocation: Bool)
+}
+
 final class SearchLocationViewController: UIViewController {
     static let reuseIdentifier = String(describing: SearchLocationViewController.self)
     static let shared = SearchLocationViewController()
@@ -18,10 +23,10 @@ final class SearchLocationViewController: UIViewController {
     
     private lazy var locationManager = CLLocationManager()
     
-    private lazy var userDefaultsManager = UserDefaultsManager.manager
-    private lazy var weatherNetworkServiceModel = WeatherNetworkServiceModel.shared
+    private var userDefaultsManager = UserDefaultsManager.manager
+    private lazy var weatherNetworkServiceModel = URLModel.shared
     private lazy var searchLocationModel = SearchLocationModel.shared
-    private lazy var weatherMainModel = WeatherMainModel.shared
+    private lazy var weatherMainModel = WeatherViewModel.shared
     private lazy var weatherMainView = WeatherMainView.shared
     
     private lazy var searchLocationView: SearchLocationView = {
@@ -51,20 +56,19 @@ final class SearchLocationViewController: UIViewController {
     }
     
     private func getMyWeatherFor<T: Locatable>(_ location: T, compleation: @escaping(WeatherInfo) -> Void) {
-        weatherNetworkServiceModel.prepareLinkFor(location: location) { result in
-            switch result {
-            case .failure(let error):
-                self.received(error: error)
-            case .success(let url):
-                self.weatherMainModel.createWeatherInfo(with: url) { myWeatherOrError in
-                    switch myWeatherOrError {
-                    case .failure(let error):
-                        self.received(error: error)
-                    case .success(let myWeather):
-                        self.mainQueue?.dispatch {
-                            self.searchLocationView.circleAnimation.stop()
-                            compleation(myWeather)
-                        }
+        let result = weatherNetworkServiceModel.prepareLinkFor(location: location)
+        switch result {
+        case .failure(let error):
+            self.received(error: error)
+        case .success(let url):
+            self.weatherMainModel.createWeatherInfo(with: url) { myWeatherOrError in
+                switch myWeatherOrError {
+                case .failure(let error):
+                    self.received(error: error)
+                case .success(let myWeather):
+                    self.mainQueue?.dispatch {
+                        self.searchLocationView.circleAnimation.stop()
+                        compleation(myWeather)
                     }
                 }
             }
@@ -81,18 +85,16 @@ final class SearchLocationViewController: UIViewController {
     
     private func returnNewLocationWith(_ myWeather: WeatherInfo, geoLocation: Bool) {
         delgate?.updateWeather(with: myWeather)
-        delgate?.updateIconWith(geoLocation)
+        delgate?.updateIcon(isGeo: geoLocation)
         navigationController?.popViewController(animated: true)
     }
 }
 
-extension SearchLocationViewController: SearchLocationViewModelDelegate {
+extension SearchLocationViewController: SearchLocationViewDelegate {
     func backButtonPressed() {
-        guard let myWeather = userDefaultsManager.getMyWeather() else {
-            navigationController?.popViewController(animated: true)
-            return
+        if let weather = userDefaultsManager.getWeatherInfo() {
+            delgate?.updateWeather(with: weather)
         }
-        delgate?.updateWeather(with: myWeather)
         navigationController?.popViewController(animated: true)
     }
     
@@ -111,17 +113,15 @@ extension SearchLocationViewController: SearchLocationViewModelDelegate {
 extension SearchLocationViewController: CLLocationManagerDelegate {
     func locationManagerDidChangeAuthorization(_ manager: CLLocationManager) {
         let status = CLLocationManager.authorizationStatus()
-        if status == .authorizedWhenInUse && searchLocationView.userLocationButton.isSelected {
+        guard status == .authorizedWhenInUse && searchLocationView.userLocationButton.isSelected else { return }
             userLocattionButtonPressed()
-        }
     }
     
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
-        if let location = locations.first {
-            searchLocationView.startCircleAnimation()
-            getMyWeatherFor(location) { myWeather in
-                self.returnNewLocationWith(myWeather, geoLocation: true)
-            }
+        guard let location = locations.first else { return }
+        searchLocationView.startCircleAnimation()
+        getMyWeatherFor(location) { myWeather in
+            self.returnNewLocationWith(myWeather, geoLocation: true)
         }
     }
     
@@ -132,23 +132,22 @@ extension SearchLocationViewController: CLLocationManagerDelegate {
 
 extension SearchLocationViewController: UISearchBarDelegate {
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
-        if let searchBartext = searchBar.text {
-            searchLocationView.startCircleAnimation()
-            if searchLocationModel.textLooksLikeCoordinates(searchBartext) {
-                guard let location = searchLocationModel.tryCreateLocationFrom(searchBartext) else {
-                    searchLocationView.messageTextLabel.retrieveError =
-                    NetworkServiceError.httpRequestFailed.rawValue
-                    searchLocationView.messageTextLabel.isActive = true
-                    return
-                }
-                getMyWeatherFor(location) { myWeather in
-                    self.returnNewLocationWith(myWeather, geoLocation: false)
-                }
-            } else {
-                guard let location = searchBar.text?.replacingOccurrences(of: " ", with: "+") else { return }
-                getMyWeatherFor(location) { myWeather in
-                    self.returnNewLocationWith(myWeather, geoLocation: false)
-                }
+        guard let searchBartext = searchBar.text else { return }
+        searchLocationView.startCircleAnimation()
+        if searchLocationModel.hasValidCoordinates(searchBartext) {
+            guard let location = searchLocationModel.location(from: searchBartext) else {
+                searchLocationView.messageTextLabel.retrieveError =
+                NetworkServiceError.httpRequestFailed.rawValue
+                searchLocationView.messageTextLabel.isActive = true
+                return
+            }
+            getMyWeatherFor(location) { myWeather in
+                self.returnNewLocationWith(myWeather, geoLocation: false)
+            }
+        } else {
+            guard let location = searchBar.text?.replacingOccurrences(of: " ", with: "+") else { return }
+            getMyWeatherFor(location) { myWeather in
+                self.returnNewLocationWith(myWeather, geoLocation: false)
             }
         }
     }
@@ -171,11 +170,5 @@ extension SearchLocationViewController: UISearchBarDelegate {
     }
 }
 
-protocol SearchLocationViewControllerDelegate: AnyObject {
-    func updateWeather(with myWeather: WeatherInfo)
-    func updateIconWith(_ geoLocation: Bool)
-}
-
-protocol Locatable {}
 extension CLLocation: Locatable {}
 extension String: Locatable {}

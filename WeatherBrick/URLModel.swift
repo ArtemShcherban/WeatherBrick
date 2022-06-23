@@ -9,37 +9,37 @@
 import Foundation
 import CoreLocation
 
-final class WeatherNetworkServiceModel {
-    static let shared = WeatherNetworkServiceModel()
+final class URLModel {
+    static let shared = URLModel()
     
     private lazy var components: URLComponents = {
         var tempComponents = URLComponents()
-        tempComponents.scheme = AppConstants.scheme
-        tempComponents.host = AppConstants.baseURL
-        tempComponents.path = AppConstants.path
+        tempComponents.scheme = URLConstants.scheme
+        tempComponents.host = URLConstants.baseURL
+        tempComponents.path = URLConstants.path
         return tempComponents
     }()
-    let queryItemAppId = URLQueryItem(name: AppConstants.appId, value: AppConstants.apiKey)
-    let queryItemUnits = URLQueryItem(name: AppConstants.units, value: AppConstants.metric)
+    let queryItemAppId = URLQueryItem(name: URLConstants.appId, value: URLConstants.apiKey)
+    let queryItemUnits = URLQueryItem(name: URLConstants.units, value: URLConstants.metric)
     
-    func prepareLinkFor<T: Locatable>(location: T, completion: @escaping(Result<URL, NetworkServiceError>) -> Void) {
+    func prepareLinkFor<T: Locatable>(location: T) -> Result<URL, NetworkServiceError> {
         if let location = location as? String {
-            let queryItemQuery = URLQueryItem(name: AppConstants.query, value: location)
+            let queryItemQuery = URLQueryItem(name: URLConstants.query, value: location)
             components.queryItems = [queryItemQuery, queryItemAppId, queryItemUnits]
         }
         if let location = location as? CLLocation {
             let queryItemLat = URLQueryItem(
-                name: AppConstants.latitude,
+                name: URLConstants.latitude,
                 value: location.coordinate.latitude.description)
             let queryItemLon = URLQueryItem(
-                name: AppConstants.longitude,
+                name: URLConstants.longitude,
                 value: location.coordinate.longitude.description)
             components.queryItems = [queryItemLat, queryItemLon, queryItemAppId, queryItemUnits]
         }
         if let url = components.url {
-            completion(.success(url))
+            return .success(url)
         } else {
-            completion(.failure(NetworkServiceError.cannotCreateURL))
+            return .failure(NetworkServiceError.cannotCreateURL)
         }
     }
 }

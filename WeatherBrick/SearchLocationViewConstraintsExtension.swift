@@ -24,10 +24,10 @@ extension SearchLocationView {
             containerView.topAnchor.constraint(equalTo: self.safeAreaLayoutGuide.topAnchor),
             containerView.leadingAnchor.constraint(
                 equalTo: self.leadingAnchor,
-                constant: AppConstants.Indent.left),
+                constant: SizesConstants.Indent.left),
             containerView.trailingAnchor.constraint(
                 equalTo: self.trailingAnchor,
-                constant: AppConstants.Indent.right)
+                constant: SizesConstants.Indent.right)
         ])
     }
     
@@ -53,7 +53,7 @@ extension SearchLocationView {
     private func setCircleAnimationConstrints() {
         circleAnimation.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
-            circleAnimation.widthAnchor.constraint(equalToConstant: AppConstants.AnimationSize.width),
+            circleAnimation.widthAnchor.constraint(equalToConstant: SizesConstants.AnimationSize.width),
             circleAnimation.heightAnchor.constraint(equalTo: circleAnimation.widthAnchor ),
             circleAnimation.centerXAnchor.constraint(equalTo: messageTextLabel.centerXAnchor),
             circleAnimation.centerYAnchor.constraint(equalTo: messageTextLabel.centerYAnchor)

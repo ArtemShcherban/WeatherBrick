@@ -9,13 +9,18 @@
 import UIKit
 import DeviceKit
 
+protocol PopUpWindowDelegate: AnyObject {
+    func popWindowPush()
+    func popWindowOut()
+}
+
 final class PopUpWindow: UIView {
     weak var delegate: PopUpWindowDelegate?
     
     private lazy var tapGesture = UITapGestureRecognizer()
     private lazy var conditionLabels: [UILabel] = []
     
-    lazy var isActive = false {
+    var isActive = false {
         didSet {
             if isActive {
                 removeTapGestureRecognizer()
@@ -27,24 +32,24 @@ final class PopUpWindow: UIView {
     
     private lazy var titleLabel: UILabel = {
         let label = UILabel()
-        label.font = UIFont(name: AppConstants.Font.ubuntuBold, size: AppConstants.bigScreenSize ? 18 : 16)
-        label.textColor = AppConstants.Color.graphite
-        label.text = AppConstants.TitleFor.popUpWindow
+        label.font = UIFont(name: FontsConstants.ubuntuBold, size: AppConstants.bigScreenSize ? 18 : 16)
+        label.textColor = ColorConstants.graphite
+        label.text = TitlesConstants.popUpWindow
         return label
     }()
     
     private lazy var hideButton: UIButton = {
         let tempHideButton = UIButton()
-        tempHideButton.layer.borderColor = AppConstants.Color.lightGraphite.cgColor
+        tempHideButton.layer.borderColor = ColorConstants.lightGraphite.cgColor
         tempHideButton.layer.borderWidth = AppConstants.bigScreenSize ? 2 : 1
         let fontAttribbute = [
             NSAttributedString.Key.font: UIFont(
-                name: AppConstants.Font.ubuntuMedium,
+                name: FontsConstants.ubuntuMedium,
                 size: AppConstants.bigScreenSize ? 15 : 14),
-            NSAttributedString.Key.foregroundColor: AppConstants.Color.lightGraphite
+            NSAttributedString.Key.foregroundColor: ColorConstants.lightGraphite
         ]
         let buttonTitle = NSAttributedString(
-            string: AppConstants.TitleFor.hideButton,
+            string: TitlesConstants.hideButton,
             attributes: fontAttribbute as [NSAttributedString.Key: Any])
         tempHideButton.setAttributedTitle(buttonTitle, for: .normal)
         tempHideButton.layer.cornerRadius = AppConstants.bigScreenSize ? 18 : 14
@@ -55,7 +60,7 @@ final class PopUpWindow: UIView {
     private lazy var windowBackgroundView: UIView = {
         let tempbackgroundView = UIView()
         tempbackgroundView.layer.cornerRadius = 16
-        tempbackgroundView.backgroundColor = AppConstants.Color.brightOrange
+        tempbackgroundView.backgroundColor = ColorConstants.brightOrange
         return tempbackgroundView
     }()
     
@@ -65,15 +70,15 @@ final class PopUpWindow: UIView {
             y: 0,
             width: (UIScreen.main.bounds.width * 0.7 - 8),
             height: UIScreen.main.bounds.height * 0.45))
-        tempContainerView.layer.cornerRadius = 16
+        tempContainerView.layer.cornerRadius = windowBackgroundView.layer.cornerRadius
         tempContainerView.clipsToBounds = true
-        tempContainerView.backgroundColor = AppConstants.Color.orange
+        tempContainerView.backgroundColor = ColorConstants.orange
         return tempContainerView
     }()
     
     private lazy var gradientLayer: CAGradientLayer = {
         let tempGradientLayer = CAGradientLayer()
-        tempGradientLayer.colors = [AppConstants.Color.orange.cgColor, AppConstants.Color.brightOrange.cgColor]
+        tempGradientLayer.colors = [ColorConstants.orange.cgColor, ColorConstants.brightOrange.cgColor]
         tempGradientLayer.locations = [0, 0.9]
         tempGradientLayer.startPoint = CGPoint(x: 0.0, y: 0.0)
         tempGradientLayer.endPoint = CGPoint(x: 1.0, y: 0.0)
@@ -87,8 +92,7 @@ final class PopUpWindow: UIView {
         addSubviews()
         setConstraints()
         addTapGestureRecognizer()
-        createShadow()
-        animateIn()
+        animatePresent()
     }
     
     required init?(coder: NSCoder) {
@@ -97,8 +101,7 @@ final class PopUpWindow: UIView {
         addSubviews()
         setConstraints()
         addTapGestureRecognizer()
-        createShadow()
-        animateIn()
+        animatePresent()
     }
     
     private func addSubviews() {
@@ -131,7 +134,7 @@ final class PopUpWindow: UIView {
         if self.isActive {
             delegate?.popWindowOut()
         } else {
-            delegate?.popWindowIn()
+            delegate?.popWindowPush()
         }
     }
     
@@ -140,23 +143,22 @@ final class PopUpWindow: UIView {
         conditions.forEach { condition in
             let label = UILabel()
             label.font = UIFont(
-                name: AppConstants.Font.ubuntuRegular,
+                name: FontsConstants.ubuntuRegular,
                 size: AppConstants.bigScreenSize ? 15 : 13)
-            label.textColor = AppConstants.Color.graphite
+            label.textColor = ColorConstants.graphite
             label.text = condition
             conditionLabels.append(label)
         }
     }
     
-   func createShadow() {
-        //        layer.masksToBounds = false
+    private func createShadow() {
         self.layer.shadowColor = UIColor.black.cgColor
         self.layer.shadowOffset = CGSize(width: 1, height: 5)
         self.layer.shadowRadius = 3
         self.layer.shadowOpacity = 0.3
-//                layer.shadowPath = UIBezierPath(rect: self.bounds).cgPath
-        //        layer.shouldRasterize = true
-        //        layer.rasterizationScale = UIScreen.main.scale
+        layer.shadowPath = UIBezierPath(
+            roundedRect: windowBackgroundView.bounds,
+            cornerRadius: windowBackgroundView.layer.cornerRadius).cgPath
     }
     
     func applyGradientAnimation() {
@@ -176,16 +178,20 @@ final class PopUpWindow: UIView {
         }
     }
     
-    @objc private func animateIn() {
+    @objc private func animatePresent() {
         self.windowBackgroundView.transform = CGAffineTransform(translationX: 0, y: 500)
         UIView.animate(
             withDuration: 1,
             delay: 0,
             usingSpringWithDamping: 0.7,
             initialSpringVelocity: 1,
-            options: .curveEaseIn) {
-                self.windowBackgroundView.transform = .identity
-        }
+            options: .curveEaseIn,
+            animations: { self.windowBackgroundView.transform = .identity },
+            completion: { _ in
+                self.fadeTransition(0.5)
+                self.createShadow()
+            }
+        )
     }
     
     private func setWindowBackgroundViewConstraints() {
@@ -213,13 +219,13 @@ final class PopUpWindow: UIView {
         NSLayoutConstraint.activate([
             titleLabel.topAnchor.constraint(
                 equalTo: containerView.topAnchor,
-                constant: containerView.frame.height * 0.08),
+                constant: containerView.frame.height * SizesConstants.Multiplier.height),
             titleLabel.centerXAnchor.constraint(equalTo: windowBackgroundView.centerXAnchor)
         ])
     }
     
     private func setLabelsConstraints() {
-        var topIndent: CGFloat = containerView.frame.height * 0.08
+        var topIndent: CGFloat = containerView.frame.height * SizesConstants.Multiplier.height
         conditionLabels.forEach { label in
             label.translatesAutoresizingMaskIntoConstraints = false
             NSLayoutConstraint.activate([
@@ -228,7 +234,7 @@ final class PopUpWindow: UIView {
                 label.widthAnchor.constraint(greaterThanOrEqualToConstant: 0),
                 label.heightAnchor.constraint(equalToConstant: containerView.frame.height * 0.05)
             ])
-            topIndent += containerView.frame.height * 0.08
+            topIndent += containerView.frame.height * SizesConstants.Multiplier.height
         }
     }
     
@@ -239,13 +245,8 @@ final class PopUpWindow: UIView {
             hideButton.heightAnchor.constraint(equalToConstant: AppConstants.bigScreenSize ? 36 : 28),
             hideButton.bottomAnchor.constraint(
                 equalTo: containerView.bottomAnchor,
-                constant: containerView.frame.height * -0.08),
+                constant: containerView.frame.height * -SizesConstants.Multiplier.height),
             hideButton.centerXAnchor.constraint(equalTo: windowBackgroundView.centerXAnchor)
         ])
     }
-}
-
-protocol PopUpWindowDelegate: AnyObject {
-    func popWindowIn()
-    func popWindowOut()
 }

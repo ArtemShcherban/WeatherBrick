@@ -31,7 +31,9 @@ extension WeatherMainView {
     private func setTemperatureLabelConstraints() {
         temperatureLabel.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
-            temperatureLabel.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: AppConstants.Indent.left),
+            temperatureLabel.leadingAnchor.constraint(
+                equalTo: self.leadingAnchor,
+                constant: SizesConstants.Indent.left),
             temperatureLabel.topAnchor.constraint(
                 equalTo: self.topAnchor,
                 constant: UIScreen.main.bounds.height * CGFloat(AppConstants.bigScreenSize ? 0.55 : 0.57)),
@@ -43,8 +45,10 @@ extension WeatherMainView {
     private func setConditionLabelConstraints() {
         conditionLabel.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
-            conditionLabel.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: AppConstants.Indent.left),
-            conditionLabel.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: AppConstants.Indent.right),
+            conditionLabel.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: SizesConstants.Indent.left),
+            conditionLabel.trailingAnchor.constraint(
+                equalTo: self.trailingAnchor,
+                constant: SizesConstants.Indent.right),
             conditionLabel.topAnchor.constraint(
                 equalTo: self.topAnchor,
                 constant: UIScreen.main.bounds.height * CGFloat(AppConstants.bigScreenSize ? 0.66 : 0.67)),
@@ -57,7 +61,7 @@ extension WeatherMainView {
         windSpeedLabel.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
             windSpeedLabel.topAnchor.constraint(equalTo: conditionLabel.bottomAnchor),
-            windSpeedLabel.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: AppConstants.Indent.left),
+            windSpeedLabel.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: SizesConstants.Indent.left),
             windSpeedLabel.widthAnchor.constraint(greaterThanOrEqualToConstant: .zero),
             windSpeedLabel.heightAnchor.constraint(greaterThanOrEqualToConstant: .zero)
         ])
@@ -69,7 +73,7 @@ extension WeatherMainView {
             circleAnimation.topAnchor.constraint(equalTo: windSpeedLabel.bottomAnchor),
             circleAnimation.centerXAnchor.constraint(equalTo: self.centerXAnchor),
             circleAnimation.heightAnchor.constraint(equalToConstant: AppConstants.bigScreenSize ? 80 : 40),
-            circleAnimation.widthAnchor.constraint(equalToConstant: AppConstants.AnimationSize.width)
+            circleAnimation.widthAnchor.constraint(equalToConstant: SizesConstants.AnimationSize.width)
         ])
     }
     
@@ -77,9 +81,9 @@ extension WeatherMainView {
         errorMessageTextLabel.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
             errorMessageTextLabel.leadingAnchor.constraint(
-                equalTo: self.leadingAnchor, constant: AppConstants.Indent.left),
+                equalTo: self.leadingAnchor, constant: SizesConstants.Indent.left),
             errorMessageTextLabel.trailingAnchor.constraint(
-                equalTo: self.trailingAnchor, constant: AppConstants.Indent.right),
+                equalTo: self.trailingAnchor, constant: SizesConstants.Indent.right),
             errorMessageTextLabel.bottomAnchor.constraint(equalTo: locationButton.topAnchor, constant: -5),
             errorMessageTextLabel.heightAnchor.constraint(greaterThanOrEqualToConstant: .zero)
         ])
@@ -90,7 +94,7 @@ extension WeatherMainView {
         NSLayoutConstraint.activate([
             geoLocationImageView.centerYAnchor.constraint(equalTo: locationButton.centerYAnchor),
             geoLocationImageView.trailingAnchor.constraint(equalTo: locationButton.leadingAnchor, constant: -5),
-            geoLocationImageView.widthAnchor.constraint(equalToConstant: AppConstants.IconSize.width),
+            geoLocationImageView.widthAnchor.constraint(equalToConstant: SizesConstants.IconSize.width),
             geoLocationImageView.heightAnchor.constraint(equalTo: geoLocationImageView.widthAnchor)
         ])
     }
@@ -100,7 +104,7 @@ extension WeatherMainView {
         NSLayoutConstraint.activate([
             searchIconImageView.centerYAnchor.constraint(equalTo: locationButton.centerYAnchor),
             searchIconImageView.leadingAnchor.constraint(equalTo: locationButton.trailingAnchor, constant: 5),
-            searchIconImageView.widthAnchor.constraint(equalToConstant: AppConstants.IconSize.width),
+            searchIconImageView.widthAnchor.constraint(equalToConstant: SizesConstants.IconSize.width),
             searchIconImageView.heightAnchor.constraint(equalTo: searchIconImageView.widthAnchor)
         ])
     }

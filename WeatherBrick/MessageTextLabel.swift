@@ -10,17 +10,14 @@ import UIKit
 import Lottie
 
 final class MessageTextLabel: UILabel {
-    lazy var retrieveError = String()
-    private let informationString = AppConstants.inputFormats
+    var retrieveError = String()
     
-    lazy var isActive = false {
+    var isActive = false {
         didSet {
-            if isActive == true {
-                messageTextAnimation {
+            messageTextAnimation {
+                if isActive == true {
                     createErrorAttributedString()
-                }
-            } else {
-                messageTextAnimation {
+                } else {
                     createFormatsAttributedString()
                 }
             }
@@ -51,17 +48,17 @@ final class MessageTextLabel: UILabel {
         textAlignment = .center
         numberOfLines = 0
         let attributedString = NSMutableAttributedString(
-            string: informationString,
+            string: AppConstants.inputFormats,
             attributes: [
                 NSAttributedString.Key.kern: -0.41,
                 NSAttributedString.Key.font:
-                    UIFont(name: AppConstants.Font.ubuntuLight, size: 15) ?? UIFont(),
-                NSAttributedString.Key.foregroundColor: AppConstants.Color.lightGraphite
+                    UIFont(name: FontsConstants.ubuntuLight, size: 15) ?? UIFont(),
+                NSAttributedString.Key.foregroundColor: ColorConstants.lightGraphite
             ])
         let cityRange = NSRange(location: 0, length: 41)
         let coordinatesRange = NSRange(location: 74, length: 18)
         let extraAttribute = [
-            NSAttributedString.Key.font: UIFont(name: AppConstants.Font.ubuntuMedium, size: 15) ?? UIFont()
+            NSAttributedString.Key.font: UIFont(name: FontsConstants.ubuntuMedium, size: 15) ?? UIFont()
         ]
         let paragraphStyle = NSMutableParagraphStyle()
         paragraphStyle.lineSpacing = 5
@@ -82,8 +79,8 @@ final class MessageTextLabel: UILabel {
             string: retrieveError,
             attributes: [
                 NSAttributedString.Key.font:
-                    UIFont(name: AppConstants.Font.ubuntuRegular, size: 15) ?? UIFont(),
-                NSAttributedString.Key.foregroundColor: AppConstants.Color.lightGraphite
+                    UIFont(name: FontsConstants.ubuntuRegular, size: 15) ?? UIFont(),
+                NSAttributedString.Key.foregroundColor: ColorConstants.lightGraphite
             ])
         attributedText = attributedString
     }

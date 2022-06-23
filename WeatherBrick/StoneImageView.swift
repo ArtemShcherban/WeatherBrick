@@ -21,13 +21,13 @@ final class StoneImageView: UIImageView {
     }
     
     private func configure() {
-        guard let stoneImage = UIImage(named: AppConstants.StoneImage.normal),
-            let risizaedImage = stoneImage.resized(toWidth: UIScreen.main.bounds.height * 0.27) else { return }
-        bounds.size = risizaedImage.size
-        image = risizaedImage
+        guard let stoneImage = UIImage(named: ImagesConstants.StoneImage.normal),
+        let resizedImage = stoneImage.resized(toWidth: UIScreen.main.bounds.height * 0.27) else { return }
+        bounds.size = resizedImage.size
+        image = resizedImage
         alpha = 1
         center.x = UIScreen.main.bounds.width / 2
-        center.y = risizaedImage.size.height / 2 - (AppConstants.bigScreenSize ? 0 : 12)
+        center.y = resizedImage.size.height / 2 - (AppConstants.bigScreenSize ? 0 : 12)
         isUserInteractionEnabled = true
         setAnchorPoint(CGPoint(x: 0.5, y: 0.0))
     }
@@ -64,7 +64,7 @@ final class StoneImageView: UIImageView {
 }
 
 extension StoneImageView {
-    func setAnchorPoint(_ point: CGPoint) {
+    private func setAnchorPoint(_ point: CGPoint) {
         let newPoint = CGPoint(x: bounds.size.width * point.x, y: bounds.size.height * point.y)
         let oldPoint = CGPoint(x: bounds.size.width * layer.anchorPoint.x, y: bounds.size.height * layer.anchorPoint.y)
         

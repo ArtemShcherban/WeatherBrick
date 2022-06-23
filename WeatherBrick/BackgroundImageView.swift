@@ -8,7 +8,7 @@
 
 import UIKit
 
-final class BackgraundImageView: UIImageView {
+final class BackgroundImageView: UIImageView {
     override init(frame: CGRect = .zero) {
         super.init(frame: frame)
         configure()
@@ -22,7 +22,7 @@ final class BackgraundImageView: UIImageView {
     private func configure() {
         isUserInteractionEnabled = true
         backgroundColor = .white
-        image = UIImage(named: AppConstants.Image.background)
+        image = UIImage(named: ImagesConstants.Image.background)
     }
     
     func setConstraints() {

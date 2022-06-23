@@ -10,8 +10,8 @@ import Foundation
 import UIKit
 import CoreLocation
 
-final class WeatherMainModel {
-    static let shared = WeatherMainModel()
+final class WeatherViewModel {
+    static let shared = WeatherViewModel()
     
     private lazy var weatherNetworkService = WeatherNetworkService()
     private lazy var additionalServiceModels = AdditionalServiceModels()
@@ -65,34 +65,35 @@ final class WeatherMainModel {
         }
     }
     
-    private func getStoneImage(dependingOn weather: ResultOfRequest) -> String {
+    private func getStoneImage(dependingOn weather: WeatherParameters) -> String {
         guard let condition = weather.conditionMain,
             let temperature = weather.temperature else {
             return String()
         }
+        
         let checkedValue = true
         
         if temperature >= 33.0 {
-            return AppConstants.StoneImage.withCracks
+            return ImagesConstants.StoneImage.withCracks
         } else {
             switch checkedValue {
-            case AppConstants.Precipitation.rain.contains(condition) :
-                return AppConstants.StoneImage.wet
+            case PrecipitationConstants.rain.contains(condition) :
+                return ImagesConstants.StoneImage.wet
                 
-            case AppConstants.Precipitation.atmosphere.contains(condition):
-                return AppConstants.StoneImage.normal
+            case PrecipitationConstants.atmosphere.contains(condition):
+                return ImagesConstants.StoneImage.normal
                 
-            case AppConstants.Precipitation.snow == condition:
-                return AppConstants.StoneImage.withSnow
+            case PrecipitationConstants.snow == condition:
+                return ImagesConstants.StoneImage.withSnow
                 
-            case AppConstants.Precipitation.clearSky == condition:
-                return AppConstants.StoneImage.normal
+            case PrecipitationConstants.clearSky == condition:
+                return ImagesConstants.StoneImage.normal
                 
-            case AppConstants.Precipitation.clouds == condition:
-                return AppConstants.StoneImage.normal
+            case PrecipitationConstants.clouds == condition:
+                return ImagesConstants.StoneImage.normal
                 
             default:
-                return AppConstants.StoneImage.normal
+                return ImagesConstants.StoneImage.normal
             }
         }
     }

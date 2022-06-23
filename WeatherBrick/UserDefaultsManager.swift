@@ -31,7 +31,7 @@ final class UserDefaultsManager: UserDefaults {
         return nil
     }
     
-    func getMyWeather() -> WeatherInfo? {
+    func getWeatherInfo() -> WeatherInfo? {
         if let data = object(forKey: AppConstants.myWeather) as? Data,
             let myWeather = try? JSONDecoder().decode(WeatherInfo.self, from: data) {
             return myWeather

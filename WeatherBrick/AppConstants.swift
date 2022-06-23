@@ -12,87 +12,11 @@ import DeviceKit
 
 enum AppConstants {
     static let bigScreenSize = Device.screenSize() > Size.screen5x8Inch
-   
-    static let scheme = "https"
-    static let baseURL = "api.openweathermap.org"
-    static let path = "/data/2.5/weather"
-    static let query = "q"
-    static let latitude = "lat"
-    static let longitude = "lon"
-    static let appId = "APPID"
-    static let apiKey = "59a2b233df10c0b64ce48ebeb844ddf2"
-    static let units = "units"
-    static let metric = "metric"
-    
     static let alphabetLetters = NSCharacterSet.letters
-    
     static let myWeather = "myWeather"
     static let monitor = "Monitor"
     static let main = "Main"
-    
-    enum Precipitation {
-        static let rain = ["Thunderstorm", "Drizzle", "Rain"]
-        static let snow = "Snow"
-        static let clouds = "Clouds"
-        static let clearSky = "Clear"
-        static let atmosphere = ["Mist", "Smoke", "Haze", "Dust", "Fog", "Sand", "Ash", "Squal", "Tornado"]
-    }
-    
-    enum Indent {
-        static let left: CGFloat = 16.0
-        static let right: CGFloat = -16.0
-    }
-    
-    enum IconSize {
-        static let width: CGFloat = 16.0
-    }
-    
-    enum AnimationSize {
-        static let width: CGFloat = 200.0
-    }
-    
-    enum Image {
-        static let background = "image_background"
-    }
-    
-    enum StoneImage {
-        static let normal = "image_stone_normal"
-        static let wet = "image_stone_wet"
-        static let withSnow = "image_stone_snow"
-        static let withCracks = "image_stone_cracks"
-        static let noStone = "image_NO_stone"
-    }
-    
-    enum Icon {
-        static let location = UIImage(named: "icon_location")
-        static let search = UIImage(named: "icon_search")
-    }
-    
-    enum TitleFor {
-        static let popUpWindow = "INFO"
-        static let hideButton = "Hide"
-        static let locationButton = "Choose your location"
-        static let backButtonTitle = "Back"
-        static let searchBarPlaceHolder = "Search for a city or coordinates"
-        static let userLocationButton = "Use your location"
-    }
-    
-    enum Font {
-        static let ubuntuRegular = "Ubuntu-Regular"
-        static let ubuntuMedium = "Ubuntu-Medium"
-        static let ubuntuLight = "Ubuntu-Light"
-        static let ubuntuBold = "Ubuntu-Bold"
-    }
-    
-    enum Color {
-        static let graphite = UIColor(red: 0.175, green: 0.175, blue: 0.175, alpha: 1)
-        static let lightGraphite = UIColor(red: 0.342, green: 0.342, blue: 0.342, alpha: 1)
-        static let orange = UIColor(red: 1, green: 0.6, blue: 0.375, alpha: 1)
-        static let darkOrange = UIColor(red: 0.984, green: 0.373, blue: 0.161, alpha: 1)
-        static let brightOrange = UIColor(red: 0.977, green: 0.315, blue: 0.106, alpha: 1)
-        static let skyBlue = UIColor(red: 0.635, green: 0.866, blue: 1, alpha: 1)
-    }
-    
+         
     static let conditions = [
         "Brick is wet - raining",
         "Brick is dry - sunny",

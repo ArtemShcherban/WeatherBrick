@@ -49,10 +49,10 @@ class ErrorMessageTextLabel: UILabel {
                 " ",
             attributes: [
                 NSAttributedString.Key.font: UIFont(
-                    name: AppConstants.Font.ubuntuLight,
+                    name: FontsConstants.ubuntuLight,
                     size: AppConstants.bigScreenSize ? 15 : 13) ?? UIFont(),
                 NSAttributedString.Key.kern: -0.41,
-                NSAttributedString.Key.foregroundColor: AppConstants.Color.lightGraphite
+                NSAttributedString.Key.foregroundColor: ColorConstants.lightGraphite
             ])
         textAlignment = .center
         attributedText = attributedString

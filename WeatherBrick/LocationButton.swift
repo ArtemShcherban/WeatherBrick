@@ -30,10 +30,10 @@ final class LocationButton: UIButton {
     
     private func configure() {
         let attributedTitle = NSAttributedString(
-            string: AppConstants.TitleFor.locationButton,
+            string: TitlesConstants.locationButton,
             attributes: [
                 NSAttributedString.Key.kern: -0.41,
-                NSAttributedString.Key.font: UIFont(name: AppConstants.Font.ubuntuRegular, size: 17) ?? UIFont()
+                NSAttributedString.Key.font: UIFont(name: FontsConstants.ubuntuRegular, size: 17) ?? UIFont()
             ])
         setAttributedTitle(attributedTitle, for: .normal)
         sizeToFit()
@@ -53,7 +53,7 @@ final class LocationButton: UIButton {
             string: title,
             attributes: [
                 NSAttributedString.Key.kern: -0.41,
-                NSAttributedString.Key.font: UIFont(name: AppConstants.Font.ubuntuMedium, size: 17) ?? UIFont()
+                NSAttributedString.Key.font: UIFont(name: FontsConstants.ubuntuMedium, size: 17) ?? UIFont()
             ])
         setAttributedTitle(attributedTitle, for: .normal)
         layer.borderWidth = 0

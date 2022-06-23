@@ -9,31 +9,30 @@
 import Foundation
 import UIKit
 
-final class WeatherNetworkService {
-    func getWeather(with link: URL, completion: @escaping(Result<ResultOfRequest, NetworkServiceError>) -> Void) {   let request = URLRequest(url: link)
-
+final class WeatherNetworkService {  
+    func getWeather(with link: URL, completion: @escaping(Result<WeatherParameters, NetworkServiceError>) -> Void) {   let request = URLRequest(url: link)
+        
         let sessionConfig = URLSessionConfiguration.default
         sessionConfig.timeoutIntervalForResource = 10.0
         let urlSession = URLSession(configuration: sessionConfig)
-
+        
         urlSession.dataTask(with: request) { data, response, error in
-            guard error == nil else {
-                if let error = error {
-                    completion(.failure( self.checkErrorCode(error: error)))
-                }
+            guard let response = response as? HTTPURLResponse, (200 ..< 299) ~= response.statusCode else {
+                completion(.failure(NetworkServiceError.httpRequestFailed))
                 return
             }
             guard let data = data else {
                 completion(.failure(NetworkServiceError.didNotRecieveData))
                 return
             }
-            guard let response = response as? HTTPURLResponse, (200 ..< 299) ~= response.statusCode else {
-                completion(.failure(NetworkServiceError.httpRequestFailed))
-                return
-            }
-            
-            if let dataFromOpenWeather = try? JSONDecoder().decode(ResultOfRequest.self, from: data) {
+            if let dataFromOpenWeather = try? JSONDecoder().decode(WeatherParameters.self, from: data) {
                 completion(.success(dataFromOpenWeather))
+            }
+            guard error == nil else {
+                if let error = error {
+                    completion(.failure( self.checkErrorCode(error: error)))
+                }
+                return
             }
         }
         .resume()

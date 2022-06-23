@@ -1,7 +1,7 @@
 import Foundation
 
 struct Temperature: Codable {
-    let сelsius: Double?
+    let сelsius: Double
     
     enum CodingKeys: String, CodingKey {
         case сelsius = "temp"
@@ -9,6 +9,6 @@ struct Temperature: Codable {
     
     init(from decoder: Decoder) throws {
         let values = try decoder.container(keyedBy: CodingKeys.self)
-        сelsius = try values.decodeIfPresent(Double.self, forKey: .сelsius)
+        сelsius = try values.decodeIfPresent(Double.self, forKey: .сelsius) ?? Double()
     }
 }
