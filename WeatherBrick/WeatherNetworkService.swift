@@ -13,7 +13,7 @@ final class WeatherNetworkService {
     func getWeather(with link: URL, completion: @escaping(Result<WeatherParameters, NetworkServiceError>) -> Void) {   let request = URLRequest(url: link)
         
         let sessionConfig = URLSessionConfiguration.default
-        sessionConfig.timeoutIntervalForResource = 10.0
+        sessionConfig.timeoutIntervalForResource = 30.0
         let urlSession = URLSession(configuration: sessionConfig)
         
         urlSession.dataTask(with: request) { data, response, error in

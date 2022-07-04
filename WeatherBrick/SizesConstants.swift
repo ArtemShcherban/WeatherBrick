@@ -26,12 +26,4 @@ enum SizesConstants {
     enum AnimationSize {
         static let width: CGFloat = 200.0
     }
-    
-    enum ScreenSizes {
-//        static let iPhone8 = (width: 375, height: 667)
-//        static let iPhone8Plus = (width: 414, height: 736)
-//        static let iPhone11Pro = (width: 375, height: 812)
-//        static let iPhone8 = (width: 375, height: 667)
-//        static let iPhone8 = (width: 375, height: 667)
-    }
 }

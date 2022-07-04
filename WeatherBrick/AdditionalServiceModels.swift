@@ -8,7 +8,7 @@
 
 import Foundation
 
-class AdditionalServiceModels {
+final class AdditionalServiceModels {
     func getCountries(completion: @escaping(([Any]) -> Void) ) {
         guard let url = Bundle.main.url(forResource: "CountriesWithFlags", withExtension: "json"),
             let data = try? Data(contentsOf: url),

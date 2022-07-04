@@ -40,7 +40,7 @@ final class WeatherMainViewController: UIViewController, SearchLocationViewContr
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        weatherMainView.createMainView()
+        weatherMainView.setupMainView()
         getDataFromNetwork()
         createNotificationObserver()
     }

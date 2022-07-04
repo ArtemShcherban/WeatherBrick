@@ -75,7 +75,7 @@ final class WeatherMainView: UIView {
     
     private(set) lazy var popUpWindow = PopUpWindow()
     
-    func createMainView() {
+    func setupMainView() {
         addSubviews()
         addSwipeGesture()
         addTargetForLocationButton()
@@ -92,7 +92,6 @@ final class WeatherMainView: UIView {
         addSubview(circleAnimation)
         addSubview(errorMessageTextLabel)
         addSubview(popUpWindow)
-//        popUpWindow.createShadow()
     }
     
     private func addSwipeGesture() {
@@ -134,16 +133,13 @@ final class WeatherMainView: UIView {
     }
     
     func setIcon(isGeo: Bool) {
-        if isGeo {
-            if searchIconImageView.superview === self {
-                searchIconImageView.removeFromSuperview()
-            }
+        switch isGeo {
+        case true:
+            searchIconImageView.removeFromSuperview()
             insertSubview(geoLocationImageView, belowSubview: popUpWindow)
             setGeoLocationIconConstraints()
-        } else {
-            if geoLocationImageView.superview === self {
-                geoLocationImageView.removeFromSuperview()
-            }
+        case false:
+            geoLocationImageView.removeFromSuperview()
             insertSubview(searchIconImageView, belowSubview: popUpWindow)
             setSearchIconConstraints()
         }
