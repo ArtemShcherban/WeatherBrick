@@ -136,6 +136,7 @@ extension SearchLocationViewController: UISearchBarDelegate {
         searchLocationView.startCircleAnimation()
         if searchLocationModel.hasValidCoordinates(searchBartext) {
             guard let location = searchLocationModel.location(from: searchBartext) else {
+                searchLocationView.circleAnimation.stop()
                 searchLocationView.messageTextLabel.retrieveError =
                 NetworkServiceError.httpRequestFailed.rawValue
                 searchLocationView.messageTextLabel.isActive = true

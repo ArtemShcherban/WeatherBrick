@@ -15,7 +15,7 @@ final class WeatherViewModel {
     
     private lazy var weatherNetworkService = WeatherNetworkService()
     private lazy var additionalServiceModels = AdditionalServiceModels()
-    private lazy var countriesWithFlags: [String: Country] = [:]
+    private(set) lazy var countriesWithFlags: [String: Country] = [:]
     
     init() {
         createCountries()

@@ -14,24 +14,21 @@ final class SearchLocationModel {
     
     func hasValidCoordinates(_ text: String) -> Bool {
         if (text.rangeOfCharacter(from: AppConstants.alphabetLetters) == nil) &&
-            text.prefix(4).contains(".") &&
-            text.contains(" ") &&
-            text.last != " " {
+            text.prefix(3).contains(".") &&
+            text.split(separator: ".").count == 3 &&
+            text.split(separator: ",").count == 2 {
             return true
         }
         return false
     }
     
     func location(from string: String) -> CLLocation? {
-        let firstIndex = string.firstIndex(of: ",") ?? string.endIndex
-        let secondIndex = string.firstIndex(of: " ") ?? string.endIndex
-        let firstString = String(string[..<firstIndex])
-        let secondString = String(string[string.index(after: secondIndex)...string.index(
-            before: string.endIndex)])
-        
-        if let latitude = Double(firstString),
-            let longitude = Double(secondString) {
-            let location = CLLocation(latitude: latitude, longitude: longitude)
+        let updatedString = string.replacingOccurrences(of: " ", with: "")
+        let firstIndex = updatedString.firstIndex(of: ",") ?? string.endIndex
+        let firstString = String(updatedString[..<firstIndex])
+        let secondString = String(updatedString[updatedString.index(after: firstIndex)...])
+        if let latitude = Double(firstString), let longitude = Double(secondString) {
+        let location = CLLocation(latitude: latitude, longitude: longitude)
             return location
         }
         return nil

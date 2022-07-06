@@ -17,7 +17,9 @@ target 'WeatherBrick' do
   end
 
   target 'WeatherBrickUITests' do
+    inherit!: search_paths
     # Pods for testing
+    pod 'iOSSnapshotTestCase'
   
   end
 
