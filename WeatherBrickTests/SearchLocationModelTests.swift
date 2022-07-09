@@ -11,8 +11,8 @@ import XCTest
 import CoreLocation
 
 class SearchLocationModelTests: XCTestCase {
-    var sut: SearchLocationModel?
-
+    private var sut: SearchLocationModel!
+    
     override func setUp() {
         super.setUp()
         sut = SearchLocationModel()
@@ -24,35 +24,19 @@ class SearchLocationModelTests: XCTestCase {
     }
     
     func testStringHasValidCoordinates() {
-        guard let sut = sut else { return }
-
         XCTAssertTrue(sut.hasValidCoordinates("55.345, 25.766"))
         XCTAssertTrue(sut.hasValidCoordinates("55.345,25.766"))
         XCTAssertTrue(sut.hasValidCoordinates("55.345,  25.766"))
         XCTAssertTrue(sut.hasValidCoordinates("55.,  25.766"))
         XCTAssertTrue(sut.hasValidCoordinates("55.345    ,  25.     "))
     }
-
+    
     func testStringHasInvalidCoordinates() {
-        guard let sut = sut else { return }
-
         XCTAssertFalse(sut.hasValidCoordinates("55,345, 25.766"))
         XCTAssertFalse(sut.hasValidCoordinates("55.345, 25,766"))
         XCTAssertFalse(sut.hasValidCoordinates("N55.345, E25.766"))
         XCTAssertFalse(sut.hasValidCoordinates("555.345, 25.766"))
         XCTAssertFalse(sut.hasValidCoordinates("55.,  25."))
-    }
-    
-    func runTest(_ coordinates: [String], file: StaticString = #file, line: UInt = #line) {
-        let expectedLat = 55.345
-        let expectedLong = 25.766
-        
-        guard let sut = sut else { return }
-        
-        for coordinate in coordinates {
-            XCTAssertEqual(sut.location(from: coordinate)?.coordinate.latitude, expectedLat, file: file, line: line)
-            XCTAssertEqual(sut.location(from: coordinate)?.coordinate.longitude, expectedLong, file: file, line: line)
-        }
     }
     
     func testCreatingCLLocationInstance() {
@@ -63,5 +47,15 @@ class SearchLocationModelTests: XCTestCase {
         coordinates.append("55. 345   ,  25.766")
         coordinates.append("55.345    ,  25.     766")
         runTest(coordinates)
+    }
+    
+    func runTest(_ coordinates: [String], file: StaticString = #file, line: UInt = #line) {
+        let expectedLat = 55.345
+        let expectedLong = 25.766
+        
+        for coordinate in coordinates {
+            XCTAssertEqual(sut.location(from: coordinate)?.coordinate.latitude, expectedLat, file: file, line: line)
+            XCTAssertEqual(sut.location(from: coordinate)?.coordinate.longitude, expectedLong, file: file, line: line)
+        }
     }
 }

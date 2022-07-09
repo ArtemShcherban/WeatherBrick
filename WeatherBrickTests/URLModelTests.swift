@@ -11,7 +11,7 @@ import XCTest
 import CoreLocation
 
 class URLModelTests: XCTestCase {
-    private var sut: URLModel?
+    private var sut: URLModel!
     
     override func setUp() {
         super.setUp()
@@ -46,8 +46,6 @@ class URLModelTests: XCTestCase {
     }
     
     func createUrlFor<T: Locatable>(location: T) -> URL? {
-        guard let sut = sut else { return nil }
-
         let result = sut.prepareLinkFor(location: location)
         switch result {
         case .success(let url):
