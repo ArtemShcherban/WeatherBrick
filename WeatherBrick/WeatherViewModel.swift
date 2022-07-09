@@ -11,13 +11,14 @@ import UIKit
 import CoreLocation
 
 final class WeatherViewModel {
-    static let shared = WeatherViewModel()
+    static let shared = WeatherViewModel(weatherNetworkService: WeatherNetworkService())
     
-    private lazy var weatherNetworkService = WeatherNetworkService()
+    private var weatherNetworkService: WeatherNetworking
     private lazy var additionalServiceModels = AdditionalServiceModels()
     private(set) lazy var countriesWithFlags: [String: Country] = [:]
     
-    init() {
+    init(weatherNetworkService: WeatherNetworking) {
+        self.weatherNetworkService = weatherNetworkService
         createCountries()
     }
     
@@ -95,7 +96,7 @@ final class WeatherViewModel {
         }
     }
     
-    private func convertToGeo(coordinates: (Double, Double)) -> (String, String) {
+    func convertToGeo(coordinates: (Double, Double)) -> (String, String) {
         var latitude = ""
         var longtitude = ""
         var doubleCoordinate = 0.0

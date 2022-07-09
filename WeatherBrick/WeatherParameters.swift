@@ -28,4 +28,14 @@ struct WeatherParameters: Decodable {
         cityName = try values.decode(String.self, forKey: .cityName)
         windParameters = try values.decode(WindParameters.self, forKey: .windParameters)
     }
+    
+    init(coordinates: LocationCoordinate, conditionMain: String, conditionDetails: String, temperature: Double, countryISO: String, cityName: String, windParameters: WindParameters) {
+        self.coordinates = coordinates
+        self.conditionMain = conditionMain
+        self.conditionDetails = conditionDetails
+        self.temperature = temperature
+        self.countryISO = countryISO
+        self.cityName = cityName
+        self.windParameters = windParameters
+    }
 }

@@ -11,15 +11,13 @@ target 'WeatherBrick' do
   pod 'lottie-ios'
 
   target 'WeatherBrickTests' do
-    inherit! :search_paths
+#    inherit! :search_paths
     # Pods for testing
 
   end
 
   target 'WeatherBrickUITests' do
-    inherit!: search_paths
     # Pods for testing
-    pod 'iOSSnapshotTestCase'
   
   end
 
