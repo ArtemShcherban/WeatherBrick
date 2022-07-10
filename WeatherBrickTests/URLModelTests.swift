@@ -10,7 +10,7 @@ import XCTest
 @testable import WeatherBrick
 import CoreLocation
 
-class URLModelTests: XCTestCase {
+final class URLModelTests: XCTestCase {
     private var sut: URLModel!
     
     override func setUp() {

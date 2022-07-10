@@ -54,6 +54,7 @@ final class PopUpWindow: UIView {
         tempHideButton.setAttributedTitle(buttonTitle, for: .normal)
         tempHideButton.layer.cornerRadius = AppConstants.bigScreenSize ? 18 : 14
         tempHideButton.addTarget(self, action: #selector(delegateActions), for: .touchUpInside)
+        tempHideButton.accessibilityIdentifier = "hideButton"
         return tempHideButton
     }()
     
@@ -93,6 +94,7 @@ final class PopUpWindow: UIView {
         setConstraints()
         addTapGestureRecognizer()
         animatePresent()
+        accessibilityIdentifier = IdentifiersConstants.popUpWindow
     }
     
     required init?(coder: NSCoder) {

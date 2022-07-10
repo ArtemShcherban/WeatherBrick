@@ -56,8 +56,8 @@ final class WeatherNetworkServiceTests: XCTestCase {
     }
     
     func test_successResponse() throws {
-        let testData = try getData()
-        sut.urlSession = mockURLSession(data: testData, statusCode: 200, error: nil)
+        let data = try getData()
+        sut.urlSession = mockURLSession(data: data, statusCode: 200, error: nil)
         
         sut.getWeather(with: url) { result in
             self.expectation.fulfill()

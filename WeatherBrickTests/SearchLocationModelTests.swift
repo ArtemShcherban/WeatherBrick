@@ -10,7 +10,7 @@ import XCTest
 @testable import WeatherBrick
 import CoreLocation
 
-class SearchLocationModelTests: XCTestCase {
+final class SearchLocationModelTests: XCTestCase {
     private var sut: SearchLocationModel!
     
     override func setUp() {
@@ -37,6 +37,10 @@ class SearchLocationModelTests: XCTestCase {
         XCTAssertFalse(sut.hasValidCoordinates("N55.345, E25.766"))
         XCTAssertFalse(sut.hasValidCoordinates("555.345, 25.766"))
         XCTAssertFalse(sut.hasValidCoordinates("55.,  25."))
+    }
+    
+    func testInabilityToCreateCLLocationInstance() {
+        XCTAssertNil(sut.location(from: "55.345, 25.766$"))
     }
     
     func testCreatingCLLocationInstance() {

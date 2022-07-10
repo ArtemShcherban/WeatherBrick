@@ -25,6 +25,7 @@ final class SearchLocationView: UIView {
             ])
         tempSearchController.searchBar.searchTextField.attributedPlaceholder = attributedString
         tempSearchController.searchBar.delegate = searchBarDelegate
+        tempSearchController.searchBar.searchTextField.accessibilityIdentifier = IdentifiersConstants.searchTextField
         return tempSearchController
     }()
     
@@ -34,6 +35,7 @@ final class SearchLocationView: UIView {
             style: .plain,
             target: self,
             action: #selector(backButtonDelegateAction))
+        tempBackButton.accessibilityIdentifier = IdentifiersConstants.backButton
         return tempBackButton
     }()
     

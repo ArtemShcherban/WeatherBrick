@@ -40,6 +40,9 @@ final class LocationButton: UIButton {
         layer.borderWidth = 1.0
         layer.borderColor = UIColor.black.cgColor
         layer.cornerRadius = frame.height / 2
+        accessibilityIdentifier = IdentifiersConstants.locationButton
+        frame.size.width += 20
+        widthAnchorConstraint.constant = frame.width
     }
     
     private func setButtonEnabled() {
@@ -65,7 +68,7 @@ final class LocationButton: UIButton {
     func setConstraints() {
         if let superview = superview {
             translatesAutoresizingMaskIntoConstraints = false
-            widthAnchorConstraint = widthAnchor.constraint(equalToConstant: frame.width + 20)
+            widthAnchorConstraint = widthAnchor.constraint(equalToConstant: widthAnchorConstraint.constant)
             NSLayoutConstraint.activate([
                 topAnchor.constraint(
                     equalTo: superview.topAnchor,

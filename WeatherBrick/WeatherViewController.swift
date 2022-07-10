@@ -22,11 +22,11 @@ final class WeatherMainViewController: UIViewController, SearchLocationViewContr
     private var userDefaultsManager = UserDefaultsManager.manager
     private var weatherNetworkServiceModel = URLModel.shared
     
-    private lazy var weatherMainModel: WeatherViewModel = {
+    lazy var weatherMainModel: WeatherViewModel = {
         WeatherViewModel.shared
     }()
     
-    private lazy var weatherMainView: WeatherMainView = {
+    lazy var weatherMainView: WeatherMainView = {
         let view = WeatherMainView()
         view.delegate = self
         view.popUpWindow.delegate = self
@@ -73,11 +73,11 @@ final class WeatherMainViewController: UIViewController, SearchLocationViewContr
         }
     }
     
-    private func getDataFromNetwork() {
+     func getDataFromNetwork() {
+        guard let location = self.userDefaultsManager.getLocation() else { return }
         mainQueue?.dispatch {
             self.weatherMainView.circleAnimation.start()
         }
-        guard let location = self.userDefaultsManager.getLocation() else { return }
         self.getWeatherFor(location)
     }
     

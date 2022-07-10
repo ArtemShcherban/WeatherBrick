@@ -36,6 +36,7 @@ final class MessageTextLabel: UILabel {
     
     private func configure() {
         backgroundColor = .clear
+        accessibilityIdentifier = IdentifiersConstants.messageTextLabel
         createFormatsAttributedString()
     }
     

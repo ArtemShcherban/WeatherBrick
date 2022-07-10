@@ -32,5 +32,6 @@ final class UserLocationButton: UIButton {
         layer.cornerRadius = frame.height / 2
         layer.borderColor = ColorConstants.lightGraphite.cgColor
         layer.borderWidth = 2
+        accessibilityIdentifier = IdentifiersConstants.userLocationButton
     }
 }

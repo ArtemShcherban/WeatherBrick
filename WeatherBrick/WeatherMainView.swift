@@ -64,12 +64,14 @@ final class WeatherMainView: UIView {
     private(set) lazy var geoLocationImageView: UIImageView = {
         let tempGeoLocationLabel = UIImageView()
         tempGeoLocationLabel.image = ImagesConstants.Icon.location
+        tempGeoLocationLabel.accessibilityIdentifier = IdentifiersConstants.geoLocationImageView
         return tempGeoLocationLabel
     }()
     
     private(set) lazy var searchIconImageView: UIImageView = {
         let tempSearchIconView = UIImageView()
         tempSearchIconView.image = ImagesConstants.Icon.search
+        tempSearchIconView.accessibilityIdentifier = IdentifiersConstants.searchIconImageView
         return tempSearchIconView
     }()
     

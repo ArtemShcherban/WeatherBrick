@@ -13,7 +13,7 @@ import CoreLocation
 final class WeatherViewModel {
     static let shared = WeatherViewModel(weatherNetworkService: WeatherNetworkService())
     
-    private var weatherNetworkService: WeatherNetworking
+    private(set) var weatherNetworkService: WeatherNetworking
     private lazy var additionalServiceModels = AdditionalServiceModels()
     private(set) lazy var countriesWithFlags: [String: Country] = [:]
     
