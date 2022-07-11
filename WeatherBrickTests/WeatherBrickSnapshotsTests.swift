@@ -17,28 +17,29 @@ final class WeatherBrickSnapshotsTests: FBSnapshotTestCase {
         self.fileNameOptions = [.device, .OS, .screenSize]
     }
     
-    func testSnapshotMainScreen() {
+    func testMainScreen() {
         let controller = WeatherMainViewController(nibName: "WeatherMainViewController", bundle: nil)
         FBSnapshotVerifyViewController(controller)
     }
     
-    func testSnapshotPopUpWindow() {
+    func testPopUpWindow() {
         let controller = WeatherMainViewController(nibName: "WeatherMainViewController", bundle: nil)
-        controller.loadViewIfNeeded()
         controller.popWindowPush()
         FBSnapshotVerifyViewController(controller)
     }
     
-    func testSnapshotSearchLocationScreen() {
+    func testSearchLocationScreen() {
         let controller = SearchLocationViewController(nibName: "SearchLocationViewController", bundle: nil)
         FBSnapshotVerifyViewController(controller)
     }
     
+    func testUserLocationButton() {
+        let view = SearchLocationView()
+        FBSnapshotVerifyView(view.userLocationButton)
+    }
+    
     func testLocationButtonView() {
-        let storyboard = UIStoryboard(name: "Main", bundle: nil)
-        guard let controller = storyboard.instantiateViewController(
-            withIdentifier: WeatherMainViewController.reuseIdentifier) as? WeatherMainViewController else { return }
-        _ = controller.view
+        let controller = WeatherMainViewController(nibName: "WeatherMainViewController", bundle: nil)
         FBSnapshotVerifyView(controller.weatherMainView.locationButton)
     }
 }

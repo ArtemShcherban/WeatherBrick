@@ -36,13 +36,15 @@
 		F41FAC962863250F00675E13 /* FontsConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = F41FAC952863250F00675E13 /* FontsConstants.swift */; };
 		F41FAC982863260B00675E13 /* ImagesConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = F41FAC972863260B00675E13 /* ImagesConstants.swift */; };
 		F41FAC9A286326CD00675E13 /* TitlesConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = F41FAC99286326CD00675E13 /* TitlesConstants.swift */; };
+		F42CADFF287AFD9F00A0A240 /* SnapshotTestingTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F42CADFE287AFD9F00A0A240 /* SnapshotTestingTests.swift */; };
+		F42CAE0C287C012000A0A240 /* MockURLProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = F42CAE0A287C012000A0A240 /* MockURLProtocol.swift */; };
+		F42CAE0D287C012000A0A240 /* MockNetworkService.swift in Sources */ = {isa = PBXBuildFile; fileRef = F42CAE0B287C012000A0A240 /* MockNetworkService.swift */; };
+		F42CAE0F287C131C00A0A240 /* WeatherBrickSnapshotsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F42CAE0E287C131C00A0A240 /* WeatherBrickSnapshotsTests.swift */; };
 		F43B674328436BE80034FAEA /* CountriesWithFlags.json in Resources */ = {isa = PBXBuildFile; fileRef = F43B674228436BE80034FAEA /* CountriesWithFlags.json */; };
 		F43B674628448E8B0034FAEA /* Dispatcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = F43B674528448E8B0034FAEA /* Dispatcher.swift */; };
 		F43B67492844B87D0034FAEA /* NetworkServiceError.swift in Sources */ = {isa = PBXBuildFile; fileRef = F43B67482844B87D0034FAEA /* NetworkServiceError.swift */; };
 		F43B6774284515D50034FAEA /* MessageTextLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F43B6773284515D50034FAEA /* MessageTextLabel.swift */; };
-		F44985F6287AAD5E003BA116 /* WeatherMainViewControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F44985F5287AAD5E003BA116 /* WeatherMainViewControllerTests.swift */; };
 		F44A66EA28784301009CC8A0 /* testData.txt in Resources */ = {isa = PBXBuildFile; fileRef = F44A66E928784301009CC8A0 /* testData.txt */; };
-		F44A66EC2878A019009CC8A0 /* MockURLProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = F44A66EB2878A019009CC8A0 /* MockURLProtocol.swift */; };
 		F45B51292872D8040026FF99 /* URLModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F45B51282872D8040026FF99 /* URLModelTests.swift */; };
 		F45B512D2872E2EF0026FF99 /* UnitTestsConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = F45B512C2872E2EF0026FF99 /* UnitTestsConstants.swift */; };
 		F45B51302872F0240026FF99 /* SearchLocationModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F45B512F2872F0240026FF99 /* SearchLocationModelTests.swift */; };
@@ -65,8 +67,6 @@
 		F48BCC5E283BE8A500378711 /* LocationButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = F48BCC5D283BE8A500378711 /* LocationButton.swift */; };
 		F48F5B6428546CBA00A1CA75 /* SearchLocationModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F48F5B6328546CBA00A1CA75 /* SearchLocationModel.swift */; };
 		F48F5B6A2854859600A1CA75 /* URLModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F48F5B692854859600A1CA75 /* URLModel.swift */; };
-		F49B1A2328795110006C9C83 /* WeatherBrickSnapshotsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F49B1A2228795110006C9C83 /* WeatherBrickSnapshotsTests.swift */; };
-		F49B1A252879688F006C9C83 /* WeatherMainViewTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F49B1A242879688F006C9C83 /* WeatherMainViewTests.swift */; };
 		F49B1A2728798E6C006C9C83 /* IdentifiersConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = F49B1A2628798E6C006C9C83 /* IdentifiersConstants.swift */; };
 		F4A9B7FD284E1668003B7D78 /* WindParameters.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4A9B7FC284E1668003B7D78 /* WindParameters.swift */; };
 		F4A9B806284F293F003B7D78 /* Country.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4A9B805284F293F003B7D78 /* Country.swift */; };
@@ -77,7 +77,6 @@
 		F4B287A9285881B6005E1960 /* Size.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4B287A8285881B6005E1960 /* Size.swift */; };
 		F4B287AB285884AC005E1960 /* DeviceScreenSizeExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4B287AA285884AC005E1960 /* DeviceScreenSizeExtension.swift */; };
 		F4B287AD2859ED17005E1960 /* UserDefaultsError.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4B287AC2859ED17005E1960 /* UserDefaultsError.swift */; };
-		F4B48BC52876D9F1000828D5 /* MockNetworkService.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4B48BC42876D9F1000828D5 /* MockNetworkService.swift */; };
 		F4B48BC7287704F5000828D5 /* WeatherNetworkServiceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4B48BC6287704F5000828D5 /* WeatherNetworkServiceTests.swift */; };
 		F4BCC394285C86BB0067404C /* ErrorMessageTextLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4BCC393285C86BB0067404C /* ErrorMessageTextLabel.swift */; };
 		F4DF62BC283D4E7D004CAE1B /* SearchLocationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4DF62BB283D4E7D004CAE1B /* SearchLocationViewController.swift */; };
@@ -146,13 +145,15 @@
 		F41FAC952863250F00675E13 /* FontsConstants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FontsConstants.swift; sourceTree = "<group>"; };
 		F41FAC972863260B00675E13 /* ImagesConstants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImagesConstants.swift; sourceTree = "<group>"; };
 		F41FAC99286326CD00675E13 /* TitlesConstants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TitlesConstants.swift; sourceTree = "<group>"; };
+		F42CADFE287AFD9F00A0A240 /* SnapshotTestingTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SnapshotTestingTests.swift; sourceTree = "<group>"; };
+		F42CAE0A287C012000A0A240 /* MockURLProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MockURLProtocol.swift; sourceTree = "<group>"; };
+		F42CAE0B287C012000A0A240 /* MockNetworkService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MockNetworkService.swift; sourceTree = "<group>"; };
+		F42CAE0E287C131C00A0A240 /* WeatherBrickSnapshotsTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherBrickSnapshotsTests.swift; sourceTree = "<group>"; };
 		F43B674228436BE80034FAEA /* CountriesWithFlags.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = CountriesWithFlags.json; sourceTree = "<group>"; };
 		F43B674528448E8B0034FAEA /* Dispatcher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Dispatcher.swift; sourceTree = "<group>"; };
 		F43B67482844B87D0034FAEA /* NetworkServiceError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkServiceError.swift; sourceTree = "<group>"; };
 		F43B6773284515D50034FAEA /* MessageTextLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageTextLabel.swift; sourceTree = "<group>"; };
-		F44985F5287AAD5E003BA116 /* WeatherMainViewControllerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherMainViewControllerTests.swift; sourceTree = "<group>"; };
 		F44A66E928784301009CC8A0 /* testData.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = testData.txt; sourceTree = "<group>"; };
-		F44A66EB2878A019009CC8A0 /* MockURLProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockURLProtocol.swift; sourceTree = "<group>"; };
 		F45B51282872D8040026FF99 /* URLModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = URLModelTests.swift; sourceTree = "<group>"; };
 		F45B512C2872E2EF0026FF99 /* UnitTestsConstants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UnitTestsConstants.swift; sourceTree = "<group>"; };
 		F45B512F2872F0240026FF99 /* SearchLocationModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchLocationModelTests.swift; sourceTree = "<group>"; };
@@ -175,8 +176,6 @@
 		F48BCC5D283BE8A500378711 /* LocationButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationButton.swift; sourceTree = "<group>"; };
 		F48F5B6328546CBA00A1CA75 /* SearchLocationModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchLocationModel.swift; sourceTree = "<group>"; };
 		F48F5B692854859600A1CA75 /* URLModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = URLModel.swift; sourceTree = "<group>"; };
-		F49B1A2228795110006C9C83 /* WeatherBrickSnapshotsTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherBrickSnapshotsTests.swift; sourceTree = "<group>"; };
-		F49B1A242879688F006C9C83 /* WeatherMainViewTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherMainViewTests.swift; sourceTree = "<group>"; };
 		F49B1A2628798E6C006C9C83 /* IdentifiersConstants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IdentifiersConstants.swift; sourceTree = "<group>"; };
 		F4A9B7FC284E1668003B7D78 /* WindParameters.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WindParameters.swift; sourceTree = "<group>"; };
 		F4A9B805284F293F003B7D78 /* Country.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Country.swift; sourceTree = "<group>"; };
@@ -187,7 +186,6 @@
 		F4B287A8285881B6005E1960 /* Size.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Size.swift; sourceTree = "<group>"; };
 		F4B287AA285884AC005E1960 /* DeviceScreenSizeExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeviceScreenSizeExtension.swift; sourceTree = "<group>"; };
 		F4B287AC2859ED17005E1960 /* UserDefaultsError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDefaultsError.swift; sourceTree = "<group>"; };
-		F4B48BC42876D9F1000828D5 /* MockNetworkService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockNetworkService.swift; sourceTree = "<group>"; };
 		F4B48BC6287704F5000828D5 /* WeatherNetworkServiceTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherNetworkServiceTests.swift; sourceTree = "<group>"; };
 		F4BCC393285C86BB0067404C /* ErrorMessageTextLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ErrorMessageTextLabel.swift; sourceTree = "<group>"; };
 		F4DF62BB283D4E7D004CAE1B /* SearchLocationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchLocationViewController.swift; sourceTree = "<group>"; };
@@ -271,16 +269,15 @@
 		A3475F12273305F400BF5E86 /* WeatherBrickTests */ = {
 			isa = PBXGroup;
 			children = (
-				F4B48BC32876D9C5000828D5 /* MockObjects */,
+				F42CAE09287C012000A0A240 /* MockObjects */,
 				F45B512E2872E3180026FF99 /* Constants */,
 				F45B512F2872F0240026FF99 /* SearchLocationModelTests.swift */,
 				F45B51282872D8040026FF99 /* URLModelTests.swift */,
-				F49B1A242879688F006C9C83 /* WeatherMainViewTests.swift */,
 				F4B48BC6287704F5000828D5 /* WeatherNetworkServiceTests.swift */,
 				A3475F13273305F400BF5E86 /* WeatherViewModelTests.swift */,
-				F49B1A2228795110006C9C83 /* WeatherBrickSnapshotsTests.swift */,
-				F44985F5287AAD5E003BA116 /* WeatherMainViewControllerTests.swift */,
 				A3475F15273305F400BF5E86 /* Info.plist */,
+				F42CADFE287AFD9F00A0A240 /* SnapshotTestingTests.swift */,
+				F42CAE0E287C131C00A0A240 /* WeatherBrickSnapshotsTests.swift */,
 			);
 			path = WeatherBrickTests;
 			sourceTree = "<group>";
@@ -371,6 +368,15 @@
 				F41FAC872863014900675E13 /* Locatable.swift */,
 			);
 			name = Protocols;
+			sourceTree = "<group>";
+		};
+		F42CAE09287C012000A0A240 /* MockObjects */ = {
+			isa = PBXGroup;
+			children = (
+				F42CAE0A287C012000A0A240 /* MockURLProtocol.swift */,
+				F42CAE0B287C012000A0A240 /* MockNetworkService.swift */,
+			);
+			path = MockObjects;
 			sourceTree = "<group>";
 		};
 		F43B674428448E680034FAEA /* Dispatcher */ = {
@@ -594,15 +600,6 @@
 				F4B287852858601A005E1960 /* UIViewTransitionAnimations.swift */,
 			);
 			name = UIViewExtensions;
-			sourceTree = "<group>";
-		};
-		F4B48BC32876D9C5000828D5 /* MockObjects */ = {
-			isa = PBXGroup;
-			children = (
-				F4B48BC42876D9F1000828D5 /* MockNetworkService.swift */,
-				F44A66EB2878A019009CC8A0 /* MockURLProtocol.swift */,
-			);
-			path = MockObjects;
 			sourceTree = "<group>";
 		};
 		F4DF62B6283CC805004CAE1B /* NetworkServiceModule */ = {
@@ -1007,15 +1004,14 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				F49B1A2328795110006C9C83 /* WeatherBrickSnapshotsTests.swift in Sources */,
-				F44A66EC2878A019009CC8A0 /* MockURLProtocol.swift in Sources */,
+				F42CADFF287AFD9F00A0A240 /* SnapshotTestingTests.swift in Sources */,
+				F42CAE0C287C012000A0A240 /* MockURLProtocol.swift in Sources */,
 				F45B51302872F0240026FF99 /* SearchLocationModelTests.swift in Sources */,
 				A3475F14273305F400BF5E86 /* WeatherViewModelTests.swift in Sources */,
-				F49B1A252879688F006C9C83 /* WeatherMainViewTests.swift in Sources */,
 				F4B48BC7287704F5000828D5 /* WeatherNetworkServiceTests.swift in Sources */,
-				F44985F6287AAD5E003BA116 /* WeatherMainViewControllerTests.swift in Sources */,
-				F4B48BC52876D9F1000828D5 /* MockNetworkService.swift in Sources */,
 				F45B512D2872E2EF0026FF99 /* UnitTestsConstants.swift in Sources */,
+				F42CAE0D287C012000A0A240 /* MockNetworkService.swift in Sources */,
+				F42CAE0F287C131C00A0A240 /* WeatherBrickSnapshotsTests.swift in Sources */,
 				F45B51292872D8040026FF99 /* URLModelTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

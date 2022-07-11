@@ -29,7 +29,7 @@ final class SearchLocationViewController: UIViewController {
     private lazy var weatherMainModel = WeatherViewModel.shared
     private lazy var weatherMainView = WeatherMainView.shared
     
-    private lazy var searchLocationView: SearchLocationView = {
+    private(set) lazy var searchLocationView: SearchLocationView = {
         let view = SearchLocationView()
         view.delegate = self
         view.searchBarDelegate = self

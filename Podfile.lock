@@ -6,12 +6,14 @@ PODS:
   - iOSSnapshotTestCase/SwiftSupport (8.0.0):
     - iOSSnapshotTestCase/Core
   - lottie-ios (3.2.3)
+  - SnapshotTesting (1.9.0)
   - SwiftLint (0.45.1)
 
 DEPENDENCIES:
   - DeviceKit
   - iOSSnapshotTestCase
   - lottie-ios
+  - SnapshotTesting (~> 1.9.0)
   - SwiftLint
 
 SPEC REPOS:
@@ -19,14 +21,16 @@ SPEC REPOS:
     - DeviceKit
     - iOSSnapshotTestCase
     - lottie-ios
+    - SnapshotTesting
     - SwiftLint
 
 SPEC CHECKSUMS:
   DeviceKit: 834dd8aa1be53cd85364d8f49aa5d98bfac397c4
   iOSSnapshotTestCase: a670511f9ee3829c2b9c23e6e68f315fd7b6790f
   lottie-ios: c058aeafa76daa4cf64d773554bccc8385d0150e
+  SnapshotTesting: 6141c48b6aa76ead61431ca665c14ab9a066c53b
   SwiftLint: 06ac37e4d38c7068e0935bb30cda95f093bec761
 
-PODFILE CHECKSUM: 648ad7438d5c96b98b65fec219a1c8a545d9d610
+PODFILE CHECKSUM: d56b9d63ed6dcdedfaf9ba9522eb01ba920008f2
 
 COCOAPODS: 1.10.2

@@ -16,13 +16,13 @@ final class WeatherBrickUITests: XCTestCase {
     private lazy var popUpWindow = app.otherElements["popUpWindow"]
     private lazy var geoLocationImageView = app.images["geoLocationImageView"]
     private lazy var searchIconImageView = app.images["searchIconImageView"]
-
+    
     override func setUp() {
         super.setUp()
         app = XCUIApplication()
         app.launchArguments.append("UITests")
         app.launch()
-        sleep(1)
+        
         continueAfterFailure = false
     }
     

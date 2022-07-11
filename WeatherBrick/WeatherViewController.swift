@@ -40,7 +40,6 @@ final class WeatherMainViewController: UIViewController, SearchLocationViewContr
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        weatherMainView.setupMainView()
         getDataFromNetwork()
         createNotificationObserver()
     }
@@ -73,7 +72,7 @@ final class WeatherMainViewController: UIViewController, SearchLocationViewContr
         }
     }
     
-     func getDataFromNetwork() {
+    private func getDataFromNetwork() {
         guard let location = self.userDefaultsManager.getLocation() else { return }
         mainQueue?.dispatch {
             self.weatherMainView.circleAnimation.start()

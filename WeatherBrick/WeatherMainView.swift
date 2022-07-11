@@ -77,6 +77,17 @@ final class WeatherMainView: UIView {
     
     private(set) lazy var popUpWindow = PopUpWindow()
     
+    override init(frame: CGRect = CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.width)) {
+        super.init(frame: frame)
+        self.frame = frame
+        self.setupMainView()
+    }
+    
+    required init?(coder: NSCoder) {
+        super.init(coder: coder)
+        self.setupMainView()
+    }
+    
     func setupMainView() {
         addSubviews()
         addSwipeGesture()

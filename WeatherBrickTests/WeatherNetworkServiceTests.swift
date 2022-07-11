@@ -10,12 +10,12 @@ import XCTest
 @testable import WeatherBrick
 
 final class WeatherNetworkServiceTests: XCTestCase {
-    var sut: WeatherNetworkService!
-    var url: URL!
-    var expectation: XCTestExpectation!
-    var error: Error!
-    var expectedResult: NetworkServiceError!
-    let timeout = 0.1
+    private var sut: WeatherNetworkService!
+    private var url: URL!
+    private var expectation: XCTestExpectation!
+    private var error: Error!
+    private var expectedResult: NetworkServiceError!
+    private let timeout = 0.1
     
     override class var defaultTestSuite: XCTestSuite {
         let testSuite = XCTestSuite(name: NSStringFromClass(self))
@@ -103,7 +103,7 @@ final class WeatherNetworkServiceTests: XCTestCase {
     
     func test_failureResponseWithErrors() throws {
         sut.urlSession = mockURLSession(data: nil, statusCode: 0, error: error)
-
+        
         sut.getWeather(with: url) { result in
             self.expectation.fulfill()
             switch result {
