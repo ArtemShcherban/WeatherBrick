@@ -8,7 +8,7 @@
 
 import Foundation
 
-class MockURLProtocol: URLProtocol {
+final class MockURLProtocol: URLProtocol {
     static var mockURLs: [URL?: (data: Data?, response: HTTPURLResponse?, error: Error?)] = [:]
     
     override class func canInit(with request: URLRequest) -> Bool {

@@ -12,7 +12,7 @@ import DeviceKit
 
 enum AppConstants {
     static let bigScreenSize = Device.screenSize() > Size.screen5x8Inch
-    static let alphabetLetters = NSCharacterSet.letters
+    static let allowedСharacters = "0123456789-., "
     static let myWeather = "myWeather"
     static let monitor = "Monitor"
     static let main = "Main"

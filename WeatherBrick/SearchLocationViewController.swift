@@ -49,7 +49,7 @@ final class SearchLocationViewController: UIViewController {
         configureNavigationController()
     }
     
-        func configureNavigationController() {
+    private func configureNavigationController() {
         navigationItem.searchController = searchLocationView.searchController
         navigationItem.hidesBackButton = true
         navigationItem.leftBarButtonItem = searchLocationView.backButton

@@ -40,9 +40,7 @@ final class LocationButton: UIButton {
         layer.borderWidth = 1.0
         layer.borderColor = UIColor.black.cgColor
         layer.cornerRadius = frame.height / 2
-        accessibilityIdentifier = IdentifiersConstants.locationButton
-        frame.size.width += 20
-        widthAnchorConstraint.constant = frame.width
+        widthAnchorConstraint.constant = frame.size.width + 20
     }
     
     private func setButtonEnabled() {

@@ -22,7 +22,7 @@ final class WeatherMainViewController: UIViewController, SearchLocationViewContr
     private var userDefaultsManager = UserDefaultsManager.manager
     private var weatherNetworkServiceModel = URLModel.shared
     
-    lazy var weatherMainModel: WeatherViewModel = {
+    var weatherMainModel: WeatherViewModel = {
         WeatherViewModel.shared
     }()
     

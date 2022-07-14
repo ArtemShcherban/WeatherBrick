@@ -8,7 +8,7 @@
 
 import Foundation
 
-enum IdentifiersConstants {
+enum AccessibilityIdentifier {
     static let locationButton = "locationButton"
     static let geoLocationImageView = "geoLocationImageView"
     static let searchIconImageView = "searchIconImageView"
@@ -17,4 +17,5 @@ enum IdentifiersConstants {
     static let backButton = "backButton"
     static let messageTextLabel = "messageTextLabel"
     static let popUpWindow = "popUpWindow"
+    static let hideButton = "hideButton"
 }

@@ -64,20 +64,18 @@ final class WeatherMainView: UIView {
     private(set) lazy var geoLocationImageView: UIImageView = {
         let tempGeoLocationLabel = UIImageView()
         tempGeoLocationLabel.image = ImagesConstants.Icon.location
-        tempGeoLocationLabel.accessibilityIdentifier = IdentifiersConstants.geoLocationImageView
         return tempGeoLocationLabel
     }()
     
     private(set) lazy var searchIconImageView: UIImageView = {
         let tempSearchIconView = UIImageView()
         tempSearchIconView.image = ImagesConstants.Icon.search
-        tempSearchIconView.accessibilityIdentifier = IdentifiersConstants.searchIconImageView
         return tempSearchIconView
     }()
     
     private(set) lazy var popUpWindow = PopUpWindow()
     
-    override init(frame: CGRect = CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.width)) {
+    override init(frame: CGRect = SizesConstants.DefaultRect.frame) {
         super.init(frame: frame)
         self.frame = frame
         self.setupMainView()
@@ -93,6 +91,7 @@ final class WeatherMainView: UIView {
         addSwipeGesture()
         addTargetForLocationButton()
         setConstraints()
+        setupAccessibilityId()
     }
     
     private func addSubviews() {
@@ -105,6 +104,13 @@ final class WeatherMainView: UIView {
         addSubview(circleAnimation)
         addSubview(errorMessageTextLabel)
         addSubview(popUpWindow)
+    }
+    
+    private func setupAccessibilityId() {
+        locationButton.accessibilityIdentifier = AccessibilityIdentifier.locationButton
+        geoLocationImageView.accessibilityIdentifier = AccessibilityIdentifier.geoLocationImageView
+        searchIconImageView.accessibilityIdentifier = AccessibilityIdentifier.searchIconImageView
+        popUpWindow.accessibilityIdentifier = AccessibilityIdentifier.popUpWindow
     }
     
     private func addSwipeGesture() {

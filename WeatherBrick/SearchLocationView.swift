@@ -25,7 +25,6 @@ final class SearchLocationView: UIView {
             ])
         tempSearchController.searchBar.searchTextField.attributedPlaceholder = attributedString
         tempSearchController.searchBar.delegate = searchBarDelegate
-        tempSearchController.searchBar.searchTextField.accessibilityIdentifier = IdentifiersConstants.searchTextField
         return tempSearchController
     }()
     
@@ -35,7 +34,6 @@ final class SearchLocationView: UIView {
             style: .plain,
             target: self,
             action: #selector(backButtonDelegateAction))
-        tempBackButton.accessibilityIdentifier = IdentifiersConstants.backButton
         return tempBackButton
     }()
     
@@ -55,6 +53,7 @@ final class SearchLocationView: UIView {
     func createSearchLocationMainView() {
         addSubviews()
         setAllConstraints()
+        setupAccessibilityId()
     }
     
     private func addSubviews() {
@@ -63,6 +62,13 @@ final class SearchLocationView: UIView {
         containerView.addSubview(messageTextLabel)
         messageTextLabel.addSubview(circleAnimation)
         containerView.addSubview(userLocationButton)
+    }
+    
+    private func setupAccessibilityId() {
+        searchController.searchBar.searchTextField.accessibilityIdentifier = AccessibilityIdentifier.searchTextField
+        backButton.accessibilityIdentifier = AccessibilityIdentifier.backButton
+        messageTextLabel.accessibilityIdentifier = AccessibilityIdentifier.messageTextLabel
+        userLocationButton.accessibilityIdentifier = AccessibilityIdentifier.userLocationButton
     }
     
     func startCircleAnimation() {

@@ -9,6 +9,7 @@
 import UIKit
 
 final class UserLocationButton: UIButton {
+    let widthConstraint = NSLayoutConstraint()
     override init(frame: CGRect) {
         super.init(frame: frame)
         configure()
@@ -33,6 +34,5 @@ final class UserLocationButton: UIButton {
         layer.borderColor = ColorConstants.lightGraphite.cgColor
         layer.borderWidth = 2
         frame.size.width += 20
-        accessibilityIdentifier = IdentifiersConstants.userLocationButton
     }
 }

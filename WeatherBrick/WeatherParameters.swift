@@ -29,7 +29,15 @@ struct WeatherParameters: Decodable {
         windParameters = try values.decode(WindParameters.self, forKey: .windParameters)
     }
     
-    init(coordinates: LocationCoordinate, conditionMain: String, conditionDetails: String, temperature: Double, countryISO: String, cityName: String, windParameters: WindParameters) {
+    init(
+        coordinates: LocationCoordinate,
+        conditionMain: String,
+        conditionDetails: String,
+        temperature: Double,
+        countryISO: String,
+        cityName: String,
+        windParameters: WindParameters
+    ) {
         self.coordinates = coordinates
         self.conditionMain = conditionMain
         self.conditionDetails = conditionDetails

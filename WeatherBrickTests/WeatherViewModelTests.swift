@@ -13,15 +13,6 @@ final class WeatherViewModelTests: XCTestCase {
     private var coordinates = (0.0, 0.0)
     private var expectedResult = ("", "")
     
-    override class var defaultTestSuite: XCTestSuite {
-        let testSuite = XCTestSuite(name: NSStringFromClass(self))
-        addNewTest(coordinates: (55.345, 15.280), expectedResult: ("55°20'41\"N", "15°16'47\"E"), testSuite: testSuite)
-        addNewTest(coordinates: (-55.345, 15.280), expectedResult: ("55°20'41\"S", "15°16'47\"E"), testSuite: testSuite)
-        addNewTest(coordinates: (-55.345, -15.28), expectedResult: ("55°20'41\"S", "15°16'47\"W"), testSuite: testSuite)
-        addNewTest(coordinates: (55.345, -15.280), expectedResult: ("55°20'41\"N", "15°16'47\"W"), testSuite: testSuite)
-        return testSuite
-    }
-    
     override func setUp() {
         super.setUp()
         weatherNetworkService = MockNetworkService()
@@ -70,22 +61,19 @@ final class WeatherViewModelTests: XCTestCase {
     }
     
     func test_convertToGeoCoordinates() {
-        XCTAssertEqual(sut.convertToGeo(coordinates: coordinates).0, expectedResult.0)
-        XCTAssertEqual(sut.convertToGeo(coordinates: coordinates).1, expectedResult.1)
-    }
-    
-    class func addNewTest(coordinates: (Double, Double), expectedResult: (String, String), testSuite: XCTestSuite) {
-        for invocation in WeatherViewModelTests.testInvocations {
-            let newTestCase = WeatherViewModelTests(invocation: invocation)
-            newTestCase.coordinates = coordinates
-            newTestCase.expectedResult = expectedResult
-            testSuite.addTest(newTestCase)
-        }
+        XCTAssertEqual(sut.convertToGeo(coordinates: (55.345, 15.280)).0, "55°20'41\"N")
+        XCTAssertEqual(sut.convertToGeo(coordinates: (55.345, 15.280)).1, "15°16'47\"E")
+        XCTAssertEqual(sut.convertToGeo(coordinates: (-55.345, 15.280)).0, "55°20'41\"S")
+        XCTAssertEqual(sut.convertToGeo(coordinates: (-55.345, 15.280)).1, "15°16'47\"E")
+        XCTAssertEqual(sut.convertToGeo(coordinates: (-55.345, -15.280)).0, "55°20'41\"S")
+        XCTAssertEqual(sut.convertToGeo(coordinates: (-55.345, -15.280)).1, "15°16'47\"W")
+        XCTAssertEqual(sut.convertToGeo(coordinates: (55.345, -15.280)).0, "55°20'41\"N")
+        XCTAssertEqual(sut.convertToGeo(coordinates: (55.345, -15.280)).1, "15°16'47\"W")
     }
     
     func getWeatherInfo() -> WeatherInfo? {
         var weatherInfo: WeatherInfo?
-        guard let url = UnitTestsConstants.cityURL else { return nil }
+        guard let url = UnitTestsConstants.stubbedCityURL else { return nil }
         expectation = expectation(description: "Weather reicived")
         
         sut.createWeatherInfo(with: url) { result in

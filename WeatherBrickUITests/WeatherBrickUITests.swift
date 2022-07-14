@@ -14,8 +14,10 @@ final class WeatherBrickUITests: XCTestCase {
     private lazy var messageTextLabel = app.staticTexts["messageTextLabel"]
     private lazy var userLocationButton = app.buttons["userLocationButton"]
     private lazy var popUpWindow = app.otherElements["popUpWindow"]
+    private lazy var hideButton = app.buttons["hideButton"]
     private lazy var geoLocationImageView = app.images["geoLocationImageView"]
     private lazy var searchIconImageView = app.images["searchIconImageView"]
+    private lazy var timeout = 1.0
     
     override func setUp() {
         super.setUp()
@@ -34,7 +36,7 @@ final class WeatherBrickUITests: XCTestCase {
         locationButton.tap()
         
         XCTAssertTrue(messageTextLabel.exists)
-        XCTAssertTrue(userLocationButton.exists )
+        XCTAssertTrue(userLocationButton.isHittable)
     }
     
     func test_tapSearchButton_WeatherVCAppear() {
@@ -42,25 +44,39 @@ final class WeatherBrickUITests: XCTestCase {
         searchTextField.tap()
         searchTextField.typeText("51.500188, -0.142378 \n")
         
-        XCTAssertTrue(popUpWindow.waitForExistence(timeout: 0.5))
+        XCTAssertTrue(popUpWindow.waitForExistence(timeout: timeout))
         XCTAssertTrue(searchIconImageView.exists)
-        XCTAssertTrue(locationButton.exists)
+        XCTAssertTrue(locationButton.isHittable)
+    }
+    
+    func test_tapPopUpWindow_WindowFullyAppears() {
+        popUpWindow.tap()
+        
+        XCTAssertTrue(hideButton.isHittable)
+    }
+    
+    func test_tapPopUpWindow_WindowPartiallyHidden() {
+        popUpWindow.tap()
+        sleep(1)
+        hideButton.tap()
+        
+        XCTAssertFalse(hideButton.isHittable)
     }
     
     func test_pressedBackButton_WeatherVCAppear() {
         locationButton.tap()
         backButton.tap()
         
-        XCTAssertTrue(popUpWindow.waitForExistence(timeout: 0.5))
-        XCTAssertTrue(locationButton.exists)
+        XCTAssertTrue(popUpWindow.waitForExistence(timeout: timeout))
+        XCTAssertTrue(locationButton.isHittable)
     }
     
     func test_tapUserLocationButton_WeatherVCAppear() {
         locationButton.tap()
         userLocationButton.tap()
         
-        XCTAssertTrue(popUpWindow.waitForExistence(timeout: 0.5))
+        XCTAssertTrue(popUpWindow.waitForExistence(timeout: timeout))
         XCTAssertTrue(geoLocationImageView.exists)
-        XCTAssertTrue(locationButton.exists)
+        XCTAssertTrue(locationButton.isHittable)
     }
 }

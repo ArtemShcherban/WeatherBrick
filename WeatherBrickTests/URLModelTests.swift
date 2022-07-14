@@ -25,7 +25,7 @@ final class URLModelTests: XCTestCase {
     
     func testCreatingURLFromString() {
         let cityName = "Lima"
-        let expectedURL = UnitTestsConstants.cityURL
+        let expectedURL = UnitTestsConstants.stubbedCityURL
         
         guard let url = createUrlFor(location: cityName) else {
             XCTFail(NetworkServiceError.cannotCreateURL.localizedDescription)
@@ -36,7 +36,7 @@ final class URLModelTests: XCTestCase {
     
     func testCreatingURLFromCLLocation() {
         let coordinates = CLLocation(latitude: 51.487098, longitude: -0.123765)
-        let expectedURL = UnitTestsConstants.coordinatesURL
+        let expectedURL = UnitTestsConstants.stubbedCoordinatesURL
         
         guard let url = createUrlFor(location: coordinates) else {
             XCTFail(NetworkServiceError.cannotCreateURL.localizedDescription)

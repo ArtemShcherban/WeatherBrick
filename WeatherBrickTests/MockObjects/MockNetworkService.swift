@@ -19,10 +19,11 @@ class MockNetworkService: WeatherNetworking {
         temperature: 16.0,
         countryISO: "NL",
         cityName: "",
-        windParameters: WindParameters(speed: 10, degrees: 240))
-
+        windParameters: WindParameters(speed: 10, degrees: 240)
+    )
+    
     func getWeather(with link: URL, completion: @escaping (Result<WeatherParameters, NetworkServiceError>) -> Void) {
-        completion(.success(mockWeather))
         isWeatherRequestTriggered = true
+        completion(.success(mockWeather))
     }
 }

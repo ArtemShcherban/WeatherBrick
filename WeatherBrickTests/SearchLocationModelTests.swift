@@ -7,8 +7,8 @@
 //
 
 import XCTest
-@testable import WeatherBrick
 import CoreLocation
+@testable import WeatherBrick
 
 final class SearchLocationModelTests: XCTestCase {
     private var sut: SearchLocationModel!
@@ -31,19 +31,11 @@ final class SearchLocationModelTests: XCTestCase {
         XCTAssertTrue(sut.hasValidCoordinates("55.345    ,  25.     "))
     }
     
-    func testStringHasInvalidCoordinates() {
-        XCTAssertFalse(sut.hasValidCoordinates("55,345, 25.766"))
-        XCTAssertFalse(sut.hasValidCoordinates("55.345, 25,766"))
-        XCTAssertFalse(sut.hasValidCoordinates("N55.345, E25.766"))
-        XCTAssertFalse(sut.hasValidCoordinates("555.345, 25.766"))
-        XCTAssertFalse(sut.hasValidCoordinates("55.,  25."))
-    }
-    
     func testInabilityToCreateCLLocationInstance() {
         XCTAssertNil(sut.location(from: "55.345, 25.766$"))
     }
     
-    func testCreatingCLLocationInstance() {
+    func testCreatingCLLocationInstances() {
         var coordinates: [String] = []
         coordinates.append("55.345, 25.766")
         coordinates.append("55.345,25.766")
