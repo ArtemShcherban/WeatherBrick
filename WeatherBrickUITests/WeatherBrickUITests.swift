@@ -4,28 +4,79 @@
 //
 
 import XCTest
+@testable import WeatherBrick
 
-class WeatherBrickUITests: XCTestCase {
+final class WeatherBrickUITests: XCTestCase {
+    private var app: XCUIApplication!
+    private lazy var locationButton = app.buttons["locationButton"]
+    private lazy var searchTextField = app.searchFields["searchTextField"]
+    private lazy var backButton = app.buttons["backButton"]
+    private lazy var messageTextLabel = app.staticTexts["messageTextLabel"]
+    private lazy var userLocationButton = app.buttons["userLocationButton"]
+    private lazy var popUpWindow = app.otherElements["popUpWindow"]
+    private lazy var hideButton = app.buttons["hideButton"]
+    private lazy var geoLocationImageView = app.images["geoLocationImageView"]
+    private lazy var searchIconImageView = app.images["searchIconImageView"]
+    private lazy var timeout = 1.0
+    
     override func setUp() {
         super.setUp()
+        app = XCUIApplication()
+        app.launchArguments.append("UITests")
+        app.launch()
         
-        // Put setup code here. This method is called before the invocation of each test method in the class.
-        
-        // In UI tests it is usually best to stop immediately when a failure occurs.
         continueAfterFailure = false
-        // UI tests must launch the application that they test. Doing this in setup will make sure it happens for each test method.
-        XCUIApplication().launch()
-
-        // In UI tests it’s important to set the initial state - such as interface orientation - required for your tests before they run. The setUp method is a good place to do this.
     }
     
     override func tearDown() {
-        // Put teardown code here. This method is called after the invocation of each test method in the class.
         super.tearDown()
     }
     
-    func testExample() {
-        // Use recording to get started writing UI tests.
-        // Use XCTAssert and related functions to verify your tests produce the correct results.
+    func test_tapLocationButton_SearchLocationVCAppear() {
+        locationButton.tap()
+        
+        XCTAssertTrue(messageTextLabel.exists)
+        XCTAssertTrue(userLocationButton.isHittable)
+    }
+    
+    func test_tapSearchButton_WeatherVCAppear() {
+        locationButton.tap()
+        searchTextField.tap()
+        searchTextField.typeText("51.500188, -0.142378 \n")
+        
+        XCTAssertTrue(popUpWindow.waitForExistence(timeout: timeout))
+        XCTAssertTrue(searchIconImageView.exists)
+        XCTAssertTrue(locationButton.isHittable)
+    }
+    
+    func test_tapPopUpWindow_WindowFullyAppears() {
+        popUpWindow.tap()
+        
+        XCTAssertTrue(hideButton.isHittable)
+    }
+    
+    func test_tapPopUpWindow_WindowPartiallyHidden() {
+        popUpWindow.tap()
+        sleep(1)
+        hideButton.tap()
+        
+        XCTAssertFalse(hideButton.isHittable)
+    }
+    
+    func test_pressedBackButton_WeatherVCAppear() {
+        locationButton.tap()
+        backButton.tap()
+        
+        XCTAssertTrue(popUpWindow.waitForExistence(timeout: timeout))
+        XCTAssertTrue(locationButton.isHittable)
+    }
+    
+    func test_tapUserLocationButton_WeatherVCAppear() {
+        locationButton.tap()
+        userLocationButton.tap()
+        
+        XCTAssertTrue(popUpWindow.waitForExistence(timeout: timeout))
+        XCTAssertTrue(geoLocationImageView.exists)
+        XCTAssertTrue(locationButton.isHittable)
     }
 }

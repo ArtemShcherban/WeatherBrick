@@ -1,0 +1,4 @@
+disabled_rules:
+ - implicitly_unwrapped_optional
+ - large_tuple
+ - line_length

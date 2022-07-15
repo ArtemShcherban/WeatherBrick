@@ -8,7 +8,7 @@
 
 import Foundation
 
-struct Country {
+struct Country: Equatable {
     var codeISO: String
     var name: String
     var flag: String

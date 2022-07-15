@@ -91,6 +91,7 @@ final class PopUpWindow: UIView {
         createConditionLabels()
         addSubviews()
         setConstraints()
+        setupAccessibilityId()
         addTapGestureRecognizer()
         animatePresent()
     }
@@ -100,6 +101,7 @@ final class PopUpWindow: UIView {
         createConditionLabels()
         addSubviews()
         setConstraints()
+        setupAccessibilityId()
         addTapGestureRecognizer()
         animatePresent()
     }
@@ -119,6 +121,10 @@ final class PopUpWindow: UIView {
         setTitleLabelConstraints()
         setLabelsConstraints()
         setHideButtonConstraints()
+    }
+    
+    private func setupAccessibilityId() {
+        hideButton.accessibilityIdentifier = AccessibilityIdentifier.hideButton
     }
     
     private func addTapGestureRecognizer() {

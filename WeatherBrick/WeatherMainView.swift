@@ -75,11 +75,23 @@ final class WeatherMainView: UIView {
     
     private(set) lazy var popUpWindow = PopUpWindow()
     
+    override init(frame: CGRect = SizesConstants.DefaultRect.frame) {
+        super.init(frame: frame)
+        self.frame = frame
+        self.setupMainView()
+    }
+    
+    required init?(coder: NSCoder) {
+        super.init(coder: coder)
+        self.setupMainView()
+    }
+    
     func setupMainView() {
         addSubviews()
         addSwipeGesture()
         addTargetForLocationButton()
         setConstraints()
+        setupAccessibilityId()
     }
     
     private func addSubviews() {
@@ -92,6 +104,13 @@ final class WeatherMainView: UIView {
         addSubview(circleAnimation)
         addSubview(errorMessageTextLabel)
         addSubview(popUpWindow)
+    }
+    
+    private func setupAccessibilityId() {
+        locationButton.accessibilityIdentifier = AccessibilityIdentifier.locationButton
+        geoLocationImageView.accessibilityIdentifier = AccessibilityIdentifier.geoLocationImageView
+        searchIconImageView.accessibilityIdentifier = AccessibilityIdentifier.searchIconImageView
+        popUpWindow.accessibilityIdentifier = AccessibilityIdentifier.popUpWindow
     }
     
     private func addSwipeGesture() {

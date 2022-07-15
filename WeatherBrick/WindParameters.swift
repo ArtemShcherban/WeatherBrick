@@ -14,4 +14,9 @@ struct WindParameters: Codable {
         speed = try values.decode(Double.self, forKey: .speed)
         degrees = try values.decode(Int.self, forKey: .degrees)
     }
+    
+    init(speed: Double, degrees: Int) {
+        self.speed = speed
+        self.degrees = degrees
+    }
 }

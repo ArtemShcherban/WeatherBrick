@@ -19,15 +19,15 @@ extension WeatherMainView {
         setErrorMessageTextLabelConstraint()
         setPopUpWindowConstraints()
     }
-    
+
     func setGeoLocationIconConstraints() {
         setGeoLocationViewConstraints()
     }
-    
+
     func setSearchIconConstraints() {
         setSearchIconViewConstraints()
     }
-    
+
     private func setTemperatureLabelConstraints() {
         temperatureLabel.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
@@ -41,7 +41,7 @@ extension WeatherMainView {
             temperatureLabel.widthAnchor.constraint(greaterThanOrEqualToConstant: .zero)
         ])
     }
-    
+
     private func setConditionLabelConstraints() {
         conditionLabel.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
@@ -56,7 +56,7 @@ extension WeatherMainView {
             conditionLabel.heightAnchor.constraint(greaterThanOrEqualToConstant: .zero)
         ])
     }
-    
+
     private func setWindSpeedLabelConstraints() {
         windSpeedLabel.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
@@ -66,7 +66,7 @@ extension WeatherMainView {
             windSpeedLabel.heightAnchor.constraint(greaterThanOrEqualToConstant: .zero)
         ])
     }
-    
+
     private func setCircleAnimationConstraints() {
         circleAnimation.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
@@ -76,7 +76,7 @@ extension WeatherMainView {
             circleAnimation.widthAnchor.constraint(equalToConstant: SizesConstants.AnimationSize.width)
         ])
     }
-    
+
     private func setErrorMessageTextLabelConstraint() {
         errorMessageTextLabel.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
@@ -88,7 +88,7 @@ extension WeatherMainView {
             errorMessageTextLabel.heightAnchor.constraint(greaterThanOrEqualToConstant: .zero)
         ])
     }
-    
+
     private func setGeoLocationViewConstraints() {
         geoLocationImageView.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
@@ -98,7 +98,7 @@ extension WeatherMainView {
             geoLocationImageView.heightAnchor.constraint(equalTo: geoLocationImageView.widthAnchor)
         ])
     }
-    
+
     private func setSearchIconViewConstraints() {
         searchIconImageView.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
@@ -108,7 +108,7 @@ extension WeatherMainView {
             searchIconImageView.heightAnchor.constraint(equalTo: searchIconImageView.widthAnchor)
         ])
     }
-    
+
     private func setPopUpWindowConstraints() {
         popUpWindow.translatesAutoresizingMaskIntoConstraints = false
         axisYConstraint =

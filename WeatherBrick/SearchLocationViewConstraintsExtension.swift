@@ -46,7 +46,7 @@ extension SearchLocationView {
         NSLayoutConstraint.activate([
             userLocationButton.topAnchor.constraint(equalTo: messageTextLabel.bottomAnchor, constant: 24),
             userLocationButton.centerXAnchor.constraint(equalTo: messageTextLabel.centerXAnchor),
-            userLocationButton.widthAnchor.constraint(equalToConstant: userLocationButton.frame.width + 20)
+            userLocationButton.widthAnchor.constraint(equalToConstant: userLocationButton.frame.width)
         ])
     }
     

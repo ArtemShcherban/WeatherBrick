@@ -29,7 +29,7 @@ final class SearchLocationViewController: UIViewController {
     private lazy var weatherMainModel = WeatherViewModel.shared
     private lazy var weatherMainView = WeatherMainView.shared
     
-    private lazy var searchLocationView: SearchLocationView = {
+    private(set) lazy var searchLocationView: SearchLocationView = {
         let view = SearchLocationView()
         view.delegate = self
         view.searchBarDelegate = self
@@ -136,6 +136,7 @@ extension SearchLocationViewController: UISearchBarDelegate {
         searchLocationView.startCircleAnimation()
         if searchLocationModel.hasValidCoordinates(searchBartext) {
             guard let location = searchLocationModel.location(from: searchBartext) else {
+                searchLocationView.circleAnimation.stop()
                 searchLocationView.messageTextLabel.retrieveError =
                 NetworkServiceError.httpRequestFailed.rawValue
                 searchLocationView.messageTextLabel.isActive = true

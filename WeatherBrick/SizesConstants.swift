@@ -26,4 +26,8 @@ enum SizesConstants {
     enum AnimationSize {
         static let width: CGFloat = 200.0
     }
+    
+    enum DefaultRect {
+        static let frame = CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height)
+    }
 }
