@@ -20,21 +20,21 @@ final class MockURLSession {
             headerFields: nil)
         return tempResponse
     }()
-    
+
     private lazy var data: Data? = {
         let dataURL = Bundle.main.url(forResource: "testData", withExtension: "txt")
         guard let dataURL = dataURL else { return nil }
         let data = try? Data(contentsOf: dataURL)
         return data
     }()
-    
+
     private lazy var sessionConfig: URLSessionConfiguration = {
         let tempSessionConfig = URLSessionConfiguration.ephemeral
         tempSessionConfig.protocolClasses = [MockURLProtocol.self]
         return tempSessionConfig
     }()
     
-    func bytDefault() -> URLSession {
+    var byDefault: URLSession {
         MockURLProtocol.mockURLs = [response?.url: (data, response, error)]
         let session = URLSession(configuration: sessionConfig)
         return session

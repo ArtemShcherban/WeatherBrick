@@ -31,7 +31,7 @@ final class WeatherNetworkServiceTests: XCTestCase {
     }
     
     func test_successResponse() throws {
-        sut.urlSession = mockURLSession.bytDefault()
+        sut.urlSession = mockURLSession.byDefault
         let expectation = XCTestExpectation(description: "Data received")
         
         sut.getWeather(with: url) { result in

@@ -9,7 +9,6 @@
 import UIKit
 
 final class UserLocationButton: UIButton {
-    let widthConstraint = NSLayoutConstraint()
     override init(frame: CGRect) {
         super.init(frame: frame)
         configure()
