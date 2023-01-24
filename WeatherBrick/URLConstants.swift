@@ -16,7 +16,7 @@ enum URLConstants {
     static let latitude = "lat"
     static let longitude = "lon"
     static let appId = "APPID"
-    static let apiKey = "59a2b233df10c0b64ce48ebeb844ddf2"
+    static let apiKey = APIKey.openWeather
     static let units = "units"
     static let metric = "metric"
 }

@@ -1,3 +1,5 @@
+URLConstants.apiKey = "INSERT YOUR API KEY HERE"
+
 Application
 
 Create an application that works with the location and weather API.

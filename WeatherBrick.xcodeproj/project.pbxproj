@@ -47,6 +47,7 @@
 		F43B67492844B87D0034FAEA /* NetworkServiceError.swift in Sources */ = {isa = PBXBuildFile; fileRef = F43B67482844B87D0034FAEA /* NetworkServiceError.swift */; };
 		F43B6774284515D50034FAEA /* MessageTextLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F43B6773284515D50034FAEA /* MessageTextLabel.swift */; };
 		F44A66EA28784301009CC8A0 /* testData.txt in Resources */ = {isa = PBXBuildFile; fileRef = F44A66E928784301009CC8A0 /* testData.txt */; };
+		F45253F22980473B005EC44E /* APIKey.swift in Sources */ = {isa = PBXBuildFile; fileRef = F45253F12980473B005EC44E /* APIKey.swift */; };
 		F45B51292872D8040026FF99 /* URLModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F45B51282872D8040026FF99 /* URLModelTests.swift */; };
 		F45B512D2872E2EF0026FF99 /* UnitTestsConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = F45B512C2872E2EF0026FF99 /* UnitTestsConstants.swift */; };
 		F45B51302872F0240026FF99 /* SearchLocationModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F45B512F2872F0240026FF99 /* SearchLocationModelTests.swift */; };
@@ -158,6 +159,7 @@
 		F43B67482844B87D0034FAEA /* NetworkServiceError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkServiceError.swift; sourceTree = "<group>"; };
 		F43B6773284515D50034FAEA /* MessageTextLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageTextLabel.swift; sourceTree = "<group>"; };
 		F44A66E928784301009CC8A0 /* testData.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = testData.txt; sourceTree = "<group>"; };
+		F45253F12980473B005EC44E /* APIKey.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIKey.swift; sourceTree = "<group>"; };
 		F45B51282872D8040026FF99 /* URLModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = URLModelTests.swift; sourceTree = "<group>"; };
 		F45B512C2872E2EF0026FF99 /* UnitTestsConstants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UnitTestsConstants.swift; sourceTree = "<group>"; };
 		F45B512F2872F0240026FF99 /* SearchLocationModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchLocationModelTests.swift; sourceTree = "<group>"; };
@@ -483,6 +485,7 @@
 				F41FAC912863234B00675E13 /* SizesConstants.swift */,
 				F41FAC99286326CD00675E13 /* TitlesConstants.swift */,
 				F41FAC8D2863224200675E13 /* URLConstants.swift */,
+				F45253F12980473B005EC44E /* APIKey.swift */,
 			);
 			name = Constants;
 			sourceTree = "<group>";
@@ -1006,6 +1009,7 @@
 				F4B287862858601A005E1960 /* UIViewTransitionAnimations.swift in Sources */,
 				F4A9B806284F293F003B7D78 /* Country.swift in Sources */,
 				F4A9B83728533D87003B7D78 /* UserDefaultsManager.swift in Sources */,
+				F45253F22980473B005EC44E /* APIKey.swift in Sources */,
 				F47DA2062837B9C800098B17 /* PopUpWindow.swift in Sources */,
 				F4DF62BE283D4EAC004CAE1B /* SearchLocationView.swift in Sources */,
 				F48BCC56283B849200378711 /* WeatherNetworkService.swift in Sources */,
